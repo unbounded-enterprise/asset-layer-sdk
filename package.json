@@ -1,6 +1,6 @@
 {
   "name": "dubby-sdk-test",
-  "version": "0.0.26",
+  "version": "0.0.01",
   "main": "dist/index.js",
   "module": "dist/index.m.js",
   "unpkg": "dist/index.umd.js",

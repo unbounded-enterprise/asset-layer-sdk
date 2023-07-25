@@ -1,5 +1,6 @@
+import { Asset } from '../assets/types';
 import { Base } from '../base';
-import { Collection, CollectionUpdate } from './types';
+import { Collection, CollectionCreationProps, CollectionUpdateProps } from './types';
 
 export class Collections extends Base {
   getCollection(id: string): Promise<Collection> {
@@ -8,16 +9,37 @@ export class Collections extends Base {
   getCollections(ids: string[]): Promise<Collection[]> {
     return this.request(`/collection/info?collectionIds=${ids}`);
   }
-  updateCollection(update: CollectionUpdate): Promise<boolean> {
+  getCollectionAssets(id: string, serials: string = '', idOnly: boolean = false): Promise<Asset[]> {
+    return this.request(`/collection/info?collectionId=${id}&serials=${serials}&idOnly=${idOnly}`);
+  }
+  createCollection(update: CollectionCreationProps): Promise<boolean> {
+    return this.request('/collection/new', {
+      method: 'POST',
+      body: JSON.stringify(update),
+    });
+  }
+  updateCollection(update: CollectionUpdateProps): Promise<boolean> {
     return this.request('/collection/update', {
       method: 'PUT',
       body: JSON.stringify(update),
     });
   }
-
-  // /activate
-  // /deactivate
-  // /image
-  // /new
-  // /nfts
+  activateCollection(collectionId: string): Promise<boolean> {
+    return this.request('/collection/activate', {
+      method: 'PUT',
+      body: JSON.stringify({ collectionId }),
+    });
+  }
+  deactivateCollection(collectionId: string): Promise<boolean> {
+    return this.request('/collection/deactivate', {
+      method: 'PUT',
+      body: JSON.stringify({ collectionId }),
+    });
+  }
+  updateCollectionImage(collectionId: string, value: string): Promise<boolean> {
+    return this.request('/collection/image', {
+      method: 'POST',
+      body: JSON.stringify({ collectionId, value }),
+    });
+  }
 }

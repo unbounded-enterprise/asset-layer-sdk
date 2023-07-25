@@ -1,0 +1,38 @@
+{
+  "name": "dubby-sdk-test",
+  "version": "0.0.26",
+  "main": "dist/index.js",
+  "module": "dist/index.m.js",
+  "unpkg": "dist/index.umd.js",
+  "types": "dist/index.d.ts",
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "homepage": "https://github.com/Nadrojiskool/sdk-test#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && microbundle --tsconfig tsconfig.json --no-sourcemap"
+  },
+  "devDependencies": {
+    "microbundle": "^0.15.1"
+  },
+  "dependencies": {
+    "isomorphic-unfetch": "^4.0.2",
+    "typescript": "^5.1.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nadrojiskool/sdk-test.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nadrojiskool/sdk-test/issues"
+  },
+  "exports": {
+    "require": "./dist/index.js",
+    "default": "./dist/index.modern.mjs"
+  },
+  "files": [
+      "dist"
+  ]
+}

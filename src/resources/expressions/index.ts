@@ -30,25 +30,25 @@ export class Expressions extends Base {
       body: JSON.stringify(update),
     });
   }
-  updateAssetExpressionValues(update: AssetExpressionValuesUpdateProps): Promise<unknown> {
+  updateAssetExpressionValues(update: AssetExpressionValuesUpdateProps): Promise<boolean> {
     return this.request('/expression/values/nft', {
       method: 'POST',
       body: JSON.stringify(update),
     });
   }
-  updateAssetsExpressionValues(update: AssetsExpressionValuesUpdateProps): Promise<unknown> {
+  updateAssetsExpressionValues(update: AssetsExpressionValuesUpdateProps): Promise<boolean> {
     return this.request('/expression/values/nfts', {
       method: 'POST',
       body: JSON.stringify(update),
     });
   }
-  updateCollectionExpressionValues(update: CollectionExpressionValuesUpdateProps): Promise<unknown> {
+  updateCollectionExpressionValues(update: CollectionExpressionValuesUpdateProps): Promise<boolean> {
     return this.request('/expression/values/collection', {
       method: 'POST',
       body: JSON.stringify(update),
     });
   }
-  updateBulkExpressionValues(update: BulkExpressionValuesUpdateProps): Promise<unknown> {
+  updateBulkExpressionValues(update: BulkExpressionValuesUpdateProps): Promise<boolean> {
     return this.request('/expression/values/bulk', {
       method: 'POST',
       body: JSON.stringify(update),

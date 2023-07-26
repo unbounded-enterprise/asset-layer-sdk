@@ -6,6 +6,11 @@ import { Listings } from './resources/listings';
 import { Slots } from './resources/slots';
 import { Users } from './resources/users';
 
+declare type AssetLayerConfig = {
+  appSecret: string;
+  baseUrl?: string;
+}
+
 export class AssetLayer {
   apps: Apps;
   assets: Assets;
@@ -15,7 +20,7 @@ export class AssetLayer {
   slots: Slots;
   users: Users;
 
-  constructor(config: { appSecret: string; baseUrl?: string }) {
+  constructor(config: AssetLayerConfig) {
     this.apps = new Apps(config);
     this.assets = new Assets(config);
     this.collections = new Collections(config);

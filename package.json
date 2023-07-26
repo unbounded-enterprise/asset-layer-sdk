@@ -1,5 +1,5 @@
 {
-  "name": "dubby-sdk-test",
+  "name": "asset-layer-sdk",
   "version": "0.0.01",
   "main": "dist/index.js",
   "module": "dist/index.m.js",

@@ -4,17 +4,17 @@ Manage your digital assets with the Asset Layer SDK
 
 First, install the SDK:
 
-npm install dubby-sdk-test
+npm install asset-layer-sdk
 
 ## Reference the SDK
 
 You can reference the SDK in two ways:
 
-const { AssetLayer } = require('dubby-sdk-test');
+const { AssetLayer } = require('asset-layer-sdk');
 
 OR
 
-import { AssetLayer } from 'dubby-sdk-test';
+import { AssetLayer } from 'asset-layer-sdk';
 
 ## Instantiate the SDK
 

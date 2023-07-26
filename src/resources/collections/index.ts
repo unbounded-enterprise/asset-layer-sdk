@@ -10,7 +10,7 @@ export class Collections extends Base {
     return this.request(`/collection/info?collectionIds=${ids}`);
   }
   getCollectionAssets(id: string, serials: string = '', idOnly: boolean = false): Promise<Asset[]> {
-    return this.request(`/collection/info?collectionId=${id}&serials=${serials}&idOnly=${idOnly}`);
+    return this.request(`/collection/nfts?collectionId=${id}&serials=${serials}&idOnly=${idOnly}`);
   }
   createCollection(update: CollectionCreationProps): Promise<boolean> {
     return this.request('/collection/new', {

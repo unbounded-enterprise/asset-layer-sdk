@@ -20,5 +20,4 @@ export class Apps extends Base {
   getSlots(id: string, idOnly: boolean = false): Promise<Slot[]> {
     return this.request(`/app/slots?appId=${id}&idOnly=${idOnly}`);
   }
-  // /slots
 }

@@ -5,17 +5,17 @@ export declare type Listing = {
   
 };
 
-export declare type ListingCreationProps = {
+export declare type CreateListingProps = {
     handle: string;
     price: number;
     nftId?: string;
     nftIds?: string[];
     collectionId?: string;
     liveTime?: number;
-    status?: ListingUpdateStatus
+    status?: ListingUpdateStatus;
 }
 
-export declare type ListingUpdateProps = {
+export declare type UpdateListingProps = {
     listingId: string;
     handle: string;
     price?: number;

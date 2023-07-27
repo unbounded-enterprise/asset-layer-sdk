@@ -1,5 +1,5 @@
 import { Base } from '../base';
-import { GetAppListingsProps, GetCollectionListingsProps, GetUserListingsProps, Listing, ListingCreationProps, ListingStatus, ListingUpdateProps } from './types';
+import { GetAppListingsProps, GetCollectionListingsProps, GetUserListingsProps, Listing, CreateListingProps, ListingStatus, UpdateListingProps } from './types';
 
 export class Listings extends Base {
   getListing(id: string, status?: ListingStatus): Promise<Listing> {
@@ -10,8 +10,8 @@ export class Listings extends Base {
     return this.request(`/listing/info?listingIds=${ids}`);
   }
   */
-  getAppListings(update: GetAppListingsProps): Promise<Listing[]> {
-    return this.request('/listing/app', {
+  getUserListings(update: GetUserListingsProps): Promise<Listing[]> {
+    return this.request('/listing/user', {
       method: 'GET',
       body: JSON.stringify(update),
     });
@@ -22,19 +22,19 @@ export class Listings extends Base {
       body: JSON.stringify(update),
     });
   }
-  getUserListings(update: GetUserListingsProps): Promise<Listing[]> {
-    return this.request('/listing/user', {
+  getAppListings(update: GetAppListingsProps): Promise<Listing[]> {
+    return this.request('/listing/app', {
       method: 'GET',
       body: JSON.stringify(update),
     });
   }
-  createListing(update: ListingCreationProps): Promise<boolean> {
+  createListing(update: CreateListingProps): Promise<boolean> {
     return this.request('/listing/new', {
       method: 'PUT',
       body: JSON.stringify(update),
     });
   }
-  updateListing(update: ListingUpdateProps): Promise<boolean> {
+  updateListing(update: UpdateListingProps): Promise<boolean> {
     return this.request('/listing/update', {
       method: 'PUT',
       body: JSON.stringify(update),

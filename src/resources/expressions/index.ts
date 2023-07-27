@@ -1,5 +1,5 @@
 import { Base } from '../base';
-import { AssetExpressionValuesUpdateProps, AssetsExpressionValuesUpdateProps, BulkExpressionValuesUpdateProps, CollectionExpressionValuesUpdateProps, Expression, ExpressionCreationProps, ExpressionUpdateProps } from './types';
+import { AssetExpressionValuesUpdateProps, AssetsExpressionValuesUpdateProps, BulkExpressionValuesUpdateProps, CollectionExpressionValuesUpdateProps, Expression, CreateExpressionProps, UpdateExpressionProps } from './types';
 
 export class Expressions extends Base {
   getExpressionsTypes(slotId: string): Promise<unknown> {
@@ -18,13 +18,13 @@ export class Expressions extends Base {
   getSlotExpressions(slotId: string): Promise<Expression[]> {
     return this.request(`/expression/slot?slotId=${slotId}`);
   }
-  createExpression(update: ExpressionCreationProps): Promise<boolean> {
+  createExpression(update: CreateExpressionProps): Promise<boolean> {
     return this.request('/expression/new', {
       method: 'POST',
       body: JSON.stringify(update),
     });
   }
-  updateExpression(update: ExpressionUpdateProps): Promise<boolean> {
+  updateExpression(update: UpdateExpressionProps): Promise<boolean> {
     return this.request('/expression/update', {
       method: 'PUT',
       body: JSON.stringify(update),

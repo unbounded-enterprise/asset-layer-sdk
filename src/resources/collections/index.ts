@@ -1,6 +1,6 @@
 import { Asset } from '../assets/types';
 import { Base } from '../base';
-import { Collection, CollectionCreationProps, CollectionUpdateProps } from './types';
+import { Collection, CreateCollectionProps, UpdateCollectionProps } from './types';
 
 export class Collections extends Base {
   getCollection(id: string): Promise<Collection> {
@@ -12,13 +12,13 @@ export class Collections extends Base {
   getCollectionAssets(id: string, serials: string = '', idOnly: boolean = false): Promise<Asset[]> {
     return this.request(`/collection/nfts?collectionId=${id}&serials=${serials}&idOnly=${idOnly}`);
   }
-  createCollection(update: CollectionCreationProps): Promise<boolean> {
+  createCollection(update: CreateCollectionProps): Promise<boolean> {
     return this.request('/collection/new', {
       method: 'POST',
       body: JSON.stringify(update),
     });
   }
-  updateCollection(update: CollectionUpdateProps): Promise<boolean> {
+  updateCollection(update: UpdateCollectionProps): Promise<boolean> {
     return this.request('/collection/update', {
       method: 'PUT',
       body: JSON.stringify(update),

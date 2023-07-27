@@ -6,7 +6,7 @@ export declare type Collection = {
   
 };
 
-export declare type CollectionCreationProps = {
+export declare type CreateCollectionProps = {
     collectionName: string;
     slotId: string;
     type: CollectionType;
@@ -20,7 +20,7 @@ export declare type CollectionCreationProps = {
     properties?: BasicAnyObject;
 }
 
-export declare type CollectionUpdateProps = {
+export declare type UpdateCollectionProps = {
     collectionId: string;
     description?: string;
     tags?: string[];

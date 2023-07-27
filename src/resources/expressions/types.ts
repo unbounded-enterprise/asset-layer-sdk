@@ -19,14 +19,14 @@ export declare type ExpressionAttribute = {
     expressionAttributeName: ExpressionAttributeType;
 }
 
-export declare type ExpressionCreationProps = {
+export declare type CreateExpressionProps = {
     slotId: string;
     expressionTypeId: string;
     expressionName: string;
     description?: string;
 }
 
-export declare type ExpressionUpdateProps = {
+export declare type UpdateExpressionProps = {
     expressionId: string;
     expressionTypeId: string;
     expressionName: string;

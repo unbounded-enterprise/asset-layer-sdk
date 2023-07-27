@@ -26,7 +26,7 @@ const assetlayer = new AssetLayer({
 
 const app = await assetlayer.apps.getApp('633b30ca09d1acacd0c50df4');
 
-## Build & Deploy the SDK
+## Build & Deploy the SDK to NPM
 
 npm run build
 

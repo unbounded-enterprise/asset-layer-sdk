@@ -1,5 +1,5 @@
-import { Base } from '../base';
-import { Asset, AssetUpdateProps, GetUserCollectionAssetsProps, GetUserCollectionsAssetsProps, GetUserSlotAssetsProps, GetUserSlotsAssetsProps } from './types';
+import { Base } from './base';
+import { Asset, UpdateAssetProps, GetUserCollectionAssetsProps, GetUserCollectionsAssetsProps, GetUserSlotAssetsProps, GetUserSlotsAssetsProps } from '../types/asset';
 
 export class Assets extends Base {
   getAsset(id: string): Promise<Asset> {
@@ -47,7 +47,7 @@ export class Assets extends Base {
       body: JSON.stringify({ recipientHandle, nftId, handle }),
     });
   }
-  sendAssets(recipientHandle: string, nftIds: string, handle: string): Promise<boolean> {
+  sendAssets(recipientHandle: string, nftIds: string[], handle: string): Promise<boolean> {
     return this.request('/asset/send', {
       method: 'POST',
       body: JSON.stringify({ recipientHandle, nftIds, handle }),
@@ -71,7 +71,7 @@ export class Assets extends Base {
       body: JSON.stringify({ recipientHandle, collectionId, handle }),
     });
   }
-  updateAsset(update: AssetUpdateProps): Promise<boolean> {
+  updateAsset(update: UpdateAssetProps): Promise<boolean> {
     return this.request('/asset/update', {
       method: 'PUT',
       body: JSON.stringify(update),

@@ -1,6 +1,6 @@
-export declare type ExpressionAttributeType = 'Image' | 'Audio' | 'Video' | 'Spine 4.0';
+export type ExpressionAttributeType = 'Image' | 'Audio' | 'Video' | 'Spine 4.0';
 
-export declare type Expression = {
+export type Expression = {
     //slotId: string;
     //expressionId: string;
     //expressionName: string;
@@ -8,32 +8,32 @@ export declare type Expression = {
     //description?: string;
 };
 
-export declare type ExpressionType = {
+export type ExpressionType = {
     expressionTypeId: string;
     expressionTypeName: ExpressionAttributeType;
     expressionAttributes: ExpressionAttribute[];
 }
 
-export declare type ExpressionAttribute = {
+export type ExpressionAttribute = {
     expressionAttributeId: string;
     expressionAttributeName: ExpressionAttributeType;
 }
 
-export declare type CreateExpressionProps = {
+export type CreateExpressionProps = {
     slotId: string;
     expressionTypeId: string;
     expressionName: string;
     description?: string;
 }
 
-export declare type UpdateExpressionProps = {
+export type UpdateExpressionProps = {
     expressionId: string;
     expressionTypeId: string;
     expressionName: string;
     description?: string;
 }
 
-export declare type AssetExpressionValuesUpdateProps = {
+export type UpdateAssetExpressionValuesProps = {
     nftId: string;
     expressionAttributeName: string;
     value: string;
@@ -41,7 +41,7 @@ export declare type AssetExpressionValuesUpdateProps = {
     expressionName?: string; // OR
 }
 
-export declare type AssetsExpressionValuesUpdateProps = {
+export type UpdateAssetsExpressionValuesProps = {
     expressionAttributeName: string;
     value: string;
     nftIds?: string; // OR 1
@@ -50,7 +50,7 @@ export declare type AssetsExpressionValuesUpdateProps = {
     expressionName?: string; // OR 2
 }
 
-export declare type CollectionExpressionValuesUpdateProps = {
+export type UpdateCollectionExpressionValuesProps = {
     collectionId: string;
     expressionAttributeName: string;
     value: string;
@@ -58,7 +58,7 @@ export declare type CollectionExpressionValuesUpdateProps = {
     expressionName?: string; // OR
 }
 
-export declare type BulkExpressionValuesUpdateProps = {
+export type UpdateBulkExpressionValuesProps = {
     collectionId: string;
     value: string;
 }

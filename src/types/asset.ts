@@ -1,17 +1,17 @@
 import { BasicAnyObject } from "src/types/basic-types";
 
-export declare type Asset = {
+export type Asset = {
   
 };
 
-export declare type AssetUpdateProps = {
+export type UpdateAssetProps = {
     properties: BasicAnyObject;
     nftId?: string;
     nftIds?: string[];
     collectionId?: string;
 }
 
-export declare type GetUserCollectionAssetsProps = {
+export type GetUserCollectionAssetsProps = {
     collectionId: string;
     handle: string;
     serials?: string;
@@ -20,21 +20,21 @@ export declare type GetUserCollectionAssetsProps = {
     countsOnly?: boolean;
 }
 
-export declare type GetUserCollectionsAssetsProps = {
+export type GetUserCollectionsAssetsProps = {
     collectionIds: string[];
     handle: string;
     idOnly?: boolean;
     countsOnly?: boolean;
 }
 
-export declare type GetUserSlotAssetsProps = {
+export type GetUserSlotAssetsProps = {
     slotId: string;
     handle: string;
     idOnly?: boolean;
     countsOnly?: boolean;
 }
 
-export declare type GetUserSlotsAssetsProps = {
+export type GetUserSlotsAssetsProps = {
     slotIds: string[];
     handle: string;
     includeDeactivated?: boolean;

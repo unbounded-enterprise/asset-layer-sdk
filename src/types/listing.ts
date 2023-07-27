@@ -1,11 +1,11 @@
-export declare type ListingStatus = 'deleted' | 'cancelled' | 'active' | 'inactive' | 'sold';
-export declare type ListingUpdateStatus = 'active' | 'inactive';
+export type ListingStatus = 'deleted' | 'cancelled' | 'active' | 'inactive' | 'sold';
+export type ListingUpdateStatus = 'active' | 'inactive';
 
-export declare type Listing = {
+export type Listing = {
   
 };
 
-export declare type CreateListingProps = {
+export type CreateListingProps = {
     handle: string;
     price: number;
     nftId?: string;
@@ -15,7 +15,7 @@ export declare type CreateListingProps = {
     status?: ListingUpdateStatus;
 }
 
-export declare type UpdateListingProps = {
+export type UpdateListingProps = {
     listingId: string;
     handle: string;
     price?: number;
@@ -23,7 +23,7 @@ export declare type UpdateListingProps = {
     status?: ListingUpdateStatus;
 }
 
-export declare type GetAppListingsProps = {
+export type GetAppListingsProps = {
     appId: string;
     status?: ListingStatus;
     lastUpdatedAt?: number;
@@ -31,7 +31,7 @@ export declare type GetAppListingsProps = {
     collectionStats?: boolean;
 }
 
-export declare type GetCollectionListingsProps = {
+export type GetCollectionListingsProps = {
     collectionId?: string;
     collectionIds?: string;
     status?: ListingStatus;
@@ -40,7 +40,7 @@ export declare type GetCollectionListingsProps = {
     collectionStats?: boolean;
 }
 
-export declare type GetUserListingsProps = {
+export type GetUserListingsProps = {
     handle: string;
     sellerOnly?: boolean;
     buyerOnly?: boolean;

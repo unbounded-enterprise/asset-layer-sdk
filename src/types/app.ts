@@ -1,6 +1,6 @@
-export declare type AppStatus = 'active' | 'inactive';
+export type AppStatus = 'active' | 'inactive';
 
-export declare type App = {
+export type App = {
     appId: string;
     handcashAppId: string;
     appName: string;
@@ -16,7 +16,7 @@ export declare type App = {
     slots: string[];
 };
 
-export declare type AppUpdate = {
+export type AppUpdate = {
   appId: string;
   appName: string;
   appImage?: string;

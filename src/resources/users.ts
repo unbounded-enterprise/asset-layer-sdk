@@ -1,5 +1,5 @@
-import { Base } from '../base';
-import { User } from './types';
+import { Base } from './base';
+import { User } from '../types/user';
 
 export class Users extends Base {
   /* WIP

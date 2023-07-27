@@ -1,6 +1,6 @@
-import { Base } from '../base';
-import { Collection } from '../collections/types';
-import { Slot, SlotUpdate } from './types';
+import { Base } from './base';
+import { Collection } from '../types/collection';
+import { Slot, SlotUpdate } from '../types/slot';
 
 export class Slots extends Base {
   getSlot(id: string): Promise<Slot> {

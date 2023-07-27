@@ -6,7 +6,7 @@ import { Listings } from './resources/listings';
 import { Slots } from './resources/slots';
 import { Users } from './resources/users';
 
-declare type AssetLayerConfig = {
+type AssetLayerConfig = {
   appSecret: string;
   baseUrl?: string;
 }

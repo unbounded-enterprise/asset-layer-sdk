@@ -1,8 +1,8 @@
-import { Base } from '../base';
-import { AssetExpressionValuesUpdateProps, AssetsExpressionValuesUpdateProps, BulkExpressionValuesUpdateProps, CollectionExpressionValuesUpdateProps, Expression, CreateExpressionProps, UpdateExpressionProps } from './types';
+import { Base } from './base';
+import { Expression, CreateExpressionProps, UpdateExpressionProps, UpdateAssetExpressionValuesProps, UpdateAssetsExpressionValuesProps, UpdateCollectionExpressionValuesProps, UpdateBulkExpressionValuesProps } from '../types/expression';
 
 export class Expressions extends Base {
-  getExpressionsTypes(slotId: string): Promise<unknown> {
+  getExpressionTypes(): Promise<unknown> {
     return this.request('/expression/types');
   }
   /* does not exist
@@ -30,25 +30,25 @@ export class Expressions extends Base {
       body: JSON.stringify(update),
     });
   }
-  updateAssetExpressionValues(update: AssetExpressionValuesUpdateProps): Promise<boolean> {
+  updateAssetExpressionValues(update: UpdateAssetExpressionValuesProps): Promise<boolean> {
     return this.request('/expression/values/nft', {
       method: 'POST',
       body: JSON.stringify(update),
     });
   }
-  updateAssetsExpressionValues(update: AssetsExpressionValuesUpdateProps): Promise<boolean> {
+  updateAssetsExpressionValues(update: UpdateAssetsExpressionValuesProps): Promise<boolean> {
     return this.request('/expression/values/nfts', {
       method: 'POST',
       body: JSON.stringify(update),
     });
   }
-  updateCollectionExpressionValues(update: CollectionExpressionValuesUpdateProps): Promise<boolean> {
+  updateCollectionExpressionValues(update: UpdateCollectionExpressionValuesProps): Promise<boolean> {
     return this.request('/expression/values/collection', {
       method: 'POST',
       body: JSON.stringify(update),
     });
   }
-  updateBulkExpressionValues(update: BulkExpressionValuesUpdateProps): Promise<boolean> {
+  updateBulkExpressionValues(update: UpdateBulkExpressionValuesProps): Promise<boolean> {
     return this.request('/expression/values/bulk', {
       method: 'POST',
       body: JSON.stringify(update),

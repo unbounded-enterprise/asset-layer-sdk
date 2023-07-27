@@ -1,6 +1,6 @@
-import { Asset } from '../assets/types';
-import { Base } from '../base';
-import { Collection, CreateCollectionProps, UpdateCollectionProps } from './types';
+import { Asset } from '../types/asset';
+import { Base } from './base';
+import { Collection, CreateCollectionProps, UpdateCollectionProps } from '../types/collection';
 
 export class Collections extends Base {
   getCollection(id: string): Promise<Collection> {

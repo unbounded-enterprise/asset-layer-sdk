@@ -1,5 +1,5 @@
-import { Base } from '../base';
-import { GetAppListingsProps, GetCollectionListingsProps, GetUserListingsProps, Listing, CreateListingProps, ListingStatus, UpdateListingProps } from './types';
+import { Base } from './base';
+import { GetAppListingsProps, GetCollectionListingsProps, GetUserListingsProps, Listing, CreateListingProps, ListingStatus, UpdateListingProps } from '../types/listing';
 
 export class Listings extends Base {
   getListing(id: string, status?: ListingStatus): Promise<Listing> {
@@ -40,10 +40,10 @@ export class Listings extends Base {
       body: JSON.stringify(update),
     });
   }
-  buyListing(listingId: string, handle: string): Promise<boolean> {
+  buyListing(listingId: string, handle: string, price?: number): Promise<boolean> {
     return this.request('/listing/buy', {
       method: 'PUT',
-      body: JSON.stringify({ listingId, handle }),
+      body: JSON.stringify({ listingId, handle, price }),
     });
   }
   removeListing(listingId: string, handle: string): Promise<boolean> {

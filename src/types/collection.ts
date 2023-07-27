@@ -1,12 +1,12 @@
 import { BasicAnyObject } from "src/types/basic-types";
 
-export declare type CollectionType = 'Identical' | 'Unique';
+export type CollectionType = 'Identical' | 'Unique';
 
-export declare type Collection = {
+export type Collection = {
   
 };
 
-export declare type CreateCollectionProps = {
+export type CreateCollectionProps = {
     collectionName: string;
     slotId: string;
     type: CollectionType;
@@ -20,7 +20,7 @@ export declare type CreateCollectionProps = {
     properties?: BasicAnyObject;
 }
 
-export declare type UpdateCollectionProps = {
+export type UpdateCollectionProps = {
     collectionId: string;
     description?: string;
     tags?: string[];

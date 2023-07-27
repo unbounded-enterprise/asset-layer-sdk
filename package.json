@@ -1,6 +1,6 @@
 {
   "name": "asset-layer-sdk",
-  "version": "0.0.01",
+  "version": "0.0.01-beta.01",
   "main": "dist/index.js",
   "module": "dist/index.m.js",
   "unpkg": "dist/index.umd.js",
@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "homepage": "https://github.com/Nadrojiskool/sdk-test#readme",
+  "homepage": "https://github.com/unbounded-enterprise/asset-layer-sdk#readme",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf dist && microbundle --tsconfig tsconfig.json --no-sourcemap"
@@ -23,10 +23,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nadrojiskool/sdk-test.git"
+    "url": "git+https://github.com/unbounded-enterprise/asset-layer-sdk.git"
   },
   "bugs": {
-    "url": "https://github.com/Nadrojiskool/sdk-test/issues"
+    "url": "https://github.com/unbounded-enterprise/asset-layer-sdk/issues"
   },
   "exports": {
     "require": "./dist/index.js",

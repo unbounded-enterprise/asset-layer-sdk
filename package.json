@@ -7,20 +7,9 @@
   "types": "dist/index.d.ts",
   "description": "",
   "keywords": [],
-  "author": "",
+  "author": "Asset Layer",
   "license": "MIT",
   "homepage": "https://github.com/unbounded-enterprise/asset-layer-sdk#readme",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf dist && microbundle --tsconfig tsconfig.json --no-sourcemap"
-  },
-  "devDependencies": {
-    "microbundle": "^0.15.1"
-  },
-  "dependencies": {
-    "isomorphic-unfetch": "^4.0.2",
-    "typescript": "^5.1.6"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/unbounded-enterprise/asset-layer-sdk.git"
@@ -28,11 +17,22 @@
   "bugs": {
     "url": "https://github.com/unbounded-enterprise/asset-layer-sdk/issues"
   },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && microbundle --tsconfig tsconfig.json --no-sourcemap"
+  },
+  "dependencies": {
+    "isomorphic-unfetch": "^4.0.2",
+    "typescript": "^5.1.6"
+  },
+  "devDependencies": {
+    "microbundle": "^0.15.1"
+  },
   "exports": {
     "require": "./dist/index.js",
     "default": "./dist/index.modern.mjs"
   },
   "files": [
-      "dist"
+    "dist"
   ]
 }

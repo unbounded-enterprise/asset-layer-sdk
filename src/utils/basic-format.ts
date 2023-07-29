@@ -7,6 +7,6 @@ export function propsToQueryString(props: BasicAnyObject) {
         if (Array.isArray(props[key])) props[key].forEach((value: string) => params.append(key, value));
         else params.append(key, props[key]);
     }
-
+    
     return '?' + params.toString();
 }

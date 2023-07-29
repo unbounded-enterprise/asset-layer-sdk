@@ -1,5 +1,5 @@
 import { Base } from './base';
-import { App, GetAppProps, GetAppSlotsProps, GetAppSlotsResponse, GetAppsProps, GetAppsResponse } from '../types/app';
+import { App, GetAppProps, GetAppResponse, GetAppSlotsProps, GetAppSlotsResponse, GetAppsProps, GetAppsResponse } from '../types/app';
 import { Slot } from '../types/slot';
 import { BasicResult } from 'src/types/basic-types';
 import { parseBasicError } from 'src/utils/basic-error';
@@ -7,9 +7,9 @@ import { propsToQueryString } from 'src/utils/basic-format';
 
 export class Apps extends Base {
   getApp = async (props: GetAppProps): Promise<App> => {
-    const response = await this.request<GetAppsResponse>('/app/info' + propsToQueryString(props));
-
-    return response.body.app[0];
+    const response = await this.request<GetAppResponse>('/app/info' + propsToQueryString(props));
+    
+    return response.body.app;
   }
   getApps = async (props: GetAppsProps): Promise<App[]> => {
     const response = await this.request<GetAppsResponse>('/app/info'  + propsToQueryString(props));

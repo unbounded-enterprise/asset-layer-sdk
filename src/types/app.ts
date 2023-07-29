@@ -49,6 +49,8 @@ export type UpdateAppProps = {
 
 export type GetAppProps = { appId: string; };
 export type GetAppsProps = { appIds: string[]; };
-export type GetAppsResponse = BasicResponse<{ app: App[]; }>;
 export type GetAppSlotsProps = { appId: string; idOnly?: boolean; };
+
+export type GetAppResponse = BasicResponse<{ app: App; }>;
+export type GetAppsResponse = BasicResponse<{ app: App[]; }>;
 export type GetAppSlotsResponse = BasicResponse<{ app: AppWithSlots }>;

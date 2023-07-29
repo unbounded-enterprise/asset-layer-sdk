@@ -71,6 +71,12 @@ const app = await assetlayer.apps.getApp('633b30ca09d1acacd0c50df4');
 
 ## Development
 
+### Connecting with the Org
+
+```sh
+$ npm init --scope=assetlayer
+```
+
 ### Building a distribution version
 
 ```sh
@@ -85,5 +91,5 @@ inside your local `dist/` folder
 ```sh
 $ npm login
 
-$ npm publish
+$ npm publish --access public
 ```

@@ -40,11 +40,9 @@ export abstract class Base {
         return response.json();
       }
 
-      response.json().then((r) => {
-        const errorText = `[AssetLayer]: ${response.statusText} // ${r.body?.message || ''}`;
-        console.warn(errorText);
-        throw new Error(errorText);
-      });
+      const errorText = `[AssetLayer]: ${response.statusText}`;
+      console.warn(errorText);
+      throw new Error(errorText);
     });
   }
 }

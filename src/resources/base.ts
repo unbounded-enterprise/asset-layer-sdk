@@ -33,14 +33,18 @@ export abstract class Base {
       headers,
     };
 
-    return fetch(url, config).then((response) => {
+    return fetch(url, config).then((response:Response) => {
       console.log('fetched', url, config, response)
       if (response.ok) {
         console.log('fetch ok')
         return response.json();
       }
-      console.log('fetch err', response.statusText)
-      throw new Error(response.statusText);
+
+      response.json().then((r) => {
+        const errorText = `[AssetLayer]: ${response.statusText} // ${r.body?.message || ''}`;
+        console.warn(errorText);
+        throw new Error(errorText);
+      });
     });
   }
 }

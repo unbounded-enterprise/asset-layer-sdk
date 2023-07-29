@@ -16,3 +16,9 @@ export type BasicAnyObject = BasicObject<any>;
 export type BasicResultSuccess<T> = { result: T };
 export type BasicResultError = { error: BasicError };
 export type BasicResult<T> = BasicResultSuccess<T> | BasicResultError;
+
+export type BasicResponse<T> = {
+  statusCode: number;
+  success: boolean;
+  body: T;
+}

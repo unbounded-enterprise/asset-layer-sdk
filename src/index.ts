@@ -7,7 +7,7 @@ import { Listings } from './resources/listings';
 import { Slots } from './resources/slots';
 import { Users } from './resources/users';
 
-type AssetLayerConfig = {
+export type AssetLayerConfig = {
   appSecret: string;
   baseUrl?: string;
 }
@@ -33,3 +33,13 @@ export class AssetLayer {
     this.users = new Users(config);
   }
 }
+
+export * from './types/app';
+export * from './types/asset';
+export * from './types/basic-types';
+export * from './types/collection';
+export * from './types/equip';
+export * from './types/expression';
+export * from './types/listing';
+export * from './types/slot';
+export * from './types/user';

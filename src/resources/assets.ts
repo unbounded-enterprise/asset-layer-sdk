@@ -1,39 +1,28 @@
 import { Base } from './base';
 import { Asset, UpdateAssetProps, GetUserCollectionAssetsProps, GetUserCollectionsAssetsProps, GetUserSlotAssetsProps, GetUserSlotsAssetsProps } from '../types/asset';
+import { propsToQueryString } from 'src/utils/basic-format';
 
 export class Assets extends Base {
-  getAsset(id: string): Promise<Asset> {
-    return this.request(`/nft/info?nftId=${id}`);
+  getAsset(assetId: string): Promise<Asset> {
+    return this.request(`/nft/info?nftId=${assetId}`);
   }
-  getAssets(ids: string[]): Promise<Asset[]> {
-    return this.request(`/nft/info?nftIds=${ids}`);
+  getAssets(assetIds: string[]): Promise<Asset[]> {
+    return this.request('/nft/info' + propsToQueryString({ nftIds: assetIds }));
   }
   getUserAssets(handle: string, idOnly: boolean = false, countsOnly: boolean = false): Promise<Asset[]> {
     return this.request(`/nft/user?handle=${handle}&idOnly=${idOnly}&countsOnly=${countsOnly}`);
   }
-  getUserCollectionAssets(update: GetUserCollectionAssetsProps): Promise<Asset[]> {
-    return this.request('/nft/collection', {
-      method: 'GET',
-      body: JSON.stringify(update),
-    });
+  getUserCollectionAssets(props: GetUserCollectionAssetsProps): Promise<Asset[]> {
+    return this.request('/nft/collection' + propsToQueryString(props));
   }
-  getUserCollectionsAssets(update: GetUserCollectionsAssetsProps): Promise<Asset[]> {
-    return this.request('/nft/collections', {
-      method: 'GET',
-      body: JSON.stringify(update),
-    });
+  getUserCollectionsAssets(props: GetUserCollectionsAssetsProps): Promise<Asset[]> {
+    return this.request('/nft/collections' + propsToQueryString(props));
   }
-  getUserSlotAssets(update: GetUserSlotAssetsProps): Promise<Asset[]> {
-    return this.request('/nft/slot', {
-      method: 'GET',
-      body: JSON.stringify(update),
-    });
+  getUserSlotAssets(props: GetUserSlotAssetsProps): Promise<Asset[]> {
+    return this.request('/nft/slot' + propsToQueryString(props));
   }
-  getUserSlotsAssets(update: GetUserSlotsAssetsProps): Promise<Asset[]> {
-    return this.request('/nft/slots', {
-      method: 'GET',
-      body: JSON.stringify(update),
-    });
+  getUserSlotsAssets(props: GetUserSlotsAssetsProps): Promise<Asset[]> {
+    return this.request('/nft/slots' + propsToQueryString(props));
   }
   mintAssets(collectionId: string, amount: number, handle: string): Promise<boolean> {
     return this.request('/asset/mint', {

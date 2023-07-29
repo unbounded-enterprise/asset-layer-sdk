@@ -1,12 +1,10 @@
 import { GetEquipProps, RemoveEquipProps, SetEquipProps, SetEquipResponse } from 'src/types/equip';
 import { Base } from './base';
+import { propsToQueryString } from 'src/utils/basic-format';
 
 export class Equips extends Base {
   getEquip(props: GetEquipProps): Promise<unknown> {
-    return this.request('/equip/info', {
-      method: 'GET',
-      body: JSON.stringify(props),
-    });
+    return this.request('/equip/info' + propsToQueryString(props));
   }
   setEquip = async (props: SetEquipProps): Promise<string> => {
     const response = await this.request<SetEquipResponse>('/equip/new', {

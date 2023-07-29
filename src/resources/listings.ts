@@ -1,5 +1,6 @@
 import { Base } from './base';
 import { GetAppListingsProps, GetCollectionListingsProps, GetUserListingsProps, Listing, CreateListingProps, ListingStatus, UpdateListingProps } from '../types/listing';
+import { propsToQueryString } from 'src/utils/basic-format';
 
 export class Listings extends Base {
   getListing(id: string, status?: ListingStatus): Promise<Listing> {
@@ -10,23 +11,14 @@ export class Listings extends Base {
     return this.request(`/listing/info?listingIds=${ids}`);
   }
   */
-  getUserListings(update: GetUserListingsProps): Promise<Listing[]> {
-    return this.request('/listing/user', {
-      method: 'GET',
-      body: JSON.stringify(update),
-    });
+  getUserListings(props: GetUserListingsProps): Promise<Listing[]> {
+    return this.request('/listing/user' + propsToQueryString(props));
   }
-  getCollectionListings(update: GetCollectionListingsProps): Promise<Listing[]> {
-    return this.request('/listing/collection', {
-      method: 'GET',
-      body: JSON.stringify(update),
-    });
+  getCollectionListings(props: GetCollectionListingsProps): Promise<Listing[]> {
+    return this.request('/listing/collection' + propsToQueryString(props));
   }
-  getAppListings(update: GetAppListingsProps): Promise<Listing[]> {
-    return this.request('/listing/app', {
-      method: 'GET',
-      body: JSON.stringify(update),
-    });
+  getAppListings(props: GetAppListingsProps): Promise<Listing[]> {
+    return this.request('/listing/app' + propsToQueryString(props));
   }
   createListing(update: CreateListingProps): Promise<boolean> {
     return this.request('/listing/new', {

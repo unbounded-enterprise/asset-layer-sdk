@@ -1,21 +1,28 @@
 import { Asset } from '../types/asset';
 import { Base } from './base';
 import { Collection, CreateCollectionProps, UpdateCollectionProps } from '../types/collection';
+import { propsToQueryString } from 'src/utils/basic-format';
 
 export class Collections extends Base {
-  getCollection(id: string): Promise<Collection> {
-    return this.request(`/collection/info?collectionId=${id}`);
+  getCollection(collectionId: string): Promise<Collection> {
+    return this.request(`/collection/info?collectionId=${collectionId}`);
   }
-  getCollections(ids: string[]): Promise<Collection[]> {
-    return this.request(`/collection/info?collectionIds=${ids}`);
+  getCollections(collectionIds: string[]): Promise<Collection[]> {
+    return this.request('/collection/info' + propsToQueryString({ collectionIds }));
   }
-  getCollectionAssets(id: string, serials: string = '', idOnly: boolean = false): Promise<Asset[]> {
-    return this.request(`/collection/nfts?collectionId=${id}&serials=${serials}&idOnly=${idOnly}`);
+  getCollectionAssets(collectionId: string, serials: string = '', idOnly: boolean = false): Promise<Asset[]> {
+    return this.request(`/collection/nfts?collectionId=${collectionId}&serials=${serials}&idOnly=${idOnly}`);
   }
   createCollection(update: CreateCollectionProps): Promise<boolean> {
     return this.request('/collection/new', {
       method: 'POST',
       body: JSON.stringify(update),
+    });
+  }
+  updateCollectionImage(collectionId: string, value: string): Promise<boolean> {
+    return this.request('/collection/image', {
+      method: 'POST',
+      body: JSON.stringify({ collectionId, value }),
     });
   }
   updateCollection(update: UpdateCollectionProps): Promise<boolean> {
@@ -34,12 +41,6 @@ export class Collections extends Base {
     return this.request('/collection/deactivate', {
       method: 'PUT',
       body: JSON.stringify({ collectionId }),
-    });
-  }
-  updateCollectionImage(collectionId: string, value: string): Promise<boolean> {
-    return this.request('/collection/image', {
-      method: 'POST',
-      body: JSON.stringify({ collectionId, value }),
     });
   }
 }

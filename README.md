@@ -30,13 +30,13 @@ These instructions will help getting started managing your digital assets with [
 To install and set up the library, run:
 
 ```sh
-$ npm install asset-layer-sdk
+$ npm install @assetlayer/sdk
 ```
 
 Or if you prefer using Yarn:
 
 ```sh
-$ yarn add asset-layer-sdk
+$ yarn add @assetlayer/sdk
 ```
 
 ## Usage
@@ -46,13 +46,13 @@ $ yarn add asset-layer-sdk
 You can reference the SDK in two ways:
 
 ```sh
-import { AssetLayer } from 'asset-layer-sdk';
+import { AssetLayer } from '@assetlayer/sdk';
 ```
 
 OR
 
 ```sh
-const { AssetLayer } = require('asset-layer-sdk');
+const { AssetLayer } = require('@assetlayer/sdk');
 ```
 
 ### Instantiate the SDK

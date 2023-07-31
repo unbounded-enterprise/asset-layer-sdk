@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-unfetch';
+import { BasicError } from 'src/types/basic-types';
 
 const assetlayerUrl = 'https://api.assetlayer.com/api/v1';
 
@@ -33,16 +34,14 @@ export abstract class Base {
       headers,
     };
 
-    return fetch(url, config).then((response:Response) => {
+    return fetch(url, config).then(async (response) => {
       console.log('fetched', url, config, response)
-      if (response.ok) {
-        console.log('fetch ok')
-        return response.json();
-      }
+      const body = await response.json();
 
-      const errorText = `[AssetLayer]: ${response.statusText}`;
-      console.warn(errorText);
-      throw new Error(errorText);
+      if (response.ok) return body;
+
+      console.warn(`[AssetLayer]: ${response.statusText} (${response.status}) // ${body?.message || 'Unknown Error'}`);
+      throw new BasicError((body?.message || 'Unknown Error'), response.status);
     });
   }
 }

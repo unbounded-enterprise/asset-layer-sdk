@@ -35,7 +35,6 @@ export abstract class Base {
     };
 
     return fetch(url, config).then(async (response) => {
-      console.log('fetched', url, config, response)
       const body = await response.json();
 
       if (response.ok) return body;

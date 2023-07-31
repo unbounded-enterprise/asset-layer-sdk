@@ -40,7 +40,7 @@ export abstract class Base {
 
       if (response.ok) return body;
 
-      console.warn(`[AssetLayer]: ${response.statusText} (${response.status}) // ${body?.message || 'Unknown Error'}`);
+      console.warn(`[AssetLayer@${endpoint}]: ${response.statusText} (${response.status}) // ${body?.message || 'Unknown Error'}`);
       throw new BasicError((body?.message || 'Unknown Error'), response.status);
     });
   }

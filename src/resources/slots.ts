@@ -1,9 +1,7 @@
 import { Base } from './base';
-import { Collection } from '../types/collection';
-import { GetSlotCollectionsIdsResponse, GetSlotCollectionsProps, GetSlotCollectionsResponse, GetSlotProps, GetSlotResponse, RawSlotsHandlers, SafeSlotsHandlers, Slot } from '../types/slot';
+import { GetSlotCollectionsProps, GetSlotProps, RawSlotsHandlers, SafeSlotsHandlers, Slot } from '../types/slot';
 import { propsToQueryString } from 'src/utils/basic-format';
 import { parseBasicError } from 'src/utils/basic-error';
-import { BasicResult } from 'src/types/basic-types';
 
 export class Slots extends Base {
   getSlot = async (props: GetSlotProps) => ((await this.raw.getSlot(props)).body.slot);

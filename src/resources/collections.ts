@@ -1,8 +1,6 @@
-import { Asset } from '../types/asset';
 import { Base } from './base';
-import { ActivateCollectionProps, Collection, CreateCollectionProps, CreateCollectionResponse, GetCollectionAssetsProps, GetCollectionAssetsResponse, GetCollectionProps, GetCollectionsProps, GetCollectionsResponse, RawCollectionsHandlers, SafeCollectionsHandlers, UpdateCollectionImageProps, UpdateCollectionProps } from '../types/collection';
+import { ActivateCollectionProps, Collection, CreateCollectionProps, GetCollectionAssetsProps, GetCollectionProps, GetCollectionsProps, RawCollectionsHandlers, SafeCollectionsHandlers, UpdateCollectionImageProps, UpdateCollectionProps } from '../types/collection';
 import { propsToQueryString } from 'src/utils/basic-format';
-import { BasicResult, BasicResultError, BasicResultSuccess, BasicSuccessResponse } from 'src/types/basic-types';
 import { parseBasicError } from 'src/utils/basic-error';
 
 export class Collections extends Base {

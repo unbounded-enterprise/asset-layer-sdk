@@ -1,7 +1,5 @@
 import { Base } from './base';
-import { App, GetAppProps, GetAppResponse, GetAppSlotsProps, GetAppSlotsResponse, GetAppsProps, GetAppsResponse, RawAppsHandlers, SafeAppsHandlers } from '../types/app';
-import { Slot } from '../types/slot';
-import { BasicResult } from 'src/types/basic-types';
+import { App, GetAppProps, GetAppSlotsProps, GetAppsProps, RawAppsHandlers, SafeAppsHandlers } from '../types/app';
 import { parseBasicError } from 'src/utils/basic-error';
 import { propsToQueryString } from 'src/utils/basic-format';
 

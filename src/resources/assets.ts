@@ -1,7 +1,6 @@
 import { Base } from './base';
 import { Asset, UpdateAssetProps, GetUserCollectionAssetsProps, GetUserCollectionsAssetsProps, GetUserSlotAssetsProps, GetUserSlotsAssetsProps, GetAssetProps, GetAssetsProps, GetUserAssetsProps, MintAssetsProps, SendAssetProps, SendAssetsProps, SendCollectionAssetsProps, SendLowestAssetProps, SendRandomAssetProps, UpdateAssetsProps, UpdateCollectionAssetsProps, SafeAssetsHandlers, RawAssetsHandlers } from '../types/asset';
 import { propsToQueryString } from 'src/utils/basic-format';
-import { BasicResult, BasicSuccessResponse } from 'src/types/basic-types';
 import { parseBasicError } from 'src/utils/basic-error';
 
 export class Assets extends Base {

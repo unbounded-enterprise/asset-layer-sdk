@@ -66,7 +66,7 @@ const assetlayer = new AssetLayer({
 ### Load an App
 
 ```sh
-const app = await assetlayer.apps.getApp('633b30ca09d1acacd0c50df4');
+const app = await assetlayer.apps.getApp({ appId: '633b30ca09d1acacd0c50df4' });
 ```
 
 ## Development

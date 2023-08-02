@@ -22,3 +22,8 @@ export type BasicResponse<T> = {
   success: boolean;
   body: T;
 }
+
+export type BasicSuccessResponse = {
+  statusCode: number;
+  success: boolean;
+}

@@ -1,25 +1,40 @@
 import { Base } from './base';
 import { Collection } from '../types/collection';
-import { Slot, SlotUpdate } from '../types/slot';
+import { GetSlotCollectionsIdsResponse, GetSlotCollectionsProps, GetSlotCollectionsResponse, GetSlotProps, GetSlotResponse, RawSlotsHandlers, SafeSlotsHandlers, Slot } from '../types/slot';
+import { propsToQueryString } from 'src/utils/basic-format';
+import { parseBasicError } from 'src/utils/basic-error';
+import { BasicResult } from 'src/types/basic-types';
 
 export class Slots extends Base {
-  getSlot(slotId: string): Promise<Slot> {
-    return this.request(`/slot/info?slotId=${slotId}`);
-  }
+  getSlot = async (props: GetSlotProps) => ((await this.raw.getSlot(props)).body.slot);
+  getSlotCollections = async (props: GetSlotCollectionsProps) => ((await this.raw.getSlotCollections(props)).body.slot.collections);
+
   /* does not exist
   getSlots(ids: string[]): Promise<Slot[]> {
     return this.request(`/slot/info?slotIds=${ids}`);
   }
   */
-  getSlotCollections(slotId: string, idOnly: boolean = false, includeDeactivated: boolean = false): Promise<Collection[]> {
-    return this.request(`/slot/collections?slotId=${slotId}&idOnly=${idOnly}&includeDeactivated=${includeDeactivated}`);
-  }
+
   /* exists, not in scope
-  updateSlot(update: SlotUpdate): Promise<boolean> {
+  updateSlot(update: unknown): Promise<boolean> {
     return this.request('/slot/update', {
       method: 'PUT',
       body: JSON.stringify(update),
     });
   }
   */
+
+  raw: RawSlotsHandlers = {
+    getSlot: async (props) => this.request('/slot/info' + propsToQueryString(props)),
+    getSlotCollections: async (props) => this.request('/slot/collections' + propsToQueryString(props)),
+  };
+
+  safe: SafeSlotsHandlers = {
+    getSlot: async (props) => {
+      try { return { result: await this.getSlot(props) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    getSlotCollections: async (props) => {
+      try { return { result: await this.getSlotCollections(props) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+  };
 }

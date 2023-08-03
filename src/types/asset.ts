@@ -52,23 +52,11 @@ export type MintAssetsProps = {
     mintTo?: string;
 }
 
-export type SendAssetProps = {
-    receiver: string;
-    assetId: string;
-    walletUserId?: string;
-}
-
-export type SendAssetsProps = {
-    receiver: string;
-    assetIds: string[];
-    walletUserId?: string;
-}
-
-export type SendCollectionAssetsProps = {
-    receiver: string;
-    collectionId: string;
-    walletUserId?: string;
-}
+type SendAssetBase = { receiver: string; walletUserId?: string; };
+export type SendAssetProps = SendAssetBase & { assetId: string; };
+export type SendAssetsProps = SendAssetBase & { assetIds: string[]; };
+export type SendCollectionAssetsProps = SendAssetBase & { collectionId: string; };
+export type SendAssetAllProps = SendAssetBase & { assetId?: string; assetIds?: string[]; collectionId?: string; };
 
 export type SendLowestAssetProps = {
     receiver: string;

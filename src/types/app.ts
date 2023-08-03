@@ -1,8 +1,8 @@
 import { BasicResponse, BasicResult } from "./basic-types";
 import { Slot } from "./slot";
+import { UserAlias } from "./user";
 
 export type AppStatus = 'active' | 'inactive';
-export type AppWallet = unknown;
 
 export type App = {
     appId: string;
@@ -18,7 +18,7 @@ export type App = {
     createdAt: number;
     updatedAt: number;
     slots: string[];
-    appWallets: AppWallet[];
+    appWallets: UserAlias[];
 };
 
 export type AppWithSlots = Omit<App, 'slots'> & {

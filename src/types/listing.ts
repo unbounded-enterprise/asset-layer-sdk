@@ -67,7 +67,7 @@ type CreateListingBase = {
 export type CreateListingProps = CreateListingBase & { assetId: string; };
 export type CreateListingsProps = CreateListingBase & { assetIds: string[]; };
 export type CreateCollectionListingsProps = CreateListingBase & { collectionId: string; };
-export type CreateListingAllProps = CreateListingBase & { assetId: string; assetIds: string[]; collectionId: string; };
+export type CreateListingAllProps = CreateListingBase & { assetId?: string; assetIds?: string[]; collectionId?: string; };
 
 export type UpdateListingProps = {
     listingId: string;

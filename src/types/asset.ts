@@ -5,8 +5,8 @@ export type Asset = {
   
 };
 
-export type GetAssetProps = { nftId: string; }
-export type GetAssetsProps = { nftIds: string[]; }
+export type GetAssetProps = { assetId: string; }
+export type GetAssetsProps = { assetIds: string[]; }
 
 export type GetUserAssetsProps = {
     handle: string; 
@@ -53,13 +53,13 @@ export type MintAssetsProps = {
 
 export type SendAssetProps = {
     recipientHandle: string;
-    nftId: string;
+    assetId: string;
     handle: string;
 }
 
 export type SendAssetsProps = {
     recipientHandle: string;
-    nftIds: string[];
+    assetIds: string[];
     handle: string;
 }
 
@@ -82,12 +82,12 @@ export type SendRandomAssetProps = {
 }
 
 export type UpdateAssetProps = {
-    nftId: string;
+    assetId: string;
     properties: BasicAnyObject;
 }
 
 export type UpdateAssetsProps = {
-    nftIds: string[];
+    assetIds: string[];
     properties: BasicAnyObject;
 }
 

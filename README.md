@@ -81,8 +81,6 @@ However, it can still throw an error, to fix that we can call the safe handler a
 
 ```js
 const { result: app, error } = await assetlayer.apps.safe.getApp({ appId: '633b30ca09d1acacd0c50df4' });
-
-if (error) console.warn('Error!' + error.message);
 ```
 
 ### Login a User

@@ -64,9 +64,9 @@ type CreateListingBase = {
     liveTime?: number;
     status?: ListingUpdateStatus;
 }
-export type CreateListingProps = CreateListingBase & { nftId: string; }
-export type CreateListingsProps = CreateListingBase & { nftIds: string[]; }
-export type CreateCollectionListingsProps = CreateListingBase & { collectionId: string; }
+export type CreateListingProps = CreateListingBase & { assetId: string; };
+export type CreateListingsProps = CreateListingBase & { assetIds: string[]; };
+export type CreateCollectionListingsProps = CreateListingBase & { collectionId: string; };
 
 export type UpdateListingProps = {
     listingId: string;

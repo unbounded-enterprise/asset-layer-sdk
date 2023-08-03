@@ -40,7 +40,7 @@ export type UpdateExpressionProps = {
 }
 
 export type UpdateAssetExpressionValueProps = {
-    nftId: string;
+    assetId: string;
     expressionAttributeName: string;
     value: string;
     expressionId?: string; // OR
@@ -50,7 +50,7 @@ export type UpdateAssetExpressionValueProps = {
 export type UpdateAssetsExpressionValueProps = {
     expressionAttributeName: string;
     value: string;
-    nftIds?: string; // OR 1
+    assetIds?: string; // OR 1
     collectionId?: string; // OR 1
     expressionId?: string; // OR 2
     expressionName?: string; // OR 2

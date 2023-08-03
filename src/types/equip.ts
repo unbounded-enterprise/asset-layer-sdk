@@ -12,8 +12,8 @@ export type SetEquipResponse = BasicResponse<{ equipId: string; }>;
 
 export type SetEquipProps = {
   slotId: string;
-  nftIdParent: string;
-  nftIdChild: string;
+  assetIdParent: string;
+  assetIdChild: string;
   handle: string;
 }
 

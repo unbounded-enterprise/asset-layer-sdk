@@ -36,6 +36,7 @@ export abstract class Base {
       'Content-Type': 'application/json',
       'appsecret': this.appSecret,
       'didtoken': this.didToken,
+      ...(options?.headers || {}),
     };
     const config = {
       ...options,

@@ -22,11 +22,11 @@ export type GetSlotCollectionsResponse = BasicResponse<{ slot: SlotWithCollectio
 export type GetSlotCollectionsIdsResponse = BasicResponse<{ slot: Slot; }>;
 
 export type RawSlotsHandlers = {
-    getSlot: (props: GetSlotProps) => Promise<GetSlotResponse>;
-    getSlotCollections: (props: GetSlotCollectionsProps) => Promise<GetSlotCollectionsResponse|GetSlotCollectionsIdsResponse>;
+    getSlot: (props: GetSlotProps, headers?: HeadersInit) => Promise<GetSlotResponse>;
+    getSlotCollections: (props: GetSlotCollectionsProps, headers?: HeadersInit) => Promise<GetSlotCollectionsResponse|GetSlotCollectionsIdsResponse>;
 };
 
 export type SafeSlotsHandlers = {
-    getSlot: (props: GetSlotProps) => Promise<BasicResult<Slot>>;
-    getSlotCollections: (props: GetSlotCollectionsProps) => Promise<BasicResult<Collection[]|string[]>>;
+    getSlot: (props: GetSlotProps, headers?: HeadersInit) => Promise<BasicResult<Slot>>;
+    getSlotCollections: (props: GetSlotCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<Collection[]|string[]>>;
 };

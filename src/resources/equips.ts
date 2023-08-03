@@ -4,25 +4,25 @@ import { propsToQueryString } from 'src/utils/basic-format';
 import { parseBasicError } from 'src/utils/basic-error';
 
 export class Equips extends Base {
-  getEquips = async (props: GetEquipsProps) => { return (await this.raw.getEquips(props)).body.equip; }
-  setEquip = async (props: SetEquipProps) => { return (await this.raw.setEquip(props)).body.equipId; }
-  removeEquip = async (props: RemoveEquipProps) => { return (await this.raw.removeEquip(props)).success; }
+  getEquips = async (props: GetEquipsProps, headers?: HeadersInit) => { return (await this.raw.getEquips(props, headers)).body.equip; }
+  setEquip = async (props: SetEquipProps, headers?: HeadersInit) => { return (await this.raw.setEquip(props, headers)).body.equipId; }
+  removeEquip = async (props: RemoveEquipProps, headers?: HeadersInit) => { return (await this.raw.removeEquip(props, headers)).success; }
 
   raw: RawEquipsHandlers = {
-    getEquips: (props) => this.request('/equip/info' + propsToQueryString(props)),
-    setEquip: (props) => this.request('/equip/new', { method: 'POST', body: JSON.stringify(props) }),
-    removeEquip: (props) => this.request('/equip', { method: 'DELETE', body: JSON.stringify(props) }),
+    getEquips: async (props, headers) => this.request('/equip/info' + propsToQueryString(props), { headers }),
+    setEquip: async (props, headers) => this.request('/equip/new', { method: 'POST', body: JSON.stringify(props), headers }),
+    removeEquip: async (props, headers) => this.request('/equip', { method: 'DELETE', body: JSON.stringify(props), headers }),
   };
 
   safe: SafeEquipsHandlers = {
-    getEquips: async (props) => {
-      try { return { result: await this.getEquips(props) }; }
+    getEquips: async (props, headers) => {
+      try { return { result: await this.getEquips(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    setEquip: async (props) => {
-      try { return { result: await this.setEquip(props) }; }
+    setEquip: async (props, headers) => {
+      try { return { result: await this.setEquip(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    removeEquip: async (props) => {
-      try { return { result: await this.removeEquip(props) }; }
+    removeEquip: async (props, headers) => {
+      try { return { result: await this.removeEquip(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
   }
 }

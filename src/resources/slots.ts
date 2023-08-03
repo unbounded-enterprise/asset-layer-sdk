@@ -4,8 +4,8 @@ import { propsToQueryString } from 'src/utils/basic-format';
 import { parseBasicError } from 'src/utils/basic-error';
 
 export class Slots extends Base {
-  getSlot = async (props: GetSlotProps) => ((await this.raw.getSlot(props)).body.slot);
-  getSlotCollections = async (props: GetSlotCollectionsProps) => ((await this.raw.getSlotCollections(props)).body.slot.collections);
+  getSlot = async (props: GetSlotProps, headers?: HeadersInit) => ((await this.raw.getSlot(props, headers)).body.slot);
+  getSlotCollections = async (props: GetSlotCollectionsProps, headers?: HeadersInit) => ((await this.raw.getSlotCollections(props, headers)).body.slot.collections);
 
   /* does not exist
   getSlots(ids: string[]): Promise<Slot[]> {
@@ -23,16 +23,16 @@ export class Slots extends Base {
   */
 
   raw: RawSlotsHandlers = {
-    getSlot: async (props) => this.request('/slot/info' + propsToQueryString(props)),
-    getSlotCollections: async (props) => this.request('/slot/collections' + propsToQueryString(props)),
+    getSlot: async (props, headers) => this.request('/slot/info' + propsToQueryString(props), { headers }),
+    getSlotCollections: async (props, headers) => this.request('/slot/collections' + propsToQueryString(props), { headers }),
   };
 
   safe: SafeSlotsHandlers = {
-    getSlot: async (props) => {
-      try { return { result: await this.getSlot(props) }; }
+    getSlot: async (props, headers) => {
+      try { return { result: await this.getSlot(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    getSlotCollections: async (props) => {
-      try { return { result: await this.getSlotCollections(props) }; }
+    getSlotCollections: async (props, headers) => {
+      try { return { result: await this.getSlotCollections(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
   };
 }

@@ -47,13 +47,13 @@ export type GetAppSlotsResponse = BasicResponse<{ app: AppWithSlots; }>;
 export type GetAppSlotIdsResponse = BasicResponse<{ app: App; }>;
 
 export type RawAppsHandlers = {
-    getApp: (props: GetAppProps) => Promise<GetAppResponse>;
-    getApps: (props: GetAppsProps) => Promise<GetAppsResponse>;
-    getAppSlots: (props: GetAppSlotsProps) => Promise<GetAppSlotsResponse|GetAppSlotIdsResponse>;
+    getApp: (props: GetAppProps, headers?: HeadersInit) => Promise<GetAppResponse>;
+    getApps: (props: GetAppsProps, headers?: HeadersInit) => Promise<GetAppsResponse>;
+    getAppSlots: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<GetAppSlotsResponse|GetAppSlotIdsResponse>;
 };
 
 export type SafeAppsHandlers = {
-    getApp: (props: GetAppProps) => Promise<BasicResult<App>>;
-    getApps: (props: GetAppsProps) => Promise<BasicResult<App[]>>;
-    getAppSlots: (props: GetAppSlotsProps) => Promise<BasicResult<Slot[]|string[]>>;
+    getApp: (props: GetAppProps, headers?: HeadersInit) => Promise<BasicResult<App>>;
+    getApps: (props: GetAppsProps, headers?: HeadersInit) => Promise<BasicResult<App[]>>;
+    getAppSlots: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<BasicResult<Slot[]|string[]>>;
 };

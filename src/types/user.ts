@@ -18,9 +18,9 @@ export type User = {
 export type UserLoginProps = { didToken: string; };
 
 export type RawUsersHandlers = {
-    getUser: () => Promise<BasicResponse<{ user: User; }>>;
+    getUser: (headers?: HeadersInit) => Promise<BasicResponse<{ user: User; }>>;
 };
 
 export type SafeUsersHandlers = {
-    getUser: () => Promise<BasicResult<User>>;
+    getUser: (headers?: HeadersInit) => Promise<BasicResult<User>>;
 };

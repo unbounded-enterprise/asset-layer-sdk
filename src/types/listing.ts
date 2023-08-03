@@ -101,27 +101,27 @@ export type ListingCounts = { [listingId: string]: number };
 export type CreateListingResponse = BasicResponse<{ listing: CreateListingResponseBody; }>;
 
 export type RawListingsHandlers = {
-    getListing: (props: GetListingProps) => Promise<BasicResponse<{ listing: Listing; }>>;
-    getUserListings: (props: GetUserListingsProps) => Promise<BasicResponse<{ listings: Listing[] | ListingCounts; }>>;
-    getCollectionListings: (props: GetCollectionListingsProps) => Promise<BasicResponse<{ listing: Listing[] | ListingCounts; }>>;
-    getAppListings: (props: GetAppListingsProps) => Promise<BasicResponse<{ listing: Listing[] | ListingCounts; }>>;
-    createListing: (props: CreateListingProps) => Promise<CreateListingResponse>;
-    createListings: (props: CreateListingsProps) => Promise<BasicResponse<{ assetIds: string[]; }>>;
-    createCollectionListings: (props: CreateCollectionListingsProps) => Promise<BasicResponse<{ assetIds: string[]; }>>;
-    updateListing: (props: UpdateListingProps) => Promise<BasicSuccessResponse>;
-    buyListing: (props: BuyListingProps) => Promise<BasicResponse<{ buy: boolean; }>>;
-    removeListing: (props: RemoveListingProps) => Promise<BasicSuccessResponse>;
+    getListing: (props: GetListingProps, headers?: HeadersInit) => Promise<BasicResponse<{ listing: Listing; }>>;
+    getUserListings: (props: GetUserListingsProps, headers?: HeadersInit) => Promise<BasicResponse<{ listings: Listing[] | ListingCounts; }>>;
+    getCollectionListings: (props: GetCollectionListingsProps, headers?: HeadersInit) => Promise<BasicResponse<{ listing: Listing[] | ListingCounts; }>>;
+    getAppListings: (props: GetAppListingsProps, headers?: HeadersInit) => Promise<BasicResponse<{ listing: Listing[] | ListingCounts; }>>;
+    createListing: (props: CreateListingProps, headers?: HeadersInit) => Promise<CreateListingResponse>;
+    createListings: (props: CreateListingsProps, headers?: HeadersInit) => Promise<BasicResponse<{ assetIds: string[]; }>>;
+    createCollectionListings: (props: CreateCollectionListingsProps, headers?: HeadersInit) => Promise<BasicResponse<{ assetIds: string[]; }>>;
+    updateListing: (props: UpdateListingProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
+    buyListing: (props: BuyListingProps, headers?: HeadersInit) => Promise<BasicResponse<{ buy: boolean; }>>;
+    removeListing: (props: RemoveListingProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
 };
 
 export type SafeListingsHandlers = {
-    getListing: (props: GetListingProps) => Promise<BasicResult<Listing>>;
-    getUserListings: (props: GetUserListingsProps) => Promise<BasicResult<Listing[] | ListingCounts>>;
-    getCollectionListings: (props: GetCollectionListingsProps) => Promise<BasicResult<Listing[] | ListingCounts>>;
-    getAppListings: (props: GetAppListingsProps) => Promise<BasicResult<Listing[] | ListingCounts>>;
-    createListing: (props: CreateListingProps) => Promise<BasicResult<CreateListingResponseBody>>;
-    createListings: (props: CreateListingsProps) => Promise<BasicResult<string[]>>;
-    createCollectionListings: (props: CreateCollectionListingsProps) => Promise<BasicResult<string[]>>;
-    updateListing: (props: UpdateListingProps) => Promise<BasicResult<boolean>>;
-    buyListing: (props: BuyListingProps) => Promise<BasicResult<boolean>>;
-    removeListing: (props: RemoveListingProps) => Promise<BasicResult<boolean>>;
+    getListing: (props: GetListingProps, headers?: HeadersInit) => Promise<BasicResult<Listing>>;
+    getUserListings: (props: GetUserListingsProps, headers?: HeadersInit) => Promise<BasicResult<Listing[] | ListingCounts>>;
+    getCollectionListings: (props: GetCollectionListingsProps, headers?: HeadersInit) => Promise<BasicResult<Listing[] | ListingCounts>>;
+    getAppListings: (props: GetAppListingsProps, headers?: HeadersInit) => Promise<BasicResult<Listing[] | ListingCounts>>;
+    createListing: (props: CreateListingProps, headers?: HeadersInit) => Promise<BasicResult<CreateListingResponseBody>>;
+    createListings: (props: CreateListingsProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
+    createCollectionListings: (props: CreateCollectionListingsProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
+    updateListing: (props: UpdateListingProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+    buyListing: (props: BuyListingProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+    removeListing: (props: RemoveListingProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
 };

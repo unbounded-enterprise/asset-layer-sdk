@@ -19,13 +19,13 @@ export type SetEquipProps = {
 export type RemoveEquipProps = { equipId: string; };
 
 export type RawEquipsHandlers = {
-  getEquips: (props: GetEquipsProps) => Promise<BasicResponse<{ equip: Equip[]; }>>;
-  setEquip: (props: SetEquipProps) => Promise<SetEquipResponse>;
-  removeEquip: (props: RemoveEquipProps) => Promise<BasicSuccessResponse>;
+  getEquips: (props: GetEquipsProps, headers?: HeadersInit) => Promise<BasicResponse<{ equip: Equip[]; }>>;
+  setEquip: (props: SetEquipProps, headers?: HeadersInit) => Promise<SetEquipResponse>;
+  removeEquip: (props: RemoveEquipProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
 };
 
 export type SafeEquipsHandlers = {
-  getEquips: (props: GetEquipsProps) => Promise<BasicResult<Equip[]>>;
-  setEquip: (props: SetEquipProps) => Promise<BasicResult<string>>;
-  removeEquip: (props: RemoveEquipProps) => Promise<BasicResult<boolean>>;
+  getEquips: (props: GetEquipsProps, headers?: HeadersInit) => Promise<BasicResult<Equip[]>>;
+  setEquip: (props: SetEquipProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
+  removeEquip: (props: RemoveEquipProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
 };

@@ -73,10 +73,10 @@ By default, handlers return the payload and will throw Errors.
 You can get the raw response by calling the raw handler as shown below:
 
 ```js
-const app = await assetlayer.apps.raw.getApp({ appId: '633b30ca09d1acacd0c50df4' });
+const response = await assetlayer.apps.raw.getApp({ appId: '633b30ca09d1acacd0c50df4' });
 ```
 
-The raw handlers can be useful in situations where more data about the response is required.
+The raw handlers can be useful in situations where more data from the response is required.
 However, it can still throw an error, to fix that we can call the safe handler as shown below:
 
 ```js

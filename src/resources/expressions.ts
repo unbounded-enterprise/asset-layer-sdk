@@ -4,32 +4,32 @@ import { propsToQueryString } from 'src/utils/basic-format';
 import { parseBasicError } from 'src/utils/basic-error';
 
 export class Expressions extends Base {
-  // getExpression = async (props: GetExpressionProps) => { return (await this.raw.getExpression(props)).body.expression; }
-  // getExpressions = async (props: GetExpressionsProps) => { return (await this.raw.getExpressions(props)).body.expressions; }
+  // getExpression = async (props: GetExpressionProps, headers?: HeadersInit) => { return (await this.raw.getExpression(props)).body.expression; }
+  // getExpressions = async (props: GetExpressionsProps, headers?: HeadersInit) => { return (await this.raw.getExpressions(props)).body.expressions; }
 
   getExpressionTypes = async () => { return (await this.raw.getExpressionTypes()).body.expressionTypes; }
-  getSlotExpressions = async (props: GetSlotExpressionsProps) => { return (await this.raw.getSlotExpressions(props)).body.expressions; }
-  createExpression = async (props: CreateExpressionProps) => { return (await this.raw.createExpression(props)).body.expressionId; }
-  updateExpression = async (props: UpdateExpressionProps) => { return (await this.raw.updateExpression(props)).success; }
+  getSlotExpressions = async (props: GetSlotExpressionsProps, headers?: HeadersInit) => { return (await this.raw.getSlotExpressions(props, headers)).body.expressions; }
+  createExpression = async (props: CreateExpressionProps, headers?: HeadersInit) => { return (await this.raw.createExpression(props, headers)).body.expressionId; }
+  updateExpression = async (props: UpdateExpressionProps, headers?: HeadersInit) => { return (await this.raw.updateExpression(props, headers)).success; }
 
-  updateAssetExpressionValue = async (props: UpdateAssetExpressionValueProps) => { return (await this.raw.updateAssetExpressionValue(props)).body.expressionValueId; }
-  updateAssetsExpressionValue = async (props: UpdateAssetsExpressionValueProps) => { return (await this.raw.updateAssetsExpressionValue(props)).body.assetIds; }
-  updateCollectionAssetsExpressionValue = async (props: UpdateCollectionAssetsExpressionValueProps) => { return (await this.raw.updateCollectionAssetsExpressionValue(props)).success; }
-  updateBulkExpressionValues = async (props: UpdateBulkExpressionValuesProps) => { return (await this.raw.updateBulkExpressionValues(props)).body.log; }
+  updateAssetExpressionValue = async (props: UpdateAssetExpressionValueProps, headers?: HeadersInit) => { return (await this.raw.updateAssetExpressionValue(props, headers)).body.expressionValueId; }
+  updateAssetsExpressionValue = async (props: UpdateAssetsExpressionValueProps, headers?: HeadersInit) => { return (await this.raw.updateAssetsExpressionValue(props, headers)).body.assetIds; }
+  updateCollectionAssetsExpressionValue = async (props: UpdateCollectionAssetsExpressionValueProps, headers?: HeadersInit) => { return (await this.raw.updateCollectionAssetsExpressionValue(props, headers)).success; }
+  updateBulkExpressionValues = async (props: UpdateBulkExpressionValuesProps, headers?: HeadersInit) => { return (await this.raw.updateBulkExpressionValues(props, headers)).body.log; }
 
   raw: RawExpressionsHandlers = {
-    // getExpression: (props) => this.request('/expression/info' + propsToQueryString(props)),
-    // getExpressions: (props) => this.request('/expression/info' + propsToQueryString(props)),
+    // getExpression: async (props) => this.request('/expression/info' + propsToQueryString(props), { headers }),
+    // getExpressions: async (props) => this.request('/expression/info' + propsToQueryString(props), { headers }),
 
-    getExpressionTypes: () => this.request('slot/expressions/types'),
-    getSlotExpressions: (props) => this.request('/slot/expressions' + propsToQueryString(props)),
-    createExpression: (props) => this.request('/slot/expressions/new', { method: 'POST', body: JSON.stringify(props) }),
-    updateExpression: (props) => this.request('slot/expressions/update', { method: 'PUT', body: JSON.stringify(props) }),
+    getExpressionTypes: async () => this.request('slot/expressions/types'),
+    getSlotExpressions: async (props, headers) => this.request('/slot/expressions' + propsToQueryString(props), { headers }),
+    createExpression: async (props, headers) => this.request('/slot/expressions/new', { method: 'POST', body: JSON.stringify(props), headers }),
+    updateExpression: async (props, headers) => this.request('slot/expressions/update', { method: 'PUT', body: JSON.stringify(props), headers }),
 
-    updateAssetExpressionValue: (props) => this.request('/asset/expressionValues', { method: 'POST', body: JSON.stringify(props) }),
-    updateAssetsExpressionValue: (props) => this.request('/asset/expressionValues', { method: 'POST', body: JSON.stringify(props) }),
-    updateCollectionAssetsExpressionValue: (props) => this.request('/asset/expressionValues', { method: 'POST', body: JSON.stringify(props) }),
-    updateBulkExpressionValues: (props) => this.request('/asset/expressionValuesBulk', { method: 'POST', body: JSON.stringify(props) }),
+    updateAssetExpressionValue: async (props, headers) => this.request('/asset/expressionValues', { method: 'POST', body: JSON.stringify(props), headers }),
+    updateAssetsExpressionValue: async (props, headers) => this.request('/asset/expressionValues', { method: 'POST', body: JSON.stringify(props), headers }),
+    updateCollectionAssetsExpressionValue: async (props, headers) => this.request('/asset/expressionValues', { method: 'POST', body: JSON.stringify(props), headers }),
+    updateBulkExpressionValues: async (props, headers) => this.request('/asset/expressionValuesBulk', { method: 'POST', body: JSON.stringify(props), headers }),
   };
 
   safe: SafeExpressionsHandlers = {
@@ -43,27 +43,27 @@ export class Expressions extends Base {
     getExpressionTypes: async () => {
       try { return { result: await this.getExpressionTypes() }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    getSlotExpressions: async (props) => {
-      try { return { result: await this.getSlotExpressions(props) }; }
+    getSlotExpressions: async (props, headers) => {
+      try { return { result: await this.getSlotExpressions(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    createExpression: async (props) => {
-      try { return { result: await this.createExpression(props) }; }
+    createExpression: async (props, headers) => {
+      try { return { result: await this.createExpression(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    updateExpression: async (props) => {
-      try { return { result: await this.updateExpression(props) }; }
+    updateExpression: async (props, headers) => {
+      try { return { result: await this.updateExpression(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
 
-    updateAssetExpressionValue: async (props) => {
-      try { return { result: await this.updateAssetExpressionValue(props) }; }
+    updateAssetExpressionValue: async (props, headers) => {
+      try { return { result: await this.updateAssetExpressionValue(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    updateAssetsExpressionValue: async (props) => {
-      try { return { result: await this.updateAssetsExpressionValue(props) }; }
+    updateAssetsExpressionValue: async (props, headers) => {
+      try { return { result: await this.updateAssetsExpressionValue(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-      updateCollectionAssetsExpressionValue: async (props) => {
-      try { return { result: await this.updateCollectionAssetsExpressionValue(props) }; }
+      updateCollectionAssetsExpressionValue: async (props, headers) => {
+      try { return { result: await this.updateCollectionAssetsExpressionValue(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    updateBulkExpressionValues: async (props) => {
-      try { return { result: await this.updateBulkExpressionValues(props) }; }
+    updateBulkExpressionValues: async (props, headers) => {
+      try { return { result: await this.updateBulkExpressionValues(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
   };
 }

@@ -4,60 +4,60 @@ import { propsToQueryString } from 'src/utils/basic-format';
 import { parseBasicError } from 'src/utils/basic-error';
 
 export class Listings extends Base {
-  getListing = async (props: GetListingProps) => ((await this.raw.getListing(props)).body.listing);
-  getUserListings = async (props: GetUserListingsProps) => ((await this.raw.getUserListings(props)).body.listings);
-  getCollectionListings = async (props: GetCollectionListingsProps) => ((await this.raw.getCollectionListings(props)).body.listing);
-  getAppListings = async (props: GetAppListingsProps) => ((await this.raw.getAppListings(props)).body.listing);
-  createListing = async (props: CreateListingProps) => ((await this.raw.createListing(props)).body.listing);
-  createListings = async (props: CreateListingsProps) => ((await this.raw.createListings(props)).body.assetIds);
-  createCollectionListings = async (props: CreateCollectionListingsProps) => ((await this.raw.createCollectionListings(props)).body.assetIds);
-  updateListing = async (props: UpdateListingProps) => ((await this.raw.updateListing(props)).success);
-  buyListing = async (props: BuyListingProps) => ((await this.raw.buyListing(props)).success);
-  removeListing = async (props: RemoveListingProps) => ((await this.raw.removeListing(props)).success);
+  getListing = async (props: GetListingProps, headers?: HeadersInit) => ((await this.raw.getListing(props, headers)).body.listing);
+  getUserListings = async (props: GetUserListingsProps, headers?: HeadersInit) => ((await this.raw.getUserListings(props, headers)).body.listings);
+  getCollectionListings = async (props: GetCollectionListingsProps, headers?: HeadersInit) => ((await this.raw.getCollectionListings(props, headers)).body.listing);
+  getAppListings = async (props: GetAppListingsProps, headers?: HeadersInit) => ((await this.raw.getAppListings(props, headers)).body.listing);
+  createListing = async (props: CreateListingProps, headers?: HeadersInit) => ((await this.raw.createListing(props, headers)).body.listing);
+  createListings = async (props: CreateListingsProps, headers?: HeadersInit) => ((await this.raw.createListings(props, headers)).body.assetIds);
+  createCollectionListings = async (props: CreateCollectionListingsProps, headers?: HeadersInit) => ((await this.raw.createCollectionListings(props, headers)).body.assetIds);
+  updateListing = async (props: UpdateListingProps, headers?: HeadersInit) => ((await this.raw.updateListing(props, headers)).success);
+  buyListing = async (props: BuyListingProps, headers?: HeadersInit) => ((await this.raw.buyListing(props, headers)).success);
+  removeListing = async (props: RemoveListingProps, headers?: HeadersInit) => ((await this.raw.removeListing(props, headers)).success);
 
   raw: RawListingsHandlers = {
-    getListing: async (props) => this.request('/listing/info' + propsToQueryString(props)),
-    getUserListings: async (props) => this.request('/listing/user' + propsToQueryString(props)),
-    getCollectionListings: async (props) => this.request('/listing/collection' + propsToQueryString(props)),
-    getAppListings: async (props) => this.request('/listing/app' + propsToQueryString(props)),
-    createListing: async (props) => this.request('/listing/new', { method: 'PUT', body: JSON.stringify(props) }),
-    createListings: async (props) => this.request('/listing/new', { method: 'PUT', body: JSON.stringify(props) }),
-    createCollectionListings: async (props) => this.request('/listing/new', { method: 'PUT', body: JSON.stringify(props) }),
-    updateListing: async (props) => this.request('/listing/update', { method: 'PUT', body: JSON.stringify(props) }),
-    buyListing: async (props) => this.request('/listing/buy', { method: 'PUT', body: JSON.stringify(props) }),
-    removeListing: async (props) => this.request('/listing', { method: 'DELETE', body: JSON.stringify(props) }),
+    getListing: async (props, headers) => this.request('/listing/info' + propsToQueryString(props), { headers }),
+    getUserListings: async (props, headers) => this.request('/listing/user' + propsToQueryString(props), { headers }),
+    getCollectionListings: async (props, headers) => this.request('/listing/collection' + propsToQueryString(props), { headers }),
+    getAppListings: async (props, headers) => this.request('/listing/app' + propsToQueryString(props), { headers }),
+    createListing: async (props, headers) => this.request('/listing/new', { method: 'PUT', body: JSON.stringify(props), headers }),
+    createListings: async (props, headers) => this.request('/listing/new', { method: 'PUT', body: JSON.stringify(props), headers }),
+    createCollectionListings: async (props, headers) => this.request('/listing/new', { method: 'PUT', body: JSON.stringify(props), headers }),
+    updateListing: async (props, headers) => this.request('/listing/update', { method: 'PUT', body: JSON.stringify(props), headers }),
+    buyListing: async (props, headers) => this.request('/listing/buy', { method: 'PUT', body: JSON.stringify(props), headers }),
+    removeListing: async (props, headers) => this.request('/listing', { method: 'DELETE', body: JSON.stringify(props), headers }),
   };
 
   safe: SafeListingsHandlers = {
-    getListing: async (props) => {
-      try { return { result: await this.getListing(props) }; }
+    getListing: async (props, headers) => {
+      try { return { result: await this.getListing(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    getUserListings: async (props) => {
-      try { return { result: await this.getUserListings(props) }; }
+    getUserListings: async (props, headers) => {
+      try { return { result: await this.getUserListings(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    getCollectionListings: async (props) => {
-      try { return { result: await this.getCollectionListings(props) }; }
+    getCollectionListings: async (props, headers) => {
+      try { return { result: await this.getCollectionListings(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    getAppListings: async (props) => {
-      try { return { result: await this.getAppListings(props) }; }
+    getAppListings: async (props, headers) => {
+      try { return { result: await this.getAppListings(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    createListing: async (props) => {
-      try { return { result: await this.createListing(props) }; }
+    createListing: async (props, headers) => {
+      try { return { result: await this.createListing(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    createListings: async (props) => {
-      try { return { result: await this.createListings(props) }; }
+    createListings: async (props, headers) => {
+      try { return { result: await this.createListings(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    createCollectionListings: async (props) => {
-      try { return { result: await this.createCollectionListings(props) }; }
+    createCollectionListings: async (props, headers) => {
+      try { return { result: await this.createCollectionListings(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    updateListing: async (props) => {
-      try { return { result: await this.updateListing(props) }; }
+    updateListing: async (props, headers) => {
+      try { return { result: await this.updateListing(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    buyListing: async (props) => {
-      try { return { result: await this.buyListing(props) }; }
+    buyListing: async (props, headers) => {
+      try { return { result: await this.buyListing(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    removeListing: async (props) => {
-      try { return { result: await this.removeListing(props) }; }
+    removeListing: async (props, headers) => {
+      try { return { result: await this.removeListing(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
   };
 }

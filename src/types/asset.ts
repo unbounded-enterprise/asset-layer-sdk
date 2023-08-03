@@ -95,7 +95,7 @@ export type UpdateCollectionAssetsProps = {
     properties: BasicAnyObject;
 }
 
-export type AssetCounts = { [collectionId: string]: string };
+export type AssetCounts = { [collectionId: string]: number };
 export type SendAssetResponseBody = { to: string; serial: number; assetId: string; };
 export type SendAssetsResponseBody = { to: string; assetIds: string[]; };
 

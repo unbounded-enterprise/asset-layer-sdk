@@ -1,4 +1,4 @@
-import { BasicAnyObject, BasicResponse, BasicResult, BasicSuccessResponse } from "src/types/basic-types";
+import { BasicAnyObject, BasicResponse, BasicResult, BasicUpdatedResponse } from "src/types/basic-types";
 import { Asset } from "./asset";
 
 export type CollectionType = 'Identical' | 'Unique';
@@ -61,10 +61,10 @@ export type RawCollectionsHandlers = {
     getCollections: (props: GetCollectionsProps) => Promise<GetCollectionsResponse>;
     getCollectionAssets: (props: GetCollectionAssetsProps) => Promise<GetCollectionAssetsResponse|GetCollectionAssetIdsResponse>;
     createCollection: (props: CreateCollectionProps) => Promise<CreateCollectionResponse>;
-    updateCollectionImage: (props: UpdateCollectionImageProps) => Promise<BasicSuccessResponse>;
-    updateCollection: (props: UpdateCollectionProps) => Promise<BasicSuccessResponse>;
-    activateCollection: (props: ActivateCollectionProps) => Promise<BasicSuccessResponse>;
-    deactivateCollection: (props: ActivateCollectionProps) => Promise<BasicSuccessResponse>;
+    updateCollectionImage: (props: UpdateCollectionImageProps) => Promise<BasicResponse<{ uploaded: boolean; }>>;
+    updateCollection: (props: UpdateCollectionProps) => Promise<BasicUpdatedResponse>;
+    activateCollection: (props: ActivateCollectionProps) => Promise<BasicUpdatedResponse>;
+    deactivateCollection: (props: ActivateCollectionProps) => Promise<BasicUpdatedResponse>;
 }
 
 export type SafeCollectionsHandlers = {

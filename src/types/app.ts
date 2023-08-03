@@ -2,21 +2,23 @@ import { BasicResponse, BasicResult } from "./basic-types";
 import { Slot } from "./slot";
 
 export type AppStatus = 'active' | 'inactive';
+export type AppWallet = unknown;
 
 export type App = {
     appId: string;
     handcashAppId: string;
     appName: string;
     appImage: string;
-    teamId: string;
-    handle: string;
-    status: AppStatus;
+    appBanner: string;
     description: string;
     url: string;
     autoGrantRead: boolean;
+    teamId: string;
+    status: AppStatus;
     createdAt: number;
     updatedAt: number;
     slots: string[];
+    appWallets: AppWallet[];
 };
 
 export type AppWithSlots = Omit<App, 'slots'> & {

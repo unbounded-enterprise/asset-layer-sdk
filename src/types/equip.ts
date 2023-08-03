@@ -7,17 +7,16 @@ export type Equip = {
   assetIdChild: string;
 };
 
-export type GetEquipsProps = { assetId: string; handle: string; }
+export type GetEquipsProps = { assetId: string; };
 export type SetEquipResponse = BasicResponse<{ equipId: string; }>;
 
 export type SetEquipProps = {
   slotId: string;
   assetIdParent: string;
   assetIdChild: string;
-  handle: string;
 }
 
-export type RemoveEquipProps = { equipId: string; handle: string; }
+export type RemoveEquipProps = { equipId: string; };
 
 export type RawEquipsHandlers = {
   getEquips: (props: GetEquipsProps) => Promise<BasicResponse<{ equip: Equip[]; }>>;

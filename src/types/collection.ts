@@ -25,20 +25,20 @@ export type CreateCollectionProps = {
     slotId: string;
     type: CollectionType;
     maximum: number;
-    handle: string;
     description?: string;
     tags?: string[];
-    royaltyHandle?: string;
+    royaltyRecipient?: string;
     collectionImage?: string;
     collectionBanner?: string;
     properties?: BasicAnyObject;
+    walletUserId?: string;
 }
 
 export type UpdateCollectionProps = {
     collectionId: string;
     description?: string;
     tags?: string[];
-    royaltyHandle?: string;
+    royaltyRecipient?: string;
     collectionImage?: string;
     collectionBanner?: string;
     properties?: BasicAnyObject;

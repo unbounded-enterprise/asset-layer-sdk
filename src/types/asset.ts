@@ -9,14 +9,14 @@ export type GetAssetProps = { assetId: string; }
 export type GetAssetsProps = { assetIds: string[]; }
 
 export type GetUserAssetsProps = {
-    handle: string; 
+    walletUserId?: string;
     idOnly?: boolean; 
     countsOnly?: boolean; 
 }
 
 export type GetUserCollectionAssetsProps = {
     collectionId: string;
-    handle: string;
+    walletUserId?: string;
     serials?: string;
     range?: string;
     idOnly?: boolean;
@@ -25,21 +25,21 @@ export type GetUserCollectionAssetsProps = {
 
 export type GetUserCollectionsAssetsProps = {
     collectionIds: string[];
-    handle: string;
+    walletUserId?: string;
     idOnly?: boolean;
     countsOnly?: boolean;
 }
 
 export type GetUserSlotAssetsProps = {
     slotId: string;
-    handle: string;
+    walletUserId?: string;
     idOnly?: boolean;
     countsOnly?: boolean;
 }
 
 export type GetUserSlotsAssetsProps = {
     slotIds: string[];
-    handle: string;
+    walletUserId?: string;
     includeDeactivated?: boolean;
     idOnly?: boolean;
     countsOnly?: boolean;
@@ -47,38 +47,39 @@ export type GetUserSlotsAssetsProps = {
 
 export type MintAssetsProps = {
     collectionId: string;
-    amount: number;
-    handle: string;
+    number: number;
+    walletUserId?: string;
+    mintTo?: string;
 }
 
 export type SendAssetProps = {
-    recipientHandle: string;
+    receiver: string;
     assetId: string;
-    handle: string;
+    walletUserId?: string;
 }
 
 export type SendAssetsProps = {
-    recipientHandle: string;
+    receiver: string;
     assetIds: string[];
-    handle: string;
+    walletUserId?: string;
 }
 
 export type SendCollectionAssetsProps = {
-    recipientHandle: string;
+    receiver: string;
     collectionId: string;
-    handle: string;
+    walletUserId?: string;
 }
 
 export type SendLowestAssetProps = {
-    recipientHandle: string;
+    receiver: string;
     collectionId: string;
-    handle: string;
+    walletUserId?: string;
 }
 
 export type SendRandomAssetProps = {
-    recipientHandle: string;
+    receiver: string;
     collectionId: string;
-    handle: string;
+    walletUserId?: string;
 }
 
 export type UpdateAssetProps = {

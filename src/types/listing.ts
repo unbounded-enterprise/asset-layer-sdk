@@ -5,7 +5,7 @@ export type ListingStatus = 'deleted' | 'cancelled' | 'active' | 'inactive' | 's
 export type ListingUpdateStatus = 'active' | 'inactive';
 
 export type ListingTXIDs = {
-    initial: string;
+    initial?: string;
     paid?: string;
     payment?: string;
 }
@@ -21,24 +21,24 @@ export type Listing = {
     price: number;
     status: ListingStatus;
     currency: string;
-    txids: ListingTXIDs;
     seller: UserAlias;
-    buyer: UserAlias;
-    soldTime: number;
-    cancelledTime: number;
     createdAt: number;
     updatedAt: number;
+    txids?: ListingTXIDs;
+    buyer?: UserAlias;
+    soldTime?: number;
+    cancelledTime?: number;
 };
 
-export type GetListingProps = { id: string, status?: ListingStatus };
+export type GetListingProps = { listingId: string, status?: ListingStatus };
 
 export type GetUserListingsProps = {
-    handle: string;
     sellerOnly?: boolean;
     buyerOnly?: boolean;
     status?: ListingStatus;
     collectionId?: string;
     countsOnly?: boolean;
+    walletUserId?: string;
 }
 
 export type GetCollectionListingsProps = {
@@ -59,32 +59,32 @@ export type GetAppListingsProps = {
 }
 
 type CreateListingBase = {
-    handle: string;
     price: number;
     liveTime?: number;
     status?: ListingUpdateStatus;
+    walletUserId?: string;
 }
 export type CreateListingProps = CreateListingBase & { assetId: string; };
 export type CreateListingsProps = CreateListingBase & { assetIds: string[]; };
 export type CreateCollectionListingsProps = CreateListingBase & { collectionId: string; };
+export type CreateListingAllProps = CreateListingBase & { assetId: string; assetIds: string[]; collectionId: string; };
 
 export type UpdateListingProps = {
     listingId: string;
-    handle: string;
     price?: number;
     liveTime?: number;
     status?: ListingUpdateStatus;
+    walletUserId?: string;
 }
 
 export type BuyListingProps = {
     listingId: string;
-    handle: string;
     price?: number | string;
 }
 
 export type RemoveListingProps = {
     listingId: string;
-    handle: string;
+    walletUserId?: string;
 }
 
 type CreateListingResponseBody = {

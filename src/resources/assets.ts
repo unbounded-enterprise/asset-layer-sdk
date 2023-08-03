@@ -2,6 +2,7 @@ import { Base } from './base';
 import { Asset, UpdateAssetProps, GetUserCollectionAssetsProps, GetUserCollectionsAssetsProps, GetUserSlotAssetsProps, GetUserSlotsAssetsProps, GetAssetProps, GetAssetsProps, GetUserAssetsProps, MintAssetsProps, SendAssetProps, SendAssetsProps, SendCollectionAssetsProps, SendLowestAssetProps, SendRandomAssetProps, UpdateAssetsProps, UpdateCollectionAssetsProps, SafeAssetsHandlers, RawAssetsHandlers } from '../types/asset';
 import { propsToQueryString } from 'src/utils/basic-format';
 import { parseBasicError } from 'src/utils/basic-error';
+import { UpdateAssetExpressionValueProps, UpdateAssetsExpressionValueProps, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps } from 'src/types/expression';
 
 export class Assets extends Base {
   getAsset = async (props: GetAssetProps) => ((await this.raw.getAsset(props)).body.assets[0]);
@@ -20,6 +21,10 @@ export class Assets extends Base {
   updateAsset = async (props: UpdateAssetProps) => ((await this.raw.updateAsset(props)).body.assetId);
   updateAssets = async (props: UpdateAssetsProps) => ((await this.raw.updateAssets(props)).body.assetIds);
   updateCollectionAssets = async (props: UpdateCollectionAssetsProps) => ((await this.raw.updateCollectionAssets(props)).body.collectionId);
+  updateAssetExpressionValue = async (props: UpdateAssetExpressionValueProps) => { return (await this.raw.updateAssetExpressionValue(props)).body.expressionValueId; }
+  updateAssetsExpressionValue = async (props: UpdateAssetsExpressionValueProps) => { return (await this.raw.updateAssetsExpressionValue(props)).body.assetIds; }
+  updateCollectionAssetsExpressionValue = async (props: UpdateCollectionAssetsExpressionValueProps) => { return (await this.raw.updateCollectionAssetsExpressionValue(props)).success; }
+  updateBulkExpressionValues = async (props: UpdateBulkExpressionValuesProps) => { return (await this.raw.updateBulkExpressionValues(props)).body.log; }
 
   raw: RawAssetsHandlers = {
     getAsset: async (props) => this.request('/nft/info' + propsToQueryString(props)),
@@ -38,6 +43,10 @@ export class Assets extends Base {
     updateAsset: async (props) => this.request('/asset/update', { method: 'PUT', body: JSON.stringify(props) }),
     updateAssets: async (props) => this.request('/asset/update', { method: 'PUT', body: JSON.stringify(props) }),
     updateCollectionAssets: async (props) => this.request('/asset/update', { method: 'PUT', body: JSON.stringify(props) }),
+    updateAssetExpressionValue: (props) => this.request('/asset/expressionValues', { method: 'POST', body: JSON.stringify(props) }),
+    updateAssetsExpressionValue: (props) => this.request('/asset/expressionValues', { method: 'POST', body: JSON.stringify(props) }),
+    updateCollectionAssetsExpressionValue: (props) => this.request('/asset/expressionValues', { method: 'POST', body: JSON.stringify(props) }),
+    updateBulkExpressionValues: (props) => this.request('/asset/expressionValuesBulk', { method: 'POST', body: JSON.stringify(props) }),
   };
 
   safe: SafeAssetsHandlers = {
@@ -88,6 +97,18 @@ export class Assets extends Base {
       catch (e) { return { error: parseBasicError(e) }; } },
     updateCollectionAssets: async (props) => {
       try { return { result: await this.updateCollectionAssets(props) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    updateAssetExpressionValue: async (props) => {
+      try { return { result: await this.updateAssetExpressionValue(props) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    updateAssetsExpressionValue: async (props) => {
+      try { return { result: await this.updateAssetsExpressionValue(props) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    updateCollectionAssetsExpressionValue: async (props) => {
+      try { return { result: await this.updateCollectionAssetsExpressionValue(props) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    updateBulkExpressionValues: async (props) => {
+      try { return { result: await this.updateBulkExpressionValues(props) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
   };
 }

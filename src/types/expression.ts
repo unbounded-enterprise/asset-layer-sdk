@@ -56,7 +56,7 @@ export type UpdateAssetsExpressionValueProps = {
     expressionName?: string; // OR 2
 }
 
-export type UpdateCollectionExpressionValueProps = {
+export type UpdateCollectionAssetsExpressionValueProps = {
     collectionId: string;
     expressionAttributeName: string;
     value: string;
@@ -72,27 +72,31 @@ export type UpdateBulkExpressionValuesProps = {
 export type BulkExpressionValueLog = { filename: string; success: boolean; };
 
 export type RawExpressionsHandlers = {
-    getExpressionTypes: () => Promise<BasicResponse<{ expressionTypes: ExpressionType[]; }>>;
     // getExpression: (props: GetExpressionProps) => Promise<BasicResponse<{ expression: Expression; }>>;
     // getExpressions: (props: GetExpressionsProps) => Promise<BasicResponse<{ expressions: Expression[]; }>>;
+
+    getExpressionTypes: () => Promise<BasicResponse<{ expressionTypes: ExpressionType[]; }>>;
     getSlotExpressions: (props: GetSlotExpressionsProps) => Promise<BasicResponse<{ expressions: Expression[]; }>>;
     createExpression: (props: CreateExpressionProps) => Promise<BasicResponse<{ expressionId: string; }>>;
+    updateExpression: (props: UpdateExpressionProps) => Promise<BasicSuccessResponse>;
+    
     updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps) => Promise<BasicResponse<{ expressionValueId: string; }>>;
     updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps) => Promise<BasicResponse<{ assetIds: string[]; }>>;
-    updateCollectionExpressionValue: (props: UpdateCollectionExpressionValueProps) => Promise<BasicSuccessResponse>;
+    updateCollectionAssetsExpressionValue: (props: UpdateCollectionAssetsExpressionValueProps) => Promise<BasicSuccessResponse>;
     updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps) => Promise<BasicResponse<{ log: BulkExpressionValueLog[]; }>>;
-    updateExpression: (props: UpdateExpressionProps) => Promise<BasicSuccessResponse>;
 };
 
 export type SafeExpressionsHandlers = {
-    getExpressionTypes: () => Promise<BasicResult<ExpressionType[]>>;
     // getExpression: (props: GetExpressionProps) => Promise<BasicResult<Expression>>;
     // getExpressions: (props: GetExpressionsProps) => Promise<BasicResult<Expression[]>>;
+
+    getExpressionTypes: () => Promise<BasicResult<ExpressionType[]>>;
     getSlotExpressions: (props: GetSlotExpressionsProps) => Promise<BasicResult<Expression[]>>;
     createExpression: (props: CreateExpressionProps) => Promise<BasicResult<string>>;
+    updateExpression: (props: UpdateExpressionProps) => Promise<BasicResult<boolean>>;
+    
     updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps) => Promise<BasicResult<string>>;
     updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps) => Promise<BasicResult<string[]>>;
-    updateCollectionExpressionValue: (props: UpdateCollectionExpressionValueProps) => Promise<BasicResult<boolean>>;
+    updateCollectionAssetsExpressionValue: (props: UpdateCollectionAssetsExpressionValueProps) => Promise<BasicResult<boolean>>;
     updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps) => Promise<BasicResult<BulkExpressionValueLog[]>>;
-    updateExpression: (props: UpdateExpressionProps) => Promise<BasicResult<boolean>>;
 };

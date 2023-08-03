@@ -1,25 +1,33 @@
 import fetch from 'isomorphic-unfetch';
 import { BasicError } from 'src/types/basic-types';
+import { UserLoginProps } from 'src/types/user';
 
-const assetlayerUrl = 'https://api.assetlayer.com/api/v1';
+const assetlayerUrl = 'https://api-v2.assetlayer.com/api/v1';
 
 type Config = {
   baseUrl?: string;
   appSecret?: string;
-  userToken?: string;
+  didToken?: string;
 };
 
 export abstract class Base {
   private baseUrl: string;
   private appSecret: string;
-  private userToken: string;
+  private didToken: string;
 
   constructor(config: Config) {
-    if (!config.appSecret && !config.userToken) console.warn('No appSecret or userToken provided');
+    if (!config.appSecret) console.warn('No appSecret provided');
 
     this.baseUrl = config.baseUrl || assetlayerUrl;
     this.appSecret = config.appSecret || '';
-    this.userToken = config.userToken || '';
+    this.didToken = config.didToken || '';
+  }
+
+  protected loginUser(props: UserLoginProps) {
+    this.didToken = props.didToken;
+  }
+  protected logoutUser() {
+    this.didToken = '';
   }
 
   protected request<T>(endpoint: string, options?: RequestInit): Promise<T> {
@@ -27,7 +35,7 @@ export abstract class Base {
     const headers = {
       'Content-Type': 'application/json',
       'appsecret': this.appSecret,
-      'usertoken': this.userToken,
+      'didtoken': this.didToken,
     };
     const config = {
       ...options,

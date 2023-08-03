@@ -1,4 +1,5 @@
 import { BasicAnyObject, BasicResponse, BasicResult, BasicSuccessResponse } from "src/types/basic-types";
+import { BulkExpressionValueLog, UpdateAssetExpressionValueProps, UpdateAssetsExpressionValueProps, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps } from "./expression";
 
 export type Asset = {
   
@@ -125,6 +126,10 @@ export type RawAssetsHandlers = {
     updateAsset: (props: UpdateAssetProps) => Promise<UpdateAssetResponse>;
     updateAssets: (props: UpdateAssetsProps) => Promise<UpdateAssetsResponse>;
     updateCollectionAssets: (props: UpdateCollectionAssetsProps) => Promise<UpdateCollectionAssetsResponse>;
+    updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps) => Promise<BasicResponse<{ expressionValueId: string; }>>;
+    updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps) => Promise<BasicResponse<{ assetIds: string[]; }>>;
+    updateCollectionAssetsExpressionValue: (props: UpdateCollectionAssetsExpressionValueProps) => Promise<BasicSuccessResponse>;
+    updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps) => Promise<BasicResponse<{ log: BulkExpressionValueLog[]; }>>;
 };
 
 export type SafeAssetsHandlers = {
@@ -144,4 +149,8 @@ export type SafeAssetsHandlers = {
     updateAsset: (props: UpdateAssetProps) => Promise<BasicResult<string>>;
     updateAssets: (props: UpdateAssetsProps) => Promise<BasicResult<string[]>>;
     updateCollectionAssets: (props: UpdateCollectionAssetsProps) => Promise<BasicResult<string>>;
+    updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps) => Promise<BasicResult<string>>;
+    updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps) => Promise<BasicResult<string[]>>;
+    updateCollectionAssetsExpressionValue: (props: UpdateCollectionAssetsExpressionValueProps) => Promise<BasicResult<boolean>>;
+    updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps) => Promise<BasicResult<BulkExpressionValueLog[]>>;
 };

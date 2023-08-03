@@ -49,7 +49,7 @@ type UpdateExpressionValueBase = {
 export type UpdateAssetExpressionValueProps = UpdateExpressionValueBase & { assetId: string; };
 export type UpdateAssetsExpressionValueProps = UpdateExpressionValueBase & { assetIds: string[]; };
 export type UpdateCollectionAssetsExpressionValueProps = UpdateExpressionValueBase & { collectionId: string; };
-export type UpdateAssetExpressionValueAllProps = UpdateExpressionValueBase & { assetId?: string; assetIds?: string; collectionId?: string; };
+export type UpdateAssetExpressionValueAllProps = UpdateExpressionValueBase & { assetId?: string; assetIds?: string[]; collectionId?: string; };
 export type UpdateBulkExpressionValuesProps = { collectionId: string; value: string; };
 
 export type BulkExpressionValueLog = { filename: string; success: boolean; };

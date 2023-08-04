@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "isomorphic-unfetch": "^4.0.2",
+    "magic-sdk": "^19.0.0",
     "typescript": "^5.1.6"
   },
   "devDependencies": {

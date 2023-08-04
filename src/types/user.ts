@@ -15,7 +15,7 @@ export type User = {
     updatedAt: number;
 };
 
-export type UserLoginProps = { didToken: string; };
+export type UserLoginProps = { email: string; };
 
 export type RawUsersHandlers = {
     getUser: (headers?: HeadersInit) => Promise<BasicResponse<{ user: User; }>>;

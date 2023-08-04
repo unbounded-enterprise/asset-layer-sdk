@@ -1,8 +1,10 @@
 import fetch from 'isomorphic-unfetch';
 import { BasicError } from 'src/types/basic-types';
 import { UserLoginProps } from 'src/types/user';
+import { Magic } from 'magic-sdk';
 
 const assetlayerUrl = 'https://api-v2.assetlayer.com/api/v1';
+const magic = new Magic('pk_live_D596D657B2C81119');
 
 type Config = {
   baseUrl?: string;
@@ -23,11 +25,32 @@ export abstract class Base {
     this.didToken = config.didToken || '';
   }
 
-  protected loginUser(props: UserLoginProps) {
-    this.didToken = props.didToken;
+  async loginUser(props: UserLoginProps) {
+    try {
+      const magicHandler = magic.auth.loginWithEmailOTP({ email: props.email });
+
+      magicHandler
+        .on('done', (result: string | null) => {
+          console.log('diddone', result);
+          this.didToken = result || '';
+        })
+        .on('error', (reason: string) => {
+          console.warn('[Magic]:', reason);
+        })
+    }
+    catch (e) {
+      console.warn('login err');
+    }
   }
-  protected logoutUser() {
-    this.didToken = '';
+  async logoutUser() {
+    try {
+      await magic.user.logout();
+    
+      this.didToken = '';
+    
+    } catch {
+      console.warn('logout err');
+    }
   }
 
   protected request<T>(endpoint: string, options?: RequestInit): Promise<T> {

@@ -46,11 +46,14 @@ type UpdateExpressionValueBase = {
     expressionName?: string; // OR
 }
 
+export type UpdateExpressionValuesProps = UpdateExpressionValueBase & { assetId?: string; assetIds?: string[]; collectionId?: string; };
 export type UpdateAssetExpressionValueProps = UpdateExpressionValueBase & { assetId: string; };
 export type UpdateAssetsExpressionValueProps = UpdateExpressionValueBase & { assetIds: string[]; };
 export type UpdateCollectionAssetsExpressionValueProps = UpdateExpressionValueBase & { collectionId: string; };
-export type UpdateAssetExpressionValueAllProps = UpdateExpressionValueBase & { assetId?: string; assetIds?: string[]; collectionId?: string; };
 export type UpdateBulkExpressionValuesProps = { collectionId: string; value: string; };
+
+export type UpdateAssetExpressionValueResponse = BasicResponse<{ expressionValueId: string; }>;
+export type UpdateAssetsExpressionValueResponse = BasicResponse<{ assetIds: string[]; }>;
 
 export type BulkExpressionValueLog = { filename: string; success: boolean; };
 
@@ -63,8 +66,9 @@ export type RawExpressionsHandlers = {
     createExpression: (props: CreateExpressionProps, headers?: HeadersInit) => Promise<BasicResponse<{ expressionId: string; }>>;
     updateExpression: (props: UpdateExpressionProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
     
-    updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit) => Promise<BasicResponse<{ expressionValueId: string; }>>;
-    updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicResponse<{ assetIds: string[]; }>>;
+    updateExpressionValues: (props: UpdateExpressionValuesProps, headers?: HeadersInit) => Promise<UpdateAssetExpressionValueResponse|UpdateAssetsExpressionValueResponse|BasicSuccessResponse>;
+    updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit) => Promise<UpdateAssetExpressionValueResponse>;
+    updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps, headers?: HeadersInit) => Promise<UpdateAssetsExpressionValueResponse>;
     updateCollectionAssetsExpressionValue: (props: UpdateCollectionAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
     updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps, headers?: HeadersInit) => Promise<BasicResponse<{ log: BulkExpressionValueLog[]; }>>;
 };
@@ -78,6 +82,7 @@ export type SafeExpressionsHandlers = {
     createExpression: (props: CreateExpressionProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
     updateExpression: (props: UpdateExpressionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
     
+    updateExpressionValues: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<string|string[]|boolean>>;
     updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
     updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
     updateCollectionAssetsExpressionValue: (props: UpdateCollectionAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;

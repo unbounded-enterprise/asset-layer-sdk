@@ -1,5 +1,5 @@
 import { BasicAnyObject, BasicResponse, BasicResult, BasicSuccessResponse } from "src/types/basic-types";
-import { BulkExpressionValueLog, UpdateAssetExpressionValueProps, UpdateAssetsExpressionValueProps, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps } from "./expression";
+import { BulkExpressionValueLog, UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from "./expression";
 
 export type Asset = {
   
@@ -107,6 +107,7 @@ export type RawAssetsHandlers = {
     getUserSlotAssets: (props: GetUserSlotAssetsProps, headers?: HeadersInit) => Promise<GetAssetsResponse|GetAssetIdsResponse|GetAssetCountsResponse>;
     getUserSlotsAssets: (props: GetUserSlotsAssetsProps, headers?: HeadersInit) => Promise<GetAssetsResponse|GetAssetIdsResponse|GetAssetCountsResponse>;
     mintAssets: (props: MintAssetsProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
+    send: (props: SendAssetAllProps, headers?: HeadersInit) => Promise<SendAssetResponse|SendAssetsResponse>;
     sendAsset: (props: SendAssetProps, headers?: HeadersInit) => Promise<SendAssetResponse>;
     sendAssets: (props: SendAssetsProps, headers?: HeadersInit) => Promise<SendAssetsResponse>;
     sendCollectionAssets: (props: SendCollectionAssetsProps, headers?: HeadersInit) => Promise<SendAssetsResponse>;
@@ -115,8 +116,10 @@ export type RawAssetsHandlers = {
     updateAsset: (props: UpdateAssetProps, headers?: HeadersInit) => Promise<UpdateAssetResponse>;
     updateAssets: (props: UpdateAssetsProps, headers?: HeadersInit) => Promise<UpdateAssetsResponse>;
     updateCollectionAssets: (props: UpdateCollectionAssetsProps, headers?: HeadersInit) => Promise<UpdateCollectionAssetsResponse>;
-    updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit) => Promise<BasicResponse<{ expressionValueId: string; }>>;
-    updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicResponse<{ assetIds: string[]; }>>;
+
+    updateExpressionValues: (props: UpdateExpressionValuesProps, headers?: HeadersInit) => Promise<UpdateAssetExpressionValueResponse|UpdateAssetsExpressionValueResponse|BasicSuccessResponse>;
+    updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit) => Promise<UpdateAssetExpressionValueResponse>;
+    updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps, headers?: HeadersInit) => Promise<UpdateAssetsExpressionValueResponse>;
     updateCollectionAssetsExpressionValue: (props: UpdateCollectionAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
     updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps, headers?: HeadersInit) => Promise<BasicResponse<{ log: BulkExpressionValueLog[]; }>>;
 };
@@ -130,6 +133,7 @@ export type SafeAssetsHandlers = {
     getUserSlotAssets: (props: GetUserSlotAssetsProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]|string[]|AssetCounts>>;
     getUserSlotsAssets: (props: GetUserSlotsAssetsProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]|string[]|AssetCounts>>;
     mintAssets: (props: MintAssetsProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+    send: (props: SendAssetAllProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetResponseBody|SendAssetsResponseBody>>;
     sendAsset: (props: SendAssetProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetResponseBody>>;
     sendAssets: (props: SendAssetsProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetsResponseBody>>;
     sendCollectionAssets: (props: SendCollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetsResponseBody>>;
@@ -138,6 +142,8 @@ export type SafeAssetsHandlers = {
     updateAsset: (props: UpdateAssetProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
     updateAssets: (props: UpdateAssetsProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
     updateCollectionAssets: (props: UpdateCollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
+
+    updateExpressionValues: (props: UpdateExpressionValuesProps, headers?: HeadersInit) => Promise<BasicResult<string|string[]|boolean>>;
     updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
     updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
     updateCollectionAssetsExpressionValue: (props: UpdateCollectionAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;

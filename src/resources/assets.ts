@@ -1,8 +1,8 @@
 import { Base } from './base';
-import { Asset, UpdateAssetProps, GetUserCollectionAssetsProps, GetUserCollectionsAssetsProps, GetUserSlotAssetsProps, GetUserSlotsAssetsProps, GetAssetProps, GetAssetsProps, GetUserAssetsProps, MintAssetsProps, SendAssetProps, SendAssetsProps, SendCollectionAssetsProps, SendLowestAssetProps, SendRandomAssetProps, UpdateAssetsProps, UpdateCollectionAssetsProps, SafeAssetsHandlers, RawAssetsHandlers } from '../types/asset';
+import { Asset, UpdateAssetProps, GetUserCollectionAssetsProps, GetUserCollectionsAssetsProps, GetUserSlotAssetsProps, GetUserSlotsAssetsProps, GetAssetProps, GetAssetsProps, GetUserAssetsProps, MintAssetsProps, SendAssetProps, SendAssetsProps, SendCollectionAssetsProps, SendLowestAssetProps, SendRandomAssetProps, UpdateAssetsProps, UpdateCollectionAssetsProps, SafeAssetsHandlers, RawAssetsHandlers, SendAssetAllProps } from '../types/asset';
 import { propsToQueryString } from 'src/utils/basic-format';
 import { parseBasicError } from 'src/utils/basic-error';
-import { UpdateAssetExpressionValueProps, UpdateAssetsExpressionValueProps, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps } from 'src/types/expression';
+import { UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from 'src/types/expression';
 
 export class Assets extends Base {
   getAsset = async (props: GetAssetProps, headers?: HeadersInit) => ((await this.raw.getAsset(props, headers)).body.assets[0]);
@@ -13,6 +13,7 @@ export class Assets extends Base {
   getUserSlotAssets = async (props: GetUserSlotAssetsProps, headers?: HeadersInit) => ((await this.raw.getUserSlotAssets(props, headers)).body.assets);
   getUserSlotsAssets = async (props: GetUserSlotsAssetsProps, headers?: HeadersInit) => ((await this.raw.getUserSlotsAssets(props, headers)).body.assets);
   mintAssets = async (props: MintAssetsProps, headers?: HeadersInit) => ((await this.raw.mintAssets(props, headers)).success);
+  send = async (props: SendAssetAllProps, headers?: HeadersInit) => ((await this.raw.send(props, headers)).body);
   sendAsset = async (props: SendAssetProps, headers?: HeadersInit) => ((await this.raw.sendAsset(props, headers)).body);
   sendAssets = async (props: SendAssetsProps, headers?: HeadersInit) => ((await this.raw.sendAssets(props, headers)).body);
   sendCollectionAssets = async (props: SendCollectionAssetsProps, headers?: HeadersInit) => ((await this.raw.sendCollectionAssets(props, headers)).body);
@@ -21,6 +22,12 @@ export class Assets extends Base {
   updateAsset = async (props: UpdateAssetProps, headers?: HeadersInit) => ((await this.raw.updateAsset(props, headers)).body.assetId);
   updateAssets = async (props: UpdateAssetsProps, headers?: HeadersInit) => ((await this.raw.updateAssets(props, headers)).body.assetIds);
   updateCollectionAssets = async (props: UpdateCollectionAssetsProps, headers?: HeadersInit) => ((await this.raw.updateCollectionAssets(props, headers)).body.collectionId);
+  updateExpressionValues = async (props: UpdateExpressionValuesProps, headers?: HeadersInit) => { 
+    const response = await this.raw.updateExpressionValues(props, headers);
+    return (props.collectionId) ? response.success 
+      : (props.assetIds) ? (response as UpdateAssetsExpressionValueResponse).body.assetIds 
+      : (response as UpdateAssetExpressionValueResponse).body.expressionValueId; 
+  }
   updateAssetExpressionValue = async (props: UpdateAssetExpressionValueProps, headers?: HeadersInit) => { return (await this.raw.updateAssetExpressionValue(props, headers)).body.expressionValueId; }
   updateAssetsExpressionValue = async (props: UpdateAssetsExpressionValueProps, headers?: HeadersInit) => { return (await this.raw.updateAssetsExpressionValue(props, headers)).body.assetIds; }
   updateCollectionAssetsExpressionValue = async (props: UpdateCollectionAssetsExpressionValueProps, headers?: HeadersInit) => { return (await this.raw.updateCollectionAssetsExpressionValue(props, headers)).success; }
@@ -35,6 +42,7 @@ export class Assets extends Base {
     getUserSlotAssets: async (props, headers) => this.request('/asset/slot' + propsToQueryString(props), { headers }),
     getUserSlotsAssets: async (props, headers) => this.request('/asset/slots' + propsToQueryString(props), { headers }),
     mintAssets: async (props, headers) => this.request('/asset/mint', { method: 'POST', body: JSON.stringify(props), headers }),
+    send: async (props, headers) => this.request('/asset/send', { method: 'POST', body: JSON.stringify(props), headers }),
     sendAsset: async (props, headers) => this.request('/asset/send', { method: 'POST', body: JSON.stringify(props), headers }),
     sendAssets: async (props, headers) => this.request('/asset/send', { method: 'POST', body: JSON.stringify(props), headers }),
     sendCollectionAssets: async (props, headers) => this.request('/asset/send', { method: 'POST', body: JSON.stringify(props), headers }),
@@ -43,6 +51,7 @@ export class Assets extends Base {
     updateAsset: async (props, headers) => this.request('/asset/update', { method: 'PUT', body: JSON.stringify(props), headers }),
     updateAssets: async (props, headers) => this.request('/asset/update', { method: 'PUT', body: JSON.stringify(props), headers }),
     updateCollectionAssets: async (props, headers) => this.request('/asset/update', { method: 'PUT', body: JSON.stringify(props), headers }),
+    updateExpressionValues: async (props, headers) => this.request('/asset/expressionValues', { method: 'POST', body: JSON.stringify(props), headers }),
     updateAssetExpressionValue: (props, headers) => this.request('/asset/expressionValues', { method: 'POST', body: JSON.stringify(props), headers }),
     updateAssetsExpressionValue: (props, headers) => this.request('/asset/expressionValues', { method: 'POST', body: JSON.stringify(props), headers }),
     updateCollectionAssetsExpressionValue: (props, headers) => this.request('/asset/expressionValues', { method: 'POST', body: JSON.stringify(props), headers }),
@@ -74,6 +83,9 @@ export class Assets extends Base {
     mintAssets: async (props, headers) => {
       try { return { result: await this.mintAssets(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
+    send: async (props, headers) => {
+      try { return { result: await this.send(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
     sendAsset: async (props, headers) => {
       try { return { result: await this.sendAsset(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
@@ -97,6 +109,9 @@ export class Assets extends Base {
       catch (e) { return { error: parseBasicError(e) }; } },
     updateCollectionAssets: async (props, headers) => {
       try { return { result: await this.updateCollectionAssets(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    updateExpressionValues: async (props, headers) => {
+      try { return { result: await this.updateExpressionValues(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
     updateAssetExpressionValue: async (props, headers) => {
       try { return { result: await this.updateAssetExpressionValue(props, headers) }; }

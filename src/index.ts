@@ -73,10 +73,8 @@ export class AssetLayer {
           // handle.emit('cancel');
         })
         .on('done', (result) => {
-          alert('Login complete!');
-          
           const didToken = result;
-          console.log('did!', didToken);
+          console.log('did1!', didToken);
           if (!didToken) throw new Error('Invalid DID Token');
 
           async function getOTP() {
@@ -85,11 +83,14 @@ export class AssetLayer {
             if (!otp) throw new Error('Login Failed [otp]');
 
             const did = await magic.user.generateIdToken({ lifespan: 3600, attachment: otp });
+            console.log('did2!', did)
             const { result: registered, error: e2 } = await parent.users.safe.registerDid({ did });
 
             if (!registered) throw new Error('Login Failed [reg]');
 
             parent.didToken = did;
+
+            alert('Login complete!');
           }
 
           getOTP();

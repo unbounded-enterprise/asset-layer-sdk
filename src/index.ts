@@ -59,7 +59,7 @@ export class AssetLayer {
       const email = props.email || event!.data.email;
       console.log('email!', email)
       
-      const magicHandler = magic.auth.loginWithEmailOTP({ email, showUI: props.showUI });
+      const magicHandler = magic.auth.loginWithEmailOTP({ email, /*showUI: props.showUI*/ });
 
       magicHandler
         .on('email-otp-sent', () => {

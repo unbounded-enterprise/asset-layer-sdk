@@ -1,56 +1,25 @@
 import fetch from 'isomorphic-unfetch';
+import { AssetLayer } from 'src';
 import { BasicError } from 'src/types/basic-types';
-import { UserLoginProps } from 'src/types/user';
-import { Magic } from 'magic-sdk';
 
 const assetlayerUrl = 'https://api-v2.assetlayer.com/api/v1';
-const magic = new Magic('pk_live_D596D657B2C81119');
 
 type Config = {
   baseUrl?: string;
   appSecret?: string;
-  didToken?: string;
 };
 
 export abstract class Base {
+  private parent: AssetLayer;
   private baseUrl: string;
   private appSecret: string;
-  private didToken: string;
 
-  constructor(config: Config) {
+  constructor(config: Config, parent: AssetLayer) {
     if (!config.appSecret) console.warn('No appSecret provided');
 
+    this.parent = parent;
     this.baseUrl = config.baseUrl || assetlayerUrl;
     this.appSecret = config.appSecret || '';
-    this.didToken = config.didToken || '';
-  }
-
-  async loginUser(props: UserLoginProps) {
-    try {
-      const magicHandler = magic.auth.loginWithEmailOTP({ email: props.email });
-
-      magicHandler
-        .on('done', (result: string | null) => {
-          console.log('diddone', result);
-          this.didToken = result || '';
-        })
-        .on('error', (reason: string) => {
-          console.warn('[Magic]:', reason);
-        })
-    }
-    catch (e) {
-      console.warn('login err');
-    }
-  }
-  async logoutUser() {
-    try {
-      await magic.user.logout();
-    
-      this.didToken = '';
-    
-    } catch {
-      console.warn('logout err');
-    }
   }
 
   protected request<T>(endpoint: string, options?: RequestInit): Promise<T> {
@@ -58,7 +27,7 @@ export abstract class Base {
     const headers = {
       'Content-Type': 'application/json',
       'appsecret': this.appSecret,
-      'didtoken': this.didToken,
+      'didToken': this.parent.didToken,
       ...(options?.headers || {}),
     };
     const config = {

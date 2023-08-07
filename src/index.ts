@@ -6,6 +6,11 @@ import { Expressions } from './resources/expressions';
 import { Listings } from './resources/listings';
 import { Slots } from './resources/slots';
 import { Users } from './resources/users';
+import { UserLoginProps } from 'src/types/user';
+import { Magic } from 'magic-sdk';
+import assetlayerLoginEmail from './modules/assetlayer-login-email';
+
+const magic = new Magic('pk_live_8FB965353AF0A346');
 
 export type AssetLayerConfig = {
   appSecret: string;
@@ -13,6 +18,8 @@ export type AssetLayerConfig = {
 }
 
 export class AssetLayer {
+  didToken: string;
+
   apps: Apps;
   assets: Assets;
   collections: Collections;
@@ -23,14 +30,116 @@ export class AssetLayer {
   users: Users;
 
   constructor(config: AssetLayerConfig) {
-    this.apps = new Apps(config);
-    this.assets = new Assets(config);
-    this.collections = new Collections(config);
-    this.equips = new Equips(config);
-    this.expressions = new Expressions(config);
-    this.listings = new Listings(config);
-    this.slots = new Slots(config);
-    this.users = new Users(config);
+    this.didToken = '';
+    const parent = this;
+    
+    this.apps = new Apps(config, parent);
+    this.assets = new Assets(config, parent);
+    this.collections = new Collections(config, parent);
+    this.equips = new Equips(config, parent);
+    this.expressions = new Expressions(config, parent);
+    this.listings = new Listings(config, parent);
+    this.slots = new Slots(config, parent);
+    this.users = new Users(config, parent);
+  }
+
+  async loginUser(props: UserLoginProps) {
+    const parent = this;
+
+    function emailHandler(event?: MessageEvent) {
+      if (event) {
+        if ((event.origin !== window.location.origin || event.data.source !== 'assetlayer-login-email-submission')) return;
+      }
+      else if (!props.email) return;
+      
+      window.removeEventListener('message', emailHandler);
+      const frame = document.getElementById('assetlayer-login-iframe');
+      if (frame) document.body.removeChild(frame);
+      
+      const email = props.email || event!.data.email;
+      console.log('email!', email)
+      
+      const magicHandler = magic.auth.loginWithEmailOTP({ email, showUI: props.showUI });
+
+      magicHandler
+        .on('email-otp-sent', () => {
+          const otp = window.prompt('Enter Email OTP');
+
+          if (!otp) throw new Error('Invalid OTP');
+      
+          magicHandler.emit('verify-email-otp', otp);
+        })
+        .on('invalid-email-otp', () => {
+          // handle.emit('cancel');
+        })
+        .on('done', (result) => {
+          alert('Login complete!');
+          
+          const didToken = result;
+          console.log('did!', didToken);
+          if (!didToken) throw new Error('Invalid DID Token');
+
+          async function getOTP() {
+            const { result: otp, error: e1 } = await parent.users.safe.getOTP();
+
+            if (!otp) throw new Error('Login Failed [otp]');
+
+            const did = await magic.user.generateIdToken({ lifespan: 3600, attachment: otp });
+            const { result: registered, error: e2 } = await parent.users.safe.registerDid({ did });
+
+            if (!registered) throw new Error('Login Failed [reg]');
+
+            parent.didToken = did;
+          }
+
+          getOTP();
+          // parent.didToken = didToken;
+          // magic.user.logout();
+        })
+        .on('error', (reason) => {
+          console.error(reason);
+        })
+        .on('settled', () => {
+          
+        }) 
+        .catch((e) => {
+          console.warn('login aborted');
+        })
+    }
+
+    if (props.email) emailHandler(undefined);
+    else {
+      const iframe = document.createElement('iframe');
+      iframe.id = 'assetlayer-login-iframe';
+      iframe.style.position = 'absolute';
+      iframe.style.width = '100vw';
+      iframe.style.height = '100vh';
+      document.body.appendChild(iframe);
+
+      try {
+        const doc = iframe.contentWindow?.document || iframe.contentDocument;
+        if (!doc) throw new Error('err');
+        
+        doc.open();
+        doc.write(assetlayerLoginEmail);
+        doc.close();
+
+        window.addEventListener('message', emailHandler);
+      }
+      catch (e) {
+        console.warn('iFrame error');
+      }
+    }
+  }
+  async logoutUser() {
+    try {
+      await magic.user.logout();
+    
+      this.didToken = '';
+    
+    } catch {
+      console.warn('logout err');
+    }
   }
 }
 

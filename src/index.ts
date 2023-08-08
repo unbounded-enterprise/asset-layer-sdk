@@ -15,7 +15,7 @@ const magic = (typeof window !== 'undefined') ? new Magic('pk_live_8FB965353AF0A
 export type AssetLayerConfig = {
   appSecret?: string;
   baseUrl?: string;
-  setInitialized?: (initialized:boolean) => void;
+  react?: boolean;
 }
 
 export class AssetLayer {
@@ -45,6 +45,12 @@ export class AssetLayer {
     this.slots = new Slots(parent, config);
     this.users = new Users(parent, config);
 
+    if (config?.react) return;
+
+    this.initialize();
+  }
+
+  async initialize(setter?: (initialized: boolean) => void) {
     this.isUserLoggedIn()
       .then(async (isLoggedIn) => {
         if (!isLoggedIn) return;
@@ -61,7 +67,7 @@ export class AssetLayer {
       })
       .then(() => { 
         this.initialized = true;
-        if (config?.setInitialized) config.setInitialized(true);
+        if (setter) setter(true);
       });
   }
 

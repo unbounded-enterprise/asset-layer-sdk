@@ -49,7 +49,8 @@ export class AssetLayer {
   }
 
   async initialize(setter?: (initialized: boolean) => void) {
-    await this.loginUser();
+    const didToken = await this.getUserDidToken();
+    if (didToken) await this.loginUser({ didToken });
 
     this.initialized = true;
     if (setter) setter(true);

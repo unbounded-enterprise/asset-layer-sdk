@@ -21,7 +21,7 @@ export type RegisterUserResponseBody = {
     handle: string;
 }
 
-export type UserLoginProps = { email?: string; showUI?: boolean; };
+export type UserLoginProps = { email?: string; didToken?: string; showUI?: boolean; };
 export type RegisterUserProps = { otp?: string };
 export type RegisterDidProps = { otp: string };
 

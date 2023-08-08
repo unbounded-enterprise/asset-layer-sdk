@@ -15,9 +15,11 @@ const magic = (typeof window !== 'undefined') ? new Magic('pk_live_8FB965353AF0A
 export type AssetLayerConfig = {
   appSecret?: string;
   baseUrl?: string;
+  setInitialized?: (initialized:boolean) => void;
 }
 
 export class AssetLayer {
+  initialized: boolean;
   didToken: string;
 
   apps: Apps;
@@ -30,6 +32,7 @@ export class AssetLayer {
   users: Users;
 
   constructor(config?: AssetLayerConfig) {
+    this.initialized = false;
     this.didToken = '';
     const parent = this;
     
@@ -41,6 +44,42 @@ export class AssetLayer {
     this.listings = new Listings(parent, config);
     this.slots = new Slots(parent, config);
     this.users = new Users(parent, config);
+
+    this.isUserLoggedIn()
+      .then(async (isLoggedIn) => {
+        if (!isLoggedIn) return;
+
+        const didToken = await magic!.user.getIdToken();
+        if (didToken) {
+          this.didToken = didToken;
+          const { result: user, error } = await this.users.safe.getUser();
+          console.log('user!', user);
+          if (!user) {
+            // this.loginUser({ didToken })
+          }
+        }
+      })
+      .then(() => { 
+        this.initialized = true;
+        if (config?.setInitialized) config.setInitialized(true);
+      });
+  }
+
+  async isUserLoggedIn() {
+    if (!magic) return undefined;
+
+    const isLoggedIn = await magic.user.isLoggedIn();
+    
+    return isLoggedIn;
+  }
+
+  async getUserMetadata() {
+    if (!magic) return undefined;
+    if (!(await this.isUserLoggedIn())) return undefined;
+
+    const userMetadata = await magic.user.getMetadata();
+
+    return userMetadata;
   }
 
   async loginUser(props?: UserLoginProps) {
@@ -48,8 +87,29 @@ export class AssetLayer {
     const parent = this;
 
     function emailHandler(event?: MessageEvent) {
+      async function register(token: string) {
+        const { result: otp, error: e1 } = await parent.users.safe.getOTP({ didtoken: token! });
+
+        if (!otp) throw new Error('Login Failed [otp]');
+
+        const did = await magic!.user.generateIdToken({ lifespan: 3600, attachment: otp });
+        console.log('did2!', did)
+        const { result: userInfo, error: e2 } = await parent.users.safe.registerDid({ otp }, { didtoken: did });
+
+        if (!userInfo) throw new Error('Login Failed [reg]');
+
+        parent.didToken = did;
+
+        alert('Login complete!');
+      }
+
       if (event) {
         if ((event.origin !== window.location.origin || event.data.source !== 'assetlayer-login-email-submission')) return;
+      }
+      else if (props?.didToken) {
+        register(props.didToken);
+
+        return;
       }
       else if (!props?.email) return;
       
@@ -78,25 +138,7 @@ export class AssetLayer {
           console.log('did1!', didToken);
           if (!didToken) throw new Error('Invalid DID Token');
 
-          async function getOTP() {
-            const { result: otp, error: e1 } = await parent.users.safe.getOTP({ didtoken: didToken! });
-
-            if (!otp) throw new Error('Login Failed [otp]');
-
-            const did = await magic!.user.generateIdToken({ lifespan: 3600, attachment: otp });
-            console.log('did2!', did)
-            const { result: userInfo, error: e2 } = await parent.users.safe.registerDid({ otp }, { didtoken: did });
-
-            if (!userInfo) throw new Error('Login Failed [reg]');
-
-            parent.didToken = did;
-
-            alert('Login complete!');
-          }
-
-          getOTP();
-          // parent.didToken = didToken;
-          // magic.user.logout();
+          register(didToken);
         })
         .on('error', (reason) => {
           console.error(reason);
@@ -109,7 +151,7 @@ export class AssetLayer {
         })
     }
 
-    if (props?.email) emailHandler(undefined);
+    if (props && (props.email || props.didToken)) emailHandler(undefined);
     else {
       const iframe = document.createElement('iframe');
       iframe.id = 'assetlayer-login-iframe';

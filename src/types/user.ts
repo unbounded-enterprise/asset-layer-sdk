@@ -14,23 +14,27 @@ export type User = {
     createdAt: number;
     updatedAt: number;
 };
-export type UserRegisteredBody = {
+export type GetOTPResponseBody = { otp: string; };
+export type RegisterUserResponseBody = {
     _id: string;
     email: string;
     handle: string;
 }
 
 export type UserLoginProps = { email?: string; showUI?: boolean; };
+export type RegisterUserProps = { otp?: string };
 export type RegisterDidProps = { otp: string };
 
 export type RawUsersHandlers = {
     getUser: (headers?: HeadersInit) => Promise<BasicResponse<{ user: User; }>>;
-    getOTP: (headers?: HeadersInit) => Promise<BasicResponse<{ otp: string; }>>;
-    registerDid: (props: RegisterDidProps, headers?: HeadersInit) => Promise<BasicResponse<UserRegisteredBody>>;
+    register: (props?: RegisterUserProps, headers?: HeadersInit) => Promise<BasicResponse<GetOTPResponseBody|RegisterUserResponseBody>>;
+    getOTP: (headers?: HeadersInit) => Promise<BasicResponse<GetOTPResponseBody>>;
+    registerDid: (props: RegisterDidProps, headers?: HeadersInit) => Promise<BasicResponse<RegisterUserResponseBody>>;
 };
 
 export type SafeUsersHandlers = {
     getUser: (headers?: HeadersInit) => Promise<BasicResult<User>>;
+    register: (props?: RegisterUserProps, headers?: HeadersInit) => Promise<BasicResult<string|RegisterUserResponseBody>>;
     getOTP: (headers?: HeadersInit) => Promise<BasicResult<string>>;
-    registerDid: (props: RegisterDidProps, headers?: HeadersInit) => Promise<BasicResult<UserRegisteredBody>>;
+    registerDid: (props: RegisterDidProps, headers?: HeadersInit) => Promise<BasicResult<RegisterUserResponseBody>>;
 };

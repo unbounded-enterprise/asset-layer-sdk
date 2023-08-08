@@ -15,7 +15,7 @@ const magic = (typeof window !== 'undefined') ? new Magic('pk_live_8FB965353AF0A
 export type AssetLayerConfig = {
   appSecret?: string;
   baseUrl?: string;
-  react?: boolean;
+  initialize?: boolean;
 }
 
 export class AssetLayer {
@@ -45,30 +45,14 @@ export class AssetLayer {
     this.slots = new Slots(parent, config);
     this.users = new Users(parent, config);
 
-    if (config?.react) return;
-
-    this.initialize();
+    if (config?.initialize) this.initialize();
   }
 
   async initialize(setter?: (initialized: boolean) => void) {
-    this.isUserLoggedIn()
-      .then(async (isLoggedIn) => {
-        if (!isLoggedIn) return;
+    await this.loginUser();
 
-        const didToken = await magic!.user.getIdToken();
-        if (didToken) {
-          this.didToken = didToken;
-          const { result: user, error } = await this.users.safe.getUser();
-          console.log('user!', user);
-          if (!user) {
-            // this.loginUser({ didToken })
-          }
-        }
-      })
-      .then(() => { 
-        this.initialized = true;
-        if (setter) setter(true);
-      });
+    this.initialized = true;
+    if (setter) setter(true);
   }
 
   async isUserLoggedIn() {
@@ -77,6 +61,14 @@ export class AssetLayer {
     const isLoggedIn = await magic.user.isLoggedIn();
     
     return isLoggedIn;
+  }
+
+  async getUserDidToken() {
+    if (!(await this.isUserLoggedIn())) return undefined;
+
+    const didToken = await magic!.user.getIdToken();
+
+    return didToken;
   }
 
   async getUserMetadata() {
@@ -90,9 +82,16 @@ export class AssetLayer {
 
   async loginUser(props?: UserLoginProps) {
     if (!magic) return;
+    if (!props || !(props.email || props.didToken)) {
+      const didToken = await this.getUserDidToken();
+      if (didToken) {
+        if (!props) props = { didToken };
+        else props.didToken = didToken;
+      }
+    }
     const parent = this;
 
-    function emailHandler(event?: MessageEvent) {
+    async function emailHandler(event?: MessageEvent) {
       async function register(token: string) {
         const { result: otp, error: e1 } = await parent.users.safe.getOTP({ didtoken: token! });
 
@@ -105,15 +104,17 @@ export class AssetLayer {
         if (!userInfo) throw new Error('Login Failed [reg]');
 
         parent.didToken = did;
+        if (!parent.initialized) parent.initialized = true;
 
         alert('Login complete!');
+        if (props?.callback) props.callback();
       }
 
       if (event) {
         if ((event.origin !== window.location.origin || event.data.source !== 'assetlayer-login-email-submission')) return;
       }
       else if (props?.didToken) {
-        register(props.didToken);
+        await register(props.didToken);
 
         return;
       }
@@ -157,7 +158,7 @@ export class AssetLayer {
         })
     }
 
-    if (props && (props.email || props.didToken)) emailHandler(undefined);
+    if (props && (props.email || props.didToken)) await emailHandler(undefined);
     else {
       const iframe = document.createElement('iframe');
       iframe.id = 'assetlayer-login-iframe';

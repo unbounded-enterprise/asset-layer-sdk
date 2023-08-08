@@ -14,6 +14,11 @@ export type User = {
     createdAt: number;
     updatedAt: number;
 };
+export type UserRegisteredBody = {
+    _id: string;
+    email: string;
+    handle: string;
+}
 
 export type UserLoginProps = { email?: string; showUI?: boolean; };
 export type RegisterDidProps = { did: string };
@@ -21,11 +26,11 @@ export type RegisterDidProps = { did: string };
 export type RawUsersHandlers = {
     getUser: (headers?: HeadersInit) => Promise<BasicResponse<{ user: User; }>>;
     getOTP: (headers?: HeadersInit) => Promise<BasicResponse<{ otp: string; }>>;
-    registerDid: (props: RegisterDidProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
+    registerDid: (headers?: HeadersInit) => Promise<BasicResponse<UserRegisteredBody>>;
 };
 
 export type SafeUsersHandlers = {
     getUser: (headers?: HeadersInit) => Promise<BasicResult<User>>;
     getOTP: (headers?: HeadersInit) => Promise<BasicResult<string>>;
-    registerDid: (props: RegisterDidProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+    registerDid: (headers?: HeadersInit) => Promise<BasicResult<UserRegisteredBody>>;
 };

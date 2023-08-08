@@ -25,7 +25,7 @@ export abstract class Base {
     const headers = {
       'Content-Type': 'application/json',
       'appsecret': this.appSecret,
-      'didToken': this.parent.didToken,
+      'didtoken': this.parent.didToken,
       ...(options?.headers || {}),
     };
     const config = {

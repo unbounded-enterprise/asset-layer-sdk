@@ -13,7 +13,7 @@ import assetlayerLoginEmail from './modules/assetlayer-login-email';
 const magic = (typeof window !== 'undefined') ? new Magic('pk_live_8FB965353AF0A346') : undefined;
 
 export type AssetLayerConfig = {
-  appSecret: string;
+  appSecret?: string;
   baseUrl?: string;
 }
 

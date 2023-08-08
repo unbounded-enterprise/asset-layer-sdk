@@ -10,7 +10,7 @@ import { UserLoginProps } from 'src/types/user';
 import { Magic } from 'magic-sdk';
 import assetlayerLoginEmail from './modules/assetlayer-login-email';
 
-const magic = new Magic('pk_live_8FB965353AF0A346');
+const magic = (typeof window !== 'undefined') ? new Magic('pk_live_8FB965353AF0A346') : undefined;
 
 export type AssetLayerConfig = {
   appSecret: string;
@@ -44,6 +44,7 @@ export class AssetLayer {
   }
 
   async loginUser(props: UserLoginProps) {
+    if (!magic) return;
     const parent = this;
 
     function emailHandler(event?: MessageEvent) {
@@ -59,7 +60,7 @@ export class AssetLayer {
       const email = props.email || event!.data.email;
       console.log('email!', email)
       
-      const magicHandler = magic.auth.loginWithEmailOTP({ email, /*showUI: props.showUI*/ });
+      const magicHandler = magic!.auth.loginWithEmailOTP({ email, /*showUI: props.showUI*/ });
 
       magicHandler
         .on('email-otp-sent', () => {
@@ -82,7 +83,7 @@ export class AssetLayer {
 
             if (!otp) throw new Error('Login Failed [otp]');
 
-            const did = await magic.user.generateIdToken({ lifespan: 3600, attachment: otp });
+            const did = await magic!.user.generateIdToken({ lifespan: 3600, attachment: otp });
             console.log('did2!', did)
             const { result: userInfo, error: e2 } = await parent.users.safe.registerDid({ didtoken: did });
 
@@ -133,6 +134,8 @@ export class AssetLayer {
     }
   }
   async logoutUser() {
+    if (!magic) return;
+
     try {
       await magic.user.logout();
     

@@ -21,16 +21,16 @@ export type UserRegisteredBody = {
 }
 
 export type UserLoginProps = { email?: string; showUI?: boolean; };
-export type RegisterDidProps = { did: string };
+export type RegisterDidProps = { otp: string };
 
 export type RawUsersHandlers = {
     getUser: (headers?: HeadersInit) => Promise<BasicResponse<{ user: User; }>>;
     getOTP: (headers?: HeadersInit) => Promise<BasicResponse<{ otp: string; }>>;
-    registerDid: (headers?: HeadersInit) => Promise<BasicResponse<UserRegisteredBody>>;
+    registerDid: (props: RegisterDidProps, headers?: HeadersInit) => Promise<BasicResponse<UserRegisteredBody>>;
 };
 
 export type SafeUsersHandlers = {
     getUser: (headers?: HeadersInit) => Promise<BasicResult<User>>;
     getOTP: (headers?: HeadersInit) => Promise<BasicResult<string>>;
-    registerDid: (headers?: HeadersInit) => Promise<BasicResult<UserRegisteredBody>>;
+    registerDid: (props: RegisterDidProps, headers?: HeadersInit) => Promise<BasicResult<UserRegisteredBody>>;
 };

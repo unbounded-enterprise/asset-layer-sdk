@@ -14,10 +14,10 @@ export abstract class Base {
   private baseUrl: string;
   private appSecret: string;
 
-  constructor(config: Config, parent: AssetLayer) {
+  constructor(parent: AssetLayer, config?: Config) {
     this.parent = parent;
-    this.baseUrl = config.baseUrl || assetlayerUrl;
-    this.appSecret = config.appSecret || '';
+    this.baseUrl = config?.baseUrl || assetlayerUrl;
+    this.appSecret = config?.appSecret || '';
   }
 
   protected request<T>(endpoint: string, options?: RequestInit): Promise<T> {

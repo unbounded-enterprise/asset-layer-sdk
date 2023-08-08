@@ -29,21 +29,21 @@ export class AssetLayer {
   slots: Slots;
   users: Users;
 
-  constructor(config: AssetLayerConfig) {
+  constructor(config?: AssetLayerConfig) {
     this.didToken = '';
     const parent = this;
     
-    this.apps = new Apps(config, parent);
-    this.assets = new Assets(config, parent);
-    this.collections = new Collections(config, parent);
-    this.equips = new Equips(config, parent);
-    this.expressions = new Expressions(config, parent);
-    this.listings = new Listings(config, parent);
-    this.slots = new Slots(config, parent);
-    this.users = new Users(config, parent);
+    this.apps = new Apps(parent, config);
+    this.assets = new Assets(parent, config);
+    this.collections = new Collections(parent, config);
+    this.equips = new Equips(parent, config);
+    this.expressions = new Expressions(parent, config);
+    this.listings = new Listings(parent, config);
+    this.slots = new Slots(parent, config);
+    this.users = new Users(parent, config);
   }
 
-  async loginUser(props: UserLoginProps) {
+  async loginUser(props?: UserLoginProps) {
     if (!magic) return;
     const parent = this;
 
@@ -51,13 +51,13 @@ export class AssetLayer {
       if (event) {
         if ((event.origin !== window.location.origin || event.data.source !== 'assetlayer-login-email-submission')) return;
       }
-      else if (!props.email) return;
+      else if (!props?.email) return;
       
       window.removeEventListener('message', emailHandler);
       const frame = document.getElementById('assetlayer-login-iframe');
       if (frame) document.body.removeChild(frame);
       
-      const email = props.email || event!.data.email;
+      const email = props?.email || event!.data.email;
       console.log('email!', email)
       
       const magicHandler = magic!.auth.loginWithEmailOTP({ email, /*showUI: props.showUI*/ });
@@ -85,7 +85,7 @@ export class AssetLayer {
 
             const did = await magic!.user.generateIdToken({ lifespan: 3600, attachment: otp });
             console.log('did2!', did)
-            const { result: userInfo, error: e2 } = await parent.users.safe.registerDid({ didtoken: did });
+            const { result: userInfo, error: e2 } = await parent.users.safe.registerDid({ otp }, { didtoken: did });
 
             if (!userInfo) throw new Error('Login Failed [reg]');
 
@@ -109,7 +109,7 @@ export class AssetLayer {
         })
     }
 
-    if (props.email) emailHandler(undefined);
+    if (props?.email) emailHandler(undefined);
     else {
       const iframe = document.createElement('iframe');
       iframe.id = 'assetlayer-login-iframe';

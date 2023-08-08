@@ -1,18 +1,18 @@
 {
-  "name": "@assetlayer/sdk",
-  "version": "0.0.1-beta.4.1",
+  "name": "@assetlayer/sdk-client",
+  "version": "0.0.1-beta.1.1",
   "main": "dist/index.js",
   "module": "dist/index.m.js",
   "unpkg": "dist/index.umd.js",
   "types": "dist/index.d.ts",
-  "description": "Manage your assets with the Asset Layer SDK / API",
+  "description": "Manage your assets client-side with the Asset Layer SDK / API",
   "keywords": [],
   "author": "Asset Layer",
   "license": "MIT",
-  "homepage": "https://github.com/unbounded-enterprise/asset-layer-sdk#readme",
+  "homepage": "https://github.com/unbounded-enterprise/asset-layer-sdk/tree/sdk-client#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/unbounded-enterprise/asset-layer-sdk.git"
+    "url": "git+https://github.com/unbounded-enterprise/asset-layer-sdk/tree/sdk-client.git"
   },
   "bugs": {
     "url": "https://github.com/unbounded-enterprise/asset-layer-sdk/issues"

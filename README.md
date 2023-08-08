@@ -59,9 +59,7 @@ const { AssetLayer } = require('@assetlayer/sdk-client');
 ### Instantiate the SDK
 
 ```js
-const assetlayer = new AssetLayer({
-  appSecret: process.env.ASSETLAYER_APP_SECRET,
-});
+const assetlayer = new AssetLayer();
 ```
 
 ### Load an App

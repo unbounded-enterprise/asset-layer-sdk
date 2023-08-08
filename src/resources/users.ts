@@ -9,8 +9,8 @@ export class Users extends Base {
 
   raw: RawUsersHandlers = {
     getUser: async (headers) => this.request('/user/info', { headers }),
-    getOTP: async (headers) => this.request('/user/otp', { headers }),
-    registerDid: async (headers) => this.request('/user/did', { headers }),
+    getOTP: async (headers) => this.request('/user/register', { headers }),
+    registerDid: async (headers) => this.request('/user/register', { headers }),
   };
 
   safe: SafeUsersHandlers = {

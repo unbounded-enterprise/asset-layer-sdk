@@ -15,8 +15,6 @@ export abstract class Base {
   private appSecret: string;
 
   constructor(config: Config, parent: AssetLayer) {
-    if (!config.appSecret) console.warn('No appSecret provided');
-
     this.parent = parent;
     this.baseUrl = config.baseUrl || assetlayerUrl;
     this.appSecret = config.appSecret || '';

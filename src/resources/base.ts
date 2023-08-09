@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-unfetch';
-import { AssetLayer } from 'src';
+import { AssetLayer } from '..';
 import { BasicError } from '../types/basic-types';
 
 const assetlayerUrl = 'https://api-v2.assetlayer.com/api/v1';

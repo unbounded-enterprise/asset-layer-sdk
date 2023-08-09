@@ -12,6 +12,7 @@ import assetlayerLoginEmail from './modules/assetlayer-login-email';
 import { parseBasicError } from './utils/basic-error';
 
 const magic = (typeof window !== 'undefined') ? new Magic('pk_live_8FB965353AF0A346') : undefined;
+let lastTokenGenerated = 0;
 
 export type AssetLayerConfig = {
   appSecret?: string;
@@ -22,6 +23,7 @@ export type AssetLayerConfig = {
 export class AssetLayer {
   initialized: boolean;
   didToken: string;
+  refreshSessionIID?: NodeJS.Timer;
 
   apps: Apps;
   assets: Assets;
@@ -96,21 +98,32 @@ export class AssetLayer {
     async function emailHandler(event?: MessageEvent) {
       async function register(token: string) {
         const { result: otp, error: e1 } = await parent.users.safe.getOTP({ didtoken: token! });
-
         console.log('otp!', otp);
-        if (!otp) throw new Error('Login Failed [otp]');
+        if (!otp) throw new Error('Login Failed [otp]: ' + parseBasicError(e1).message);
 
         const did = await magic!.user.generateIdToken({ lifespan: 3600, attachment: otp });
         console.log('did2!', did)
         const { result: userInfo, error: e2 } = await parent.users.safe.registerDid({ otp }, { didtoken: did });
 
-        if (!userInfo) throw new Error('Login Failed [reg]');
+        if (!userInfo) throw new Error('Login Failed [reg]: ' + parseBasicError(e2).message);
 
+        lastTokenGenerated = Date.now();
         parent.didToken = did;
         if (!parent.initialized) parent.initialized = true;
 
         alert('Login complete!');
         if (props?.callback) props.callback();
+
+        async function refreshSessionHandler() {
+          console.log('refresh time elapsed', Date.now() - lastTokenGenerated);
+          if (Date.now() - lastTokenGenerated < 3000000) return;
+
+          const { result: didToken } = await parent.safe.getUserDidToken();
+          console.log('refresh did!', didToken);
+          if (didToken) await parent.safe.loginUser({ didToken });
+          else if (!((await parent.safe.isUserLoggedIn()).result)) parent.logoutUser();
+        }
+        parent.refreshSessionIID = setInterval(refreshSessionHandler, 300000);
       }
 
       if (event) {
@@ -143,12 +156,12 @@ export class AssetLayer {
         .on('invalid-email-otp', () => {
           // magicHandler.emit('cancel');
         })
-        .on('done', (result) => {
+        .on('done', async (result) => {
           const didToken = result;
           console.log('did1!', didToken);
           if (!didToken) throw new Error('Invalid DID Token');
 
-          register(didToken);
+          await register(didToken);
         })
         .on('error', (reason) => {
           console.error(reason);
@@ -157,7 +170,8 @@ export class AssetLayer {
           
         }) 
         .catch((e) => {
-          console.warn('login aborted');
+          const error = parseBasicError(e);
+          console.warn('login aborted:', error.message);
         })
     }
 
@@ -192,7 +206,7 @@ export class AssetLayer {
       await magic.user.logout();
     
       this.didToken = '';
-    
+      if (this.refreshSessionIID) clearInterval(this.refreshSessionIID);
     } catch {
       console.warn('logout err');
     }

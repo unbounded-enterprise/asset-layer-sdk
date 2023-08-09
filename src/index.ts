@@ -6,9 +6,10 @@ import { Expressions } from './resources/expressions';
 import { Listings } from './resources/listings';
 import { Slots } from './resources/slots';
 import { Users } from './resources/users';
-import { UserLoginProps } from 'src/types/user';
+import { SafeLoginHandlers, UserLoginProps } from 'src/types/user';
 import { Magic } from 'magic-sdk';
 import assetlayerLoginEmail from './modules/assetlayer-login-email';
+import { parseBasicError } from './utils/basic-error';
 
 const magic = (typeof window !== 'undefined') ? new Magic('pk_live_8FB965353AF0A346') : undefined;
 
@@ -96,6 +97,7 @@ export class AssetLayer {
       async function register(token: string) {
         const { result: otp, error: e1 } = await parent.users.safe.getOTP({ didtoken: token! });
 
+        console.log('otp!', otp);
         if (!otp) throw new Error('Login Failed [otp]');
 
         const did = await magic!.user.generateIdToken({ lifespan: 3600, attachment: otp });
@@ -194,6 +196,27 @@ export class AssetLayer {
     } catch {
       console.warn('logout err');
     }
+  }
+
+  safe: SafeLoginHandlers = {
+    initialize: async (setter) => {
+      try { return { result: await this.initialize(setter) } }
+      catch (e) { return { error: parseBasicError(e) } } },
+    isUserLoggedIn: async () => {
+      try { return { result: await this.isUserLoggedIn() } }
+      catch (e) { return { error: parseBasicError(e) } } },
+    getUserDidToken: async () => {
+      try { return { result: await this.getUserDidToken() } }
+      catch (e) { return { error: parseBasicError(e) } } },
+    getUserMetadata: async () => {
+      try { return { result: await this.getUserMetadata() } }
+      catch (e) { return { error: parseBasicError(e) } } },
+    loginUser: async (props) => {
+      try { return { result: await this.loginUser(props) } }
+      catch (e) { return { error: parseBasicError(e) } } },
+    logoutUser: async () => {
+      try { return { result: await this.logoutUser() } }
+      catch (e) { return { error: parseBasicError(e) } } },
   }
 }
 

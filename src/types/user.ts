@@ -38,3 +38,12 @@ export type SafeUsersHandlers = {
     getOTP: (headers?: HeadersInit) => Promise<BasicResult<string>>;
     registerDid: (props: RegisterDidProps, headers?: HeadersInit) => Promise<BasicResult<RegisterUserResponseBody>>;
 };
+
+export type SafeLoginHandlers = {
+    initialize: (setter?: (initialized: boolean) => void) => Promise<BasicResult<void>>;
+    isUserLoggedIn: () => Promise<BasicResult<boolean|undefined>>;
+    getUserDidToken: () => Promise<BasicResult<string|undefined>>;
+    getUserMetadata: () => Promise<BasicResult<any>>;
+    loginUser: (props: UserLoginProps) => Promise<BasicResult<void>>;
+    logoutUser: () => Promise<BasicResult<void>>;
+};

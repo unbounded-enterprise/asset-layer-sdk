@@ -1,3 +1,5 @@
+import { assetlayerLogoDataUrl } from 'src/assets/assetlayer-logo';
+
 const assetlayerLoginEmail = 
 `
 <!DOCTYPE html>
@@ -12,7 +14,7 @@ const assetlayerLoginEmail =
     <div id="login-email-container" style="display: flex; justify-content: center; align-items: center; width: 100vw; height: 100vh;">
       <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 360px; height: 380px; 
           background-color: white; border: 1px solid black; border-radius: 24px; box-shadow: 5px 5px 5px rgba(0,0,0,0.25);">
-        <img src="/assetlayer-logo.png" alt="" crossorigin="anonymous" style="width: 45px; height: 45px;"/>
+        <img src="${assetlayerLogoDataUrl}" alt="" crossorigin="anonymous" style="width: 45px; height: 45px;"/>
         <input id="enter-email-input" type="text" placeholder="Email" style="margin: 80px 0px; padding: 0px 16px; width: 280px; height: 50px; 
           border: 1px solid darkgray; border-radius: 12px"/>
         <button id="submit-email-button" 

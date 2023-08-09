@@ -1,8 +1,8 @@
 import { Base } from './base';
 import { Asset, UpdateAssetProps, GetUserCollectionAssetsProps, GetUserCollectionsAssetsProps, GetUserSlotAssetsProps, GetUserSlotsAssetsProps, GetAssetProps, GetAssetsProps, GetUserAssetsProps, MintAssetsProps, SendAssetProps, SendAssetsProps, SendCollectionAssetsProps, SendLowestAssetProps, SendRandomAssetProps, UpdateAssetsProps, UpdateCollectionAssetsProps, SafeAssetsHandlers, RawAssetsHandlers, SendAssetAllProps } from '../types/asset';
-import { propsToQueryString } from 'src/utils/basic-format';
-import { parseBasicError } from 'src/utils/basic-error';
-import { UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from 'src/types/expression';
+import { propsToQueryString } from '../utils/basic-format';
+import { parseBasicError } from '../utils/basic-error';
+import { UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from '../types/expression';
 
 export class Assets extends Base {
   getAsset = async (props: GetAssetProps, headers?: HeadersInit) => ((await this.raw.getAsset(props, headers)).body.assets[0]);

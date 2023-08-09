@@ -1,7 +1,7 @@
 import { Base } from './base';
 import { Expression, CreateExpressionProps, UpdateExpressionProps, UpdateAssetExpressionValueProps, UpdateAssetsExpressionValueProps, UpdateCollectionAssetsExpressionValueProps, UpdateBulkExpressionValuesProps, GetSlotExpressionsProps, RawExpressionsHandlers, SafeExpressionsHandlers, UpdateExpressionValuesProps, UpdateAssetsExpressionValueResponse, UpdateAssetExpressionValueResponse } from '../types/expression';
-import { propsToQueryString } from 'src/utils/basic-format';
-import { parseBasicError } from 'src/utils/basic-error';
+import { propsToQueryString } from '../utils/basic-format';
+import { parseBasicError } from '../utils/basic-error';
 
 export class Expressions extends Base {
   // getExpression = async (props: GetExpressionProps, headers?: HeadersInit) => { return (await this.raw.getExpression(props)).body.expression; }

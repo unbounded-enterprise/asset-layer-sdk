@@ -1,7 +1,7 @@
 import { Base } from './base';
 import { GetAppListingsProps, GetCollectionListingsProps, GetUserListingsProps, Listing, CreateListingProps, UpdateListingProps, GetListingProps, BuyListingProps, RemoveListingProps, RawListingsHandlers, SafeListingsHandlers, CreateListingsProps, CreateCollectionListingsProps, CreateListingAllProps } from '../types/listing';
-import { propsToQueryString } from 'src/utils/basic-format';
-import { parseBasicError } from 'src/utils/basic-error';
+import { propsToQueryString } from '../utils/basic-format';
+import { parseBasicError } from '../utils/basic-error';
 
 export class Listings extends Base {
   getListing = async (props: GetListingProps, headers?: HeadersInit) => ((await this.raw.getListing(props, headers)).body.listing);

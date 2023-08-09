@@ -1,4 +1,4 @@
-import { BasicError } from "src/types/basic-types";
+import { BasicError } from "../types/basic-types";
 
 export function parseBasicError(error:any, fallbackCode:number = 500): BasicError {
     if (!error) return new BasicError('Unknown Error', fallbackCode);

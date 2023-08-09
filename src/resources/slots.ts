@@ -1,7 +1,7 @@
 import { Base } from './base';
 import { GetSlotCollectionsProps, GetSlotProps, RawSlotsHandlers, SafeSlotsHandlers, Slot } from '../types/slot';
-import { propsToQueryString } from 'src/utils/basic-format';
-import { parseBasicError } from 'src/utils/basic-error';
+import { propsToQueryString } from '../utils/basic-format';
+import { parseBasicError } from '../utils/basic-error';
 
 export class Slots extends Base {
   getSlot = async (props: GetSlotProps, headers?: HeadersInit) => ((await this.raw.getSlot(props, headers)).body.slot);

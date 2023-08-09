@@ -1,6 +1,6 @@
 import { Base } from './base';
 import { GetOTPResponseBody, RawUsersHandlers, RegisterDidProps, RegisterUserProps, RegisterUserResponseBody, SafeUsersHandlers, User } from '../types/user';
-import { parseBasicError } from 'src/utils/basic-error';
+import { parseBasicError } from '../utils/basic-error';
 
 export class Users extends Base {
   getUser = async (headers?: HeadersInit) => { return (await this.raw.getUser(headers)).body.user; }

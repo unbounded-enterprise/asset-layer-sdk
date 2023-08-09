@@ -6,7 +6,7 @@ import { Expressions } from './resources/expressions';
 import { Listings } from './resources/listings';
 import { Slots } from './resources/slots';
 import { Users } from './resources/users';
-import { SafeLoginHandlers, UserLoginProps } from 'src/types/user';
+import { SafeLoginHandlers, UserLoginProps } from './types/user';
 import { Magic } from 'magic-sdk';
 import assetlayerLoginEmail from './modules/assetlayer-login-email';
 import { parseBasicError } from './utils/basic-error';

@@ -1,4 +1,4 @@
-import { BasicAnyObject } from "src/types/basic-types";
+import { BasicAnyObject } from "../types/basic-types";
 
 export function propsToQueryString(props: BasicAnyObject) {
     const params = new URLSearchParams();

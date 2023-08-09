@@ -1,7 +1,7 @@
-import { GetEquipsProps, RawEquipsHandlers, RemoveEquipProps, SafeEquipsHandlers, SetEquipProps, SetEquipResponse } from 'src/types/equip';
+import { GetEquipsProps, RawEquipsHandlers, RemoveEquipProps, SafeEquipsHandlers, SetEquipProps, SetEquipResponse } from '../types/equip';
 import { Base } from './base';
-import { propsToQueryString } from 'src/utils/basic-format';
-import { parseBasicError } from 'src/utils/basic-error';
+import { propsToQueryString } from '../utils/basic-format';
+import { parseBasicError } from '../utils/basic-error';
 
 export class Equips extends Base {
   getEquips = async (props: GetEquipsProps, headers?: HeadersInit) => { return (await this.raw.getEquips(props, headers)).body.equip; }

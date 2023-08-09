@@ -1,4 +1,4 @@
-import { BasicAnyObject, BasicResponse, BasicResult, BasicUpdatedResponse } from "src/types/basic-types";
+import { BasicAnyObject, BasicResponse, BasicResult, BasicUpdatedResponse } from "../types/basic-types";
 import { Asset } from "./asset";
 
 export type CollectionType = 'Identical' | 'Unique';

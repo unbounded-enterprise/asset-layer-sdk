@@ -1,7 +1,7 @@
 import { Base } from './base';
 import { ActivateCollectionProps, Collection, CreateCollectionProps, GetCollectionAssetsProps, GetCollectionProps, GetCollectionsProps, RawCollectionsHandlers, SafeCollectionsHandlers, UpdateCollectionImageProps, UpdateCollectionProps } from '../types/collection';
-import { propsToQueryString } from 'src/utils/basic-format';
-import { parseBasicError } from 'src/utils/basic-error';
+import { propsToQueryString } from '../utils/basic-format';
+import { parseBasicError } from '../utils/basic-error';
 
 export class Collections extends Base {
   getCollection = async (props: GetCollectionProps, headers?: HeadersInit) => ((await this.raw.getCollection(props, headers)).body.collections[0]);

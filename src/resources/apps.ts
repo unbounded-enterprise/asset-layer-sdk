@@ -1,7 +1,7 @@
 import { Base } from './base';
 import { App, GetAppProps, GetAppSlotsProps, GetAppsProps, RawAppsHandlers, SafeAppsHandlers } from '../types/app';
-import { parseBasicError } from 'src/utils/basic-error';
-import { propsToQueryString } from 'src/utils/basic-format';
+import { parseBasicError } from '../utils/basic-error';
+import { propsToQueryString } from '../utils/basic-format';
 
 export class Apps extends Base {
   getApp = async (props: GetAppProps, headers?: HeadersInit) => ((await this.raw.getApp(props, headers)).body.app);

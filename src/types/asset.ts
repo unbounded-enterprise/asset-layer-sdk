@@ -1,4 +1,4 @@
-import { BasicAnyObject, BasicResponse, BasicResult, BasicSuccessResponse } from "src/types/basic-types";
+import { BasicAnyObject, BasicResponse, BasicResult, BasicSuccessResponse } from "../types/basic-types";
 import { BulkExpressionValueLog, UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from "./expression";
 
 export type Asset = {

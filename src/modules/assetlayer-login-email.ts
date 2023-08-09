@@ -1,4 +1,4 @@
-import { assetlayerLogoDataUrl } from 'src/assets/assetlayer-logo';
+import { assetlayerLogoDataUrl } from '../assets/assetlayer-logo';
 
 const assetlayerLoginEmail = 
 `

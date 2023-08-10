@@ -111,7 +111,6 @@ export class AssetLayer {
         parent.didToken = did;
         if (!parent.initialized) parent.initialized = true;
 
-        alert('Login complete!');
         if (props?.callback) props.callback();
 
         async function refreshSessionHandler() {

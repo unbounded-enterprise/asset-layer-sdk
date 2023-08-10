@@ -10,6 +10,16 @@ export type Expression = {
     //description?: string;
 };
 
+export type ExpressionValue = {
+    value: string; // url to content
+    expressionValueId: string;
+    expressionAttribute: ExpressionAttribute;
+    expression: { 
+      expressionId: string, 
+      expressionName: string 
+    };
+}
+
 export type ExpressionType = {
     expressionTypeId: string;
     expressionTypeName: ExpressionAttributeType;

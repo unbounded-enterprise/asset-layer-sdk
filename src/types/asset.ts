@@ -1,8 +1,17 @@
 import { BasicAnyObject, BasicResponse, BasicResult, BasicSuccessResponse } from "../types/basic-types";
-import { BulkExpressionValueLog, UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from "./expression";
+import { BulkExpressionValueLog, ExpressionValue, UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from "./expression";
+import { UserAlias } from "./user";
 
 export type Asset = {
-  
+    assetId: string;
+    serial: number;
+    collectionId: string;
+    collectionName: string;
+    user: UserAlias;
+    createdAt: number;
+    updatedAt: number;
+    properties: BasicAnyObject;
+    expressionValues: ExpressionValue[],
 };
 
 export type GetAssetProps = { assetId: string; }

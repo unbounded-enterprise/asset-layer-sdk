@@ -6,13 +6,13 @@ export type UserRole = { teamId: string; role: UserTeamRole; };
 export type UserAlias = { userId: string; handle: string; };
 export type User = {
     userId: string;
-    name: string;
     email: string;
-    status: UserStatus;
     handle: string;
     roles: UserRole[];
     createdAt: number;
     updatedAt: number;
+    name?: string;
+    status?: UserStatus;
 };
 export type GetOTPResponseBody = { otp: string; };
 export type RegisterUserResponseBody = {

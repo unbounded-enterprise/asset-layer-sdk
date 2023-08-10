@@ -10,8 +10,8 @@ export type Asset = {
     user: UserAlias;
     createdAt: number;
     updatedAt: number;
+    expressionValues: ExpressionValue[];
     properties: BasicAnyObject;
-    expressionValues: ExpressionValue[],
 };
 
 export type GetAssetProps = { assetId: string; }

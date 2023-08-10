@@ -3,11 +3,11 @@ import { BasicResponse, BasicResult, BasicSuccessResponse } from "./basic-types"
 export type ExpressionAttributeType = 'Image' | 'Audio' | 'Video' | 'Spine 4.0';
 
 export type Expression = {
-    //slotId: string;
-    //expressionId: string;
-    //expressionName: string;
-    //expressionType: ExpressionType;
-    //description?: string;
+    slotId: string;
+    expressionId: string;
+    expressionName: string;
+    expressionType: ExpressionType;
+    description?: string;
 };
 
 export type ExpressionValue = {

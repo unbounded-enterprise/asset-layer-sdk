@@ -2,7 +2,18 @@ import { BasicResponse, BasicResult } from "./basic-types";
 import { Collection } from "./collection";
 
 export type Slot = {
+    slotId: string;
+    slotName: string;
+    slotImage: string;
+    description: string;
+    appId: string;
+    acceptingCollections: boolean;
+    isPublic: boolean;
+    collectionTypes: string;
+    createdAt: number;
+    updatedAt: number;
     collections: string[];
+    expressions: string[];
 };
 
 export type SlotWithCollections = Omit<Slot, 'collections'> & {

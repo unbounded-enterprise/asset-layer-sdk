@@ -3,22 +3,28 @@ import { Slot } from "./slot";
 import { UserAlias } from "./user";
 
 export type AppStatus = 'active' | 'inactive';
+export type AppCurrency = {
+    currencyId: string;
+    currencyCode: string;
+    name: string;
+};
 
 export type App = {
     appId: string;
-    handcashAppId: string;
     appName: string;
     appImage: string;
     appBanner: string;
-    description: string;
-    url: string;
-    autoGrantRead: boolean;
     teamId: string;
     status: AppStatus;
     createdAt: number;
     updatedAt: number;
     slots: string[];
     appWallets: UserAlias[];
+    appCurrencies: AppCurrency[];
+    autoGrantRead?: boolean;
+    description?: string;
+    url?: string;
+    handcashAppId?: string;
 };
 
 export type AppWithSlots = Omit<App, 'slots'> & {

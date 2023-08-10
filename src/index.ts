@@ -85,6 +85,7 @@ export class AssetLayer {
   }
 
   async loginUser(props?: UserLoginProps) {
+    console.log('loginprops', props)
     if (!magic) return;
     if (!props || !(props.email || props.didToken)) {
       const didToken = await this.getUserDidToken();
@@ -127,6 +128,10 @@ export class AssetLayer {
 
       if (event) {
         if ((event.origin !== window.location.origin || event.data.source !== 'assetlayer-login-email-submission')) return;
+
+        window.removeEventListener('message', emailHandler);
+        const frame = document.getElementById('assetlayer-login-iframe');
+        if (frame) document.body.removeChild(frame);
       }
       else if (props?.didToken) {
         await register(props.didToken);
@@ -134,10 +139,6 @@ export class AssetLayer {
         return;
       }
       else if (!props?.email) return;
-      
-      window.removeEventListener('message', emailHandler);
-      const frame = document.getElementById('assetlayer-login-iframe');
-      if (frame) document.body.removeChild(frame);
       
       const email = props?.email || event!.data.email;
       console.log('email!', email)

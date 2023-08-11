@@ -1,9 +1,13 @@
 import { Base } from './base';
-import { ActivateCollectionProps, Collection, CreateCollectionProps, GetCollectionAssetsAllProps, GetCollectionAssetsProps, GetCollectionProps, GetCollectionsProps, RawCollectionsHandlers, SafeCollectionsHandlers, UpdateCollectionImageProps, UpdateCollectionProps } from '../types/collection';
+import { ActivateCollectionProps, Collection, CreateCollectionProps, GetCollectionAssetsAllProps, GetCollectionAssetsProps, GetCollectionProps, GetCollectionsAllProps, GetCollectionsProps, RawCollectionsHandlers, SafeCollectionsHandlers, UpdateCollectionImageProps, UpdateCollectionProps } from '../types/collection';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
 
 export class Collections extends Base {
+  info = async (props: GetCollectionsAllProps, headers?: HeadersInit) => {
+    const response = await this.raw.info(props, headers);
+    return (props.collectionIds) ? response.body.collections : response.body.collections[0];
+  };
   getCollection = async (props: GetCollectionProps, headers?: HeadersInit) => ((await this.raw.getCollection(props, headers)).body.collections[0]);
   getCollections = async (props: GetCollectionsProps, headers?: HeadersInit) => ((await this.raw.getCollections(props, headers)).body.collections);
   assets = async (props: GetCollectionAssetsAllProps, headers?: HeadersInit) => ((await this.raw.getCollectionAssets(props, headers)).body.collection.assets);
@@ -16,6 +20,7 @@ export class Collections extends Base {
   deactivateCollection = async (props: ActivateCollectionProps, headers?: HeadersInit) => ((await this.raw.deactivateCollection(props, headers)).success);
 
   raw: RawCollectionsHandlers = {
+    info: async (props, headers) => this.request('/collection/info' + propsToQueryString(props), { headers }),
     getCollection: async (props, headers) => this.request('/collection/info' + propsToQueryString(props), { headers }),
     getCollections: async (props, headers) => this.request('/collection/info' + propsToQueryString(props), { headers }),
     assets: async (props, headers) => this.request('/collection/assets' + propsToQueryString(props), { headers }),
@@ -29,6 +34,9 @@ export class Collections extends Base {
   };
 
   safe: SafeCollectionsHandlers = {
+    info: async (props, headers) => {
+      try { return { result: await this.info(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
     getCollection: async (props, headers) => {
       try { return { result: await this.getCollection(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },

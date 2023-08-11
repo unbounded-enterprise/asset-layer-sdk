@@ -30,6 +30,9 @@ export type App = {
 export type AppWithSlots = Omit<App, 'slots'> & {
     slots: Slot[];
 };
+export type AppWithListingsCount = App & {
+    count: number;
+};
 
 export type UpdateAppProps = {
     appId: string;
@@ -45,21 +48,38 @@ export type UpdateAppProps = {
 
 export type GetAppProps = { appId: string; };
 export type GetAppsProps = { appIds: string[]; };
-export type GetAppSlotsProps = { appId: string; idOnly?: boolean; };
+export type GetAppsAllProps = { appId?: string; appIds?: string[]; };
+export type GetAppSlotsProps = { appId: string; };
+export type GetAppSlotsAllProps = { appId: string; idOnly?: boolean; };
+export type GetAppsWithListingsAllProps = { idOnly?: boolean; };
 
 export type GetAppResponse = BasicResponse<{ app: App; }>;
 export type GetAppsResponse = BasicResponse<{ app: App[]; }>;
 export type GetAppSlotsResponse = BasicResponse<{ app: AppWithSlots; }>;
 export type GetAppSlotIdsResponse = BasicResponse<{ app: App; }>;
+export type GetAppsWithListingsResponse = BasicResponse<{ apps: AppWithListingsCount[]; }>;
+export type GetAppIdsWithListingsResponse = BasicResponse<{ apps: string[]; }>;
 
 export type RawAppsHandlers = {
+    info: (props: GetAppsAllProps, headers?: HeadersInit) => Promise<GetAppResponse|GetAppsResponse>;
     getApp: (props: GetAppProps, headers?: HeadersInit) => Promise<GetAppResponse>;
     getApps: (props: GetAppsProps, headers?: HeadersInit) => Promise<GetAppsResponse>;
-    getAppSlots: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<GetAppSlotsResponse|GetAppSlotIdsResponse>;
+    slots: (props: GetAppSlotsAllProps, headers?: HeadersInit) => Promise<GetAppSlotsResponse|GetAppSlotIdsResponse>;
+    getAppSlots: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<GetAppSlotsResponse>;
+    getAppSlotIds: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<GetAppSlotIdsResponse>;
+    listings: (props: GetAppsWithListingsAllProps, headers?: HeadersInit) => Promise<GetAppsWithListingsResponse|GetAppIdsWithListingsResponse>;
+    getAppsWithListings: (headers?: HeadersInit) => Promise<GetAppsWithListingsResponse>;
+    getAppIdsWithListings: (headers?: HeadersInit) => Promise<GetAppIdsWithListingsResponse>;
 };
 
 export type SafeAppsHandlers = {
+    info: (props: GetAppsAllProps, headers?: HeadersInit) => Promise<BasicResult<App|App[]>>;
     getApp: (props: GetAppProps, headers?: HeadersInit) => Promise<BasicResult<App>>;
     getApps: (props: GetAppsProps, headers?: HeadersInit) => Promise<BasicResult<App[]>>;
-    getAppSlots: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<BasicResult<Slot[]|string[]>>;
+    slots: (props: GetAppSlotsAllProps, headers?: HeadersInit) => Promise<BasicResult<Slot[]|string[]>>;
+    getAppSlots: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<BasicResult<Slot[]>>;
+    getAppSlotIds: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
+    listings: (props: GetAppsWithListingsAllProps, headers?: HeadersInit) => Promise<BasicResult<App[]|string[]>>;
+    getAppsWithListings: (headers?: HeadersInit) => Promise<BasicResult<App[]>>;
+    getAppIdsWithListings: (headers?: HeadersInit) => Promise<BasicResult<string[]>>;
 };

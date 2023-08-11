@@ -1,5 +1,5 @@
 import { Base } from './base';
-import { Asset, UpdateAssetProps, GetUserCollectionAssetsProps, GetUserCollectionsAssetsProps, GetUserSlotAssetsProps, GetUserSlotsAssetsProps, GetAssetProps, GetAssetsProps, GetUserAssetsProps, MintAssetsProps, SendAssetProps, SendAssetsProps, SendCollectionAssetsProps, SendLowestAssetProps, SendRandomAssetProps, UpdateAssetsProps, UpdateCollectionAssetsProps, SafeAssetsHandlers, RawAssetsHandlers, SendAssetAllProps, UpdateAssetsAllProps, UpdateAssetResponse, UpdateAssetsResponse, UpdateCollectionAssetsResponse, GetAssetsAllProps } from '../types/asset';
+import { Asset, UpdateAssetProps, GetUserCollectionAssetsProps, GetUserCollectionsAssetsProps, GetUserSlotAssetsProps, GetUserSlotsAssetsProps, GetAssetProps, GetAssetsProps, MintAssetsProps, SendAssetProps, SendAssetsProps, SendCollectionAssetsProps, SendLowestAssetProps, SendRandomAssetProps, UpdateAssetsProps, UpdateCollectionAssetsProps, SafeAssetsHandlers, RawAssetsHandlers, SendAssetAllProps, UpdateAssetsAllProps, UpdateAssetResponse, UpdateAssetsResponse, UpdateCollectionAssetsResponse, GetAssetsAllProps, GetUserAssetsAllProps, GetUserAssetsBaseProps } from '../types/asset';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
 import { UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from '../types/expression';
@@ -11,7 +11,10 @@ export class Assets extends Base {
   };
   getAsset = async (props: GetAssetProps, headers?: HeadersInit) => ((await this.raw.getAsset(props, headers)).body.assets[0]);
   getAssets = async (props: GetAssetsProps, headers?: HeadersInit) => ((await this.raw.getAssets(props, headers)).body.assets);
-  getUserAssets = async (props: GetUserAssetsProps, headers?: HeadersInit) => ((await this.raw.getUserAssets(props, headers)).body.assets);
+  user = async (props?: GetUserAssetsAllProps, headers?: HeadersInit) => ((await this.raw.user(props, headers)).body.assets);
+  getUserAssets = async (props?: GetUserAssetsBaseProps, headers?: HeadersInit) => ((await this.raw.getUserAssets(props, headers)).body.assets);
+  getUserAssetIds = async (props?: GetUserAssetsBaseProps, headers?: HeadersInit) => ((await this.raw.getUserAssetIds(props, headers)).body.assets);
+  getUserAssetsCounts = async (props?: GetUserAssetsBaseProps, headers?: HeadersInit) => ((await this.raw.getUserAssetsCounts(props, headers)).body.assets);
   getUserCollectionAssets = async (props: GetUserCollectionAssetsProps, headers?: HeadersInit) => ((await this.raw.getUserCollectionAssets(props, headers)).body.assets);
   getUserCollectionsAssets = async (props: GetUserCollectionsAssetsProps, headers?: HeadersInit) => ((await this.raw.getUserCollectionsAssets(props, headers)).body.assets);
   getUserSlotAssets = async (props: GetUserSlotAssetsProps, headers?: HeadersInit) => ((await this.raw.getUserSlotAssets(props, headers)).body.assets);
@@ -48,7 +51,10 @@ export class Assets extends Base {
     info: async (props, headers) => this.request('/asset/info' + propsToQueryString(props), { headers }),
     getAsset: async (props, headers) => this.request('/asset/info' + propsToQueryString(props), { headers }),
     getAssets: async (props, headers) => this.request('/asset/info' + propsToQueryString(props), { headers }),
+    user: async (props, headers) => this.request('/asset/user' + propsToQueryString(props), { headers }),
     getUserAssets: async (props, headers) => this.request('/asset/user' + propsToQueryString(props), { headers }),
+    getUserAssetIds: async (props, headers) => this.request('/asset/user' + propsToQueryString({ ...props, idOnly: true }), { headers }),
+    getUserAssetsCounts: async (props, headers) => this.request('/asset/user' + propsToQueryString({ ...props, countsOnly: true }), { headers }),
     getUserCollectionAssets: async (props, headers) => this.request('/asset/collection' + propsToQueryString(props), { headers }),
     getUserCollectionsAssets: async (props, headers) => this.request('/asset/collections' + propsToQueryString(props), { headers }),
     getUserSlotAssets: async (props, headers) => this.request('/asset/slot' + propsToQueryString(props), { headers }),
@@ -82,8 +88,17 @@ export class Assets extends Base {
     getAssets: async (props, headers) => {
       try { return { result: await this.getAssets(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
+    user: async (props, headers) => {
+      try { return { result: await this.user(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
     getUserAssets: async (props, headers) => {
       try { return { result: await this.getUserAssets(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    getUserAssetIds: async (props, headers) => {
+      try { return { result: await this.getUserAssetIds(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    getUserAssetsCounts: async (props, headers) => {
+      try { return { result: await this.getUserAssetsCounts(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
     getUserCollectionAssets: async (props, headers) => {
       try { return { result: await this.getUserCollectionAssets(props, headers) }; }

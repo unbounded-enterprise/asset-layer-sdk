@@ -1,5 +1,5 @@
+import type { GetSlotCollectionsAllProps, GetSlotCollectionsProps, GetSlotProps, RawSlotsHandlers, SafeSlotsHandlers } from '../types/slot';
 import { Base } from './base';
-import { GetSlotCollectionsAllProps, GetSlotCollectionsProps, GetSlotProps, RawSlotsHandlers, SafeSlotsHandlers, Slot } from '../types/slot';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
 

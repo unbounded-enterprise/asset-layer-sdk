@@ -1,5 +1,5 @@
+import type { GetOTPResponseBody, RawUsersHandlers, RegisterDidProps, RegisterUserProps, RegisterUserResponseBody, SafeUsersHandlers } from '../types/user';
 import { Base } from './base';
-import { GetOTPResponseBody, RawUsersHandlers, RegisterDidProps, RegisterUserProps, RegisterUserResponseBody, SafeUsersHandlers, User } from '../types/user';
 import { parseBasicError } from '../utils/basic-error';
 
 export class Users extends Base {

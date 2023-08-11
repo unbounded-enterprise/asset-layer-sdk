@@ -1,4 +1,4 @@
-import { GetEquipsProps, RawEquipsHandlers, RemoveEquipProps, SafeEquipsHandlers, SetEquipProps, SetEquipResponse } from '../types/equip';
+import type { GetEquipsProps, RawEquipsHandlers, RemoveEquipProps, SafeEquipsHandlers, SetEquipProps } from '../types/equip';
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';

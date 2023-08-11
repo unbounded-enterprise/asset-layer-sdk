@@ -1,5 +1,5 @@
+import type { ActivateCollectionProps, CreateCollectionProps, GetCollectionAssetsAllProps, GetCollectionAssetsProps, GetCollectionProps, GetCollectionsAllProps, GetCollectionsProps, RawCollectionsHandlers, SafeCollectionsHandlers, UpdateCollectionImageProps, UpdateCollectionProps } from '../types/collection';
 import { Base } from './base';
-import { ActivateCollectionProps, Collection, CreateCollectionProps, GetCollectionAssetsAllProps, GetCollectionAssetsProps, GetCollectionProps, GetCollectionsAllProps, GetCollectionsProps, RawCollectionsHandlers, SafeCollectionsHandlers, UpdateCollectionImageProps, UpdateCollectionProps } from '../types/collection';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
 

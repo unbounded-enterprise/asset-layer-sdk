@@ -1,4 +1,4 @@
-import { BasicResponse, BasicResult, BasicSuccessResponse } from "./basic-types";
+import type { BasicResponse, BasicResult, BasicSuccessResponse } from "./basic-types";
 
 export type ExpressionAttributeType = 'Image' | 'Audio' | 'Video' | 'Spine 4.0';
 

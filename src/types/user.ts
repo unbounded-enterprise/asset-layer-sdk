@@ -1,4 +1,4 @@
-import { BasicResponse, BasicResult, BasicSuccessResponse } from "./basic-types";
+import type { BasicResponse, BasicResult } from "./basic-types";
 
 export type UserStatus = string;
 export type UserTeamRole = 'admin' | 'developer';

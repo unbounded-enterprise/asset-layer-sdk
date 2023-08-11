@@ -1,5 +1,5 @@
+import type { CreateExpressionProps, UpdateExpressionProps, UpdateAssetExpressionValueProps, UpdateAssetsExpressionValueProps, UpdateCollectionAssetsExpressionValueProps, UpdateBulkExpressionValuesProps, GetSlotExpressionsProps, RawExpressionsHandlers, SafeExpressionsHandlers, UpdateExpressionValuesProps, UpdateAssetsExpressionValueResponse, UpdateAssetExpressionValueResponse } from '../types/expression';
 import { Base } from './base';
-import { Expression, CreateExpressionProps, UpdateExpressionProps, UpdateAssetExpressionValueProps, UpdateAssetsExpressionValueProps, UpdateCollectionAssetsExpressionValueProps, UpdateBulkExpressionValuesProps, GetSlotExpressionsProps, RawExpressionsHandlers, SafeExpressionsHandlers, UpdateExpressionValuesProps, UpdateAssetsExpressionValueResponse, UpdateAssetExpressionValueResponse } from '../types/expression';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
 

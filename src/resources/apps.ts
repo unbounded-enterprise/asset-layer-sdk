@@ -1,5 +1,5 @@
+import type { GetAppProps, GetAppSlotsAllProps, GetAppSlotsProps, GetAppsAllProps, GetAppsProps, GetAppsWithListingsAllProps, RawAppsHandlers, SafeAppsHandlers } from '../types/app';
 import { Base } from './base';
-import { App, GetAppProps, GetAppSlotsAllProps, GetAppSlotsProps, GetAppsAllProps, GetAppsProps, GetAppsWithListingsAllProps, RawAppsHandlers, SafeAppsHandlers } from '../types/app';
 import { parseBasicError } from '../utils/basic-error';
 import { propsToQueryString } from '../utils/basic-format';
 

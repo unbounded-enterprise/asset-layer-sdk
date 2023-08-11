@@ -1,5 +1,5 @@
-import { BasicResponse, BasicResult } from "./basic-types";
-import { Collection } from "./collection";
+import type { BasicResponse, BasicResult } from "./basic-types";
+import type { Collection } from "./collection";
 
 export type Slot = {
     slotId: string;

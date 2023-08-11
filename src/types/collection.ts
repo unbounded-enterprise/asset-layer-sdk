@@ -1,7 +1,7 @@
-import { BasicAnyObject, BasicResponse, BasicResult, BasicUpdatedResponse } from "../types/basic-types";
-import { Asset } from "./asset";
-import { ExpressionValue } from "./expression";
-import { UserAlias } from "./user";
+import type { BasicAnyObject, BasicResponse, BasicResult, BasicUpdatedResponse } from "../types/basic-types";
+import type { Asset } from "./asset";
+import type { ExpressionValue } from "./expression";
+import type { UserAlias } from "./user";
 
 export type CollectionType = 'Identical' | 'Unique';
 export type CollectionStatus = 'active' | 'inactive';

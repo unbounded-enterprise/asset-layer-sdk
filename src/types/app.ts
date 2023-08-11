@@ -1,6 +1,6 @@
-import { BasicResponse, BasicResult } from "./basic-types";
-import { Slot } from "./slot";
-import { UserAlias } from "./user";
+import type { BasicResponse, BasicResult } from "./basic-types";
+import type { Slot } from "./slot";
+import type { UserAlias } from "./user";
 
 export type AppStatus = 'active' | 'inactive';
 export type AppCurrency = {

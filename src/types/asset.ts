@@ -1,6 +1,6 @@
-import { BasicAnyObject, BasicResponse, BasicResult, BasicSuccessResponse } from "../types/basic-types";
-import { BulkExpressionValueLog, ExpressionValue, UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from "./expression";
-import { UserAlias } from "./user";
+import type { BasicAnyObject, BasicResponse, BasicResult, BasicSuccessResponse } from "../types/basic-types";
+import type { BulkExpressionValueLog, ExpressionValue, UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from "./expression";
+import type { UserAlias } from "./user";
 
 export type Asset = {
     assetId: string;

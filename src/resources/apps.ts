@@ -20,7 +20,7 @@ export class Apps extends Base {
     getApps: async (props, headers) => this.request('/app/info'  + propsToQueryString(props), { headers }),
     slots: async (props, headers) => this.request('/app/slots' + propsToQueryString(props), { headers }),
     getAppSlots: async (props, headers) => this.request('/app/slots' + propsToQueryString(props), { headers }),
-    getAppSlotIds: async (props, headers) => this.request('/app/slots' + propsToQueryString(props), { headers }),
+    getAppSlotIds: async (props, headers) => this.request('/app/slots' + propsToQueryString({ ...props, idOnly: true }), { headers }),
     listings: async (props, headers) => this.request('/app/listings' + propsToQueryString(props), { headers }),
     getAppsWithListings: async (headers) => this.request('/app/listings', { headers }),
     getAppIdsWithListings: async (headers) => this.request('/app/listings' + propsToQueryString({ idOnly: true }), { headers }),

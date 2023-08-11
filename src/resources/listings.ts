@@ -8,7 +8,7 @@ export class Listings extends Base {
   getUserListings = async (props: GetUserListingsProps, headers?: HeadersInit) => ((await this.raw.getUserListings(props, headers)).body.listings);
   getCollectionListings = async (props: GetCollectionListingsProps, headers?: HeadersInit) => ((await this.raw.getCollectionListings(props, headers)).body.listing);
   getAppListings = async (props: GetAppListingsProps, headers?: HeadersInit) => ((await this.raw.getAppListings(props, headers)).body.listing);
-  create = async (props: CreateListingAllProps, headers?: HeadersInit) => (((await this.raw.create(props, headers)).body as any)[(props.collectionId || props.assetIds) ? 'assetIds' : 'listing']);
+  new = async (props: CreateListingAllProps, headers?: HeadersInit) => (((await this.raw.new(props, headers)).body as any)[(props.collectionId || props.assetIds) ? 'assetIds' : 'listing']);
   createListing = async (props: CreateListingProps, headers?: HeadersInit) => ((await this.raw.createListing(props, headers)).body.listing);
   createListings = async (props: CreateListingsProps, headers?: HeadersInit) => ((await this.raw.createListings(props, headers)).body.assetIds);
   createCollectionListings = async (props: CreateCollectionListingsProps, headers?: HeadersInit) => ((await this.raw.createCollectionListings(props, headers)).body.assetIds);
@@ -21,7 +21,7 @@ export class Listings extends Base {
     getUserListings: async (props, headers) => this.request('/listing/user' + propsToQueryString(props), { headers }),
     getCollectionListings: async (props, headers) => this.request('/listing/collection' + propsToQueryString(props), { headers }),
     getAppListings: async (props, headers) => this.request('/listing/app' + propsToQueryString(props), { headers }),
-    create: async (props, headers) => this.request('/listing/new', { method: 'PUT', body: JSON.stringify(props), headers }),
+    new: async (props, headers) => this.request('/listing/new', { method: 'PUT', body: JSON.stringify(props), headers }),
     createListing: async (props, headers) => this.request('/listing/new', { method: 'PUT', body: JSON.stringify(props), headers }),
     createListings: async (props, headers) => this.request('/listing/new', { method: 'PUT', body: JSON.stringify(props), headers }),
     createCollectionListings: async (props, headers) => this.request('/listing/new', { method: 'PUT', body: JSON.stringify(props), headers }),
@@ -43,8 +43,8 @@ export class Listings extends Base {
     getAppListings: async (props, headers) => {
       try { return { result: await this.getAppListings(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    create: async (props, headers) => {
-      try { return { result: await this.create(props, headers) }; }
+    new: async (props, headers) => {
+      try { return { result: await this.new(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
     createListing: async (props, headers) => {
       try { return { result: await this.createListing(props, headers) }; }

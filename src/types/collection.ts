@@ -64,10 +64,7 @@ export type UpdateCollectionProps = {
     properties?: BasicAnyObject;
 }
 
-export type UpdateCollectionImageProps = {
-    collectionId: string;
-    value: string;
-}
+export type UpdateCollectionImageProps = { collectionId: string; value: string; }
 
 export type ActivateCollectionProps = { collectionId: string }
 
@@ -80,7 +77,7 @@ export type RawCollectionsHandlers = {
     info: (props: GetCollectionsAllProps, headers?: HeadersInit) => Promise<GetCollectionsResponse>;
     getCollection: (props: GetCollectionProps, headers?: HeadersInit) => Promise<GetCollectionsResponse>;
     getCollections: (props: GetCollectionsProps, headers?: HeadersInit) => Promise<GetCollectionsResponse>;
-    assets: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<GetCollectionAssetsResponse|GetCollectionAssetIdsResponse>;
+    assets: (props: GetCollectionAssetsAllProps, headers?: HeadersInit) => Promise<GetCollectionAssetsResponse|GetCollectionAssetIdsResponse>;
     getCollectionAssets: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<GetCollectionAssetsResponse>;
     getCollectionAssetIds: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<GetCollectionAssetIdsResponse>;
     createCollection: (props: CreateCollectionProps, headers?: HeadersInit) => Promise<CreateCollectionResponse>;
@@ -94,7 +91,7 @@ export type SafeCollectionsHandlers = {
     info: (props: GetCollectionsAllProps, headers?: HeadersInit) => Promise<BasicResult<Collection|Collection[]>>;
     getCollection: (props: GetCollectionProps, headers?: HeadersInit) => Promise<BasicResult<Collection>>;
     getCollections: (props: GetCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<Collection[]>>;
-    assets: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]|string[]>>;
+    assets: (props: GetCollectionAssetsAllProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]|string[]>>;
     getCollectionAssets: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]>>;
     getCollectionAssetIds: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
     createCollection: (props: CreateCollectionProps, headers?: HeadersInit) => Promise<BasicResult<string>>;

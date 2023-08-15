@@ -1,5 +1,6 @@
-import type { BasicResponse, BasicResult } from "./basic-types";
+import type { BasicResponse, BasicResult, BasicSuccessResponse } from "./basic-types";
 import type { Collection } from "./collection";
+import type { CreateExpressionProps, Expression, ExpressionType, GetSlotExpressionsProps, UpdateExpressionProps } from "./expression";
 
 export type Slot = {
     slotId: string;
@@ -34,6 +35,11 @@ export type RawSlotsHandlers = {
     collections: (props: GetSlotCollectionsAllProps, headers?: HeadersInit) => Promise<GetSlotCollectionsResponse|GetSlotCollectionsIdsResponse>;
     getSlotCollections: (props: GetSlotCollectionsProps, headers?: HeadersInit) => Promise<GetSlotCollectionsResponse>;
     getSlotCollectionIds: (props: GetSlotCollectionsProps, headers?: HeadersInit) => Promise<GetSlotCollectionsIdsResponse>;
+
+    getExpressionTypes: () => Promise<BasicResponse<{ expressionTypes: ExpressionType[]; }>>;
+    getSlotExpressions: (props: GetSlotExpressionsProps, headers?: HeadersInit) => Promise<BasicResponse<{ expressions: Expression[]; }>>;
+    createExpression: (props: CreateExpressionProps, headers?: HeadersInit) => Promise<BasicResponse<{ expressionId: string; }>>;
+    updateExpression: (props: UpdateExpressionProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
 };
 
 export type SafeSlotsHandlers = {
@@ -41,4 +47,9 @@ export type SafeSlotsHandlers = {
     collections: (props: GetSlotCollectionsAllProps, headers?: HeadersInit) => Promise<BasicResult<Collection[]|string[]>>;
     getSlotCollections: (props: GetSlotCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<Collection[]>>;
     getSlotCollectionIds: (props: GetSlotCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
+    
+    getExpressionTypes: () => Promise<BasicResult<ExpressionType[]>>;
+    getSlotExpressions: (props: GetSlotExpressionsProps, headers?: HeadersInit) => Promise<BasicResult<Expression[]>>;
+    createExpression: (props: CreateExpressionProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
+    updateExpression: (props: UpdateExpressionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
 };

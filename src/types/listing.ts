@@ -14,7 +14,7 @@ export type Listing = {
     assetId: string;
     collectionName: string;
     serial: number;
-    liveTime: string;
+    liveTime: number;
     collectionId: string;
     slotId: string;
     appId: string;

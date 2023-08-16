@@ -16,8 +16,14 @@ export type Slot = {
     collections: string[];
     expressions: string[];
 };
-
+export type SlotWithExpressions = Omit<Slot, 'expressions'> & {
+    expressions: Expression[];
+}
 export type SlotWithCollections = Omit<Slot, 'collections'> & {
+    collections: Collection[];
+}
+export type SlotWithExpressionsAndCollections = Omit<Slot, 'expressions'|'collections'> & {
+    expressions: Expression[];
     collections: Collection[];
 }
 

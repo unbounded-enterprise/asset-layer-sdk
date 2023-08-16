@@ -97,10 +97,39 @@ You can skip the email prompt by providing an email like so:
 assetlayer.loginUser({ email });
 ```
 
-And to logout:
+You can also directly pass in a did token (unregistered).
+With this method you can await the response:
+
+```js
+const success = await assetlayer.loginUser({ didToken });
+```
+
+When not passing a didToken, you must rely on a callback.
+To handle a successful login you have to pass in an onSuccess handler:
+
+```js
+assetlayer.loginUser({ onSuccess: async () => console.log(await assetlayer.users.getUser()) });
+```
+
+### Logout a User
 
 ```js
 assetlayer.logoutUser();
+```
+
+### Handling a logged in User
+
+Using initialize, you can sign in a user if there's already an active session:
+
+```js
+const loggedIn = await assetlayer.initialize();
+```
+
+This will return whether or not the user was successfully logged in.
+You can also call it a onComplete handler:
+
+```js
+assetlayer.initialize((loggedIn) => { if (!loggedIn) assetlayer.loginUser(); });
 ```
 
 ## SDK Development

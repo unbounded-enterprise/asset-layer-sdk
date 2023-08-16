@@ -1,5 +1,5 @@
 import type { BasicResponse, BasicResult } from "./basic-types";
-import type { Slot } from "./slot";
+import type { Slot, SlotWithExpressionsAndCollections } from "./slot";
 import type { UserAlias } from "./user";
 
 export type AppStatus = 'active' | 'inactive';
@@ -26,9 +26,11 @@ export type App = {
     url?: string;
     handcashAppId?: string;
 };
-
 export type AppWithSlots = Omit<App, 'slots'> & {
     slots: Slot[];
+};
+export type AppWithSlotsWithExpressionsAndCollections = Omit<App, 'slots'> & {
+    slots: SlotWithExpressionsAndCollections[];
 };
 export type AppWithListingsCount = App & {
     count: number;
@@ -55,7 +57,7 @@ export type GetAppsWithListingsAllProps = { idOnly?: boolean; };
 
 export type GetAppResponse = BasicResponse<{ app: App; }>;
 export type GetAppsResponse = BasicResponse<{ app: App[]; }>;
-export type GetAppSlotsResponse = BasicResponse<{ app: AppWithSlots; }>;
+export type GetAppSlotsResponse = BasicResponse<{ app: AppWithSlotsWithExpressionsAndCollections; }>;
 export type GetAppSlotIdsResponse = BasicResponse<{ app: App; }>;
 export type GetAppsWithListingsResponse = BasicResponse<{ apps: AppWithListingsCount[]; }>;
 export type GetAppIdsWithListingsResponse = BasicResponse<{ apps: string[]; }>;
@@ -76,8 +78,8 @@ export type SafeAppsHandlers = {
     info: (props: GetAppsAllProps, headers?: HeadersInit) => Promise<BasicResult<App|App[]>>;
     getApp: (props: GetAppProps, headers?: HeadersInit) => Promise<BasicResult<App>>;
     getApps: (props: GetAppsProps, headers?: HeadersInit) => Promise<BasicResult<App[]>>;
-    slots: (props: GetAppSlotsAllProps, headers?: HeadersInit) => Promise<BasicResult<Slot[]|string[]>>;
-    getAppSlots: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<BasicResult<Slot[]>>;
+    slots: (props: GetAppSlotsAllProps, headers?: HeadersInit) => Promise<BasicResult<SlotWithExpressionsAndCollections[]|string[]>>;
+    getAppSlots: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<BasicResult<SlotWithExpressionsAndCollections[]>>;
     getAppSlotIds: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
     listings: (props: GetAppsWithListingsAllProps, headers?: HeadersInit) => Promise<BasicResult<App[]|string[]>>;
     getAppsWithListings: (headers?: HeadersInit) => Promise<BasicResult<App[]>>;

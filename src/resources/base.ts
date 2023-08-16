@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-unfetch';
 import { AssetLayer } from '..';
 import { BasicError } from '../types/basic-types';
+import { parseBasicError } from 'src/utils/basic-error';
 
 const assetlayerUrl = 'https://api-v2.assetlayer.com/api/v1';
 
@@ -38,8 +39,9 @@ export abstract class Base {
 
       if (response.ok) return body;
 
-      console.warn(`[AssetLayer@${endpoint.split('?')[0]}]: ${response.statusText} (${response.status}) // ${body?.message || 'Unknown Error'}`);
-      throw new BasicError((body?.message || 'Unknown Error'), response.status);
+      const error = parseBasicError(body);
+      console.warn(`[AssetLayer@${endpoint.split('?')[0]}]: ${response.statusText} (${response.status}) // ${error.message}`);
+      throw new BasicError((error.message), response.status);
     });
   }
 }

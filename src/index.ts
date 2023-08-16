@@ -51,13 +51,13 @@ export class AssetLayer {
     if (config?.initialize) this.initialize();
   }
 
-  async initialize(setter?: (initialized: boolean) => void) {
+  async initialize(onComplete?: (loggedIn: boolean) => void) {
     let loggedIn = false;
     const didToken = await this.getUserDidToken();
     if (didToken) loggedIn = !!(await this.loginUser({ didToken }));
 
     this.initialized = true;
-    if (setter) setter(true);
+    if (onComplete) onComplete(loggedIn);
     return loggedIn;
   }
 
@@ -114,7 +114,7 @@ export class AssetLayer {
         parent.didToken = did;
         if (!parent.initialized) parent.initialized = true;
 
-        if (props?.callback) props.callback();
+        if (props?.onSuccess) props.onSuccess();
 
         async function refreshSessionHandler() {
           console.log('refresh time elapsed', Date.now() - lastTokenGenerated);

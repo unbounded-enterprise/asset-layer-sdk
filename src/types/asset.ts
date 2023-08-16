@@ -2,6 +2,8 @@ import type { BasicAnyObject, BasicResponse, BasicResult, BasicSuccessResponse }
 import type { BulkExpressionValueLog, ExpressionValue, UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from "./expression";
 import type { UserAlias } from "./user";
 
+export type AssetType = 'placeholder' | '';
+
 export type Asset = {
     assetId: string;
     serial: number;
@@ -12,6 +14,7 @@ export type Asset = {
     updatedAt: number;
     expressionValues: ExpressionValue[];
     properties: BasicAnyObject;
+    type?: AssetType;
 };
 
 export type GetAssetProps = { assetId: string; }

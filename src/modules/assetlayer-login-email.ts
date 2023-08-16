@@ -31,7 +31,8 @@ const assetlayerLoginEmail =
         btn.addEventListener('click', function() {
             const email = document.getElementById('enter-email-input').value;
             // Send the email to the parent window
-            window.parent.postMessage({ source: 'assetlayer-login-email-submission', email }, window.location.origin);
+            window.parent.postMessage({ source: 'assetlayer-login-email-submission', email }, 
+                (window.location.href.slice(0,7) === 'file://') ? '*' : window.location.origin);
         });
     </script>
   </body>

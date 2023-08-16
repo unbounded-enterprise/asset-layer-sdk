@@ -1,4 +1,4 @@
-import type { BasicResponse, BasicResult } from "./basic-types";
+import type { BasicError, BasicResponse, BasicResult } from "./basic-types";
 
 export type UserStatus = string;
 export type UserTeamRole = 'admin' | 'developer';
@@ -21,7 +21,7 @@ export type RegisterUserResponseBody = {
     handle: string;
 }
 
-export type UserLoginProps = { email?: string; didToken?: string; showUI?: boolean; callback?: () => void; };
+export type UserLoginProps = { email?: string; didToken?: string; showUI?: boolean; onSuccess?: () => void; onError?: (e:BasicError) => void; };
 export type RegisterUserProps = { otp?: string };
 export type RegisterDidProps = { otp: string };
 

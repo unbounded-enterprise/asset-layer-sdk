@@ -18,7 +18,9 @@ This project requires NodeJS and NPM.
     - [Reference the SDK](#reference-the-sdk)
     - [Instantiate the SDK](#instantiate-the-sdk)
     - [Load an App](#load-an-app)
-  - [Development](#development)
+    - [Login a User](#login-a-user)
+    - [Initialize a User](#handling-an-active-session)
+  - [Development](#sdk-development)
     - [Building a distribution version](#building-a-distribution-version)
     - [Deploying to NPM](#deploying-to-npm)
 
@@ -117,7 +119,7 @@ assetlayer.loginUser({ onSuccess: async () => console.log(await assetlayer.users
 assetlayer.logoutUser();
 ```
 
-### Handling a logged in User
+### Handling an active session
 
 Using initialize, you can sign in a user if there's already an active session:
 
@@ -126,7 +128,7 @@ const loggedIn = await assetlayer.initialize();
 ```
 
 This will return whether or not the user was successfully logged in.
-You can also call it a onComplete handler:
+You can also pass it an onComplete handler:
 
 ```js
 assetlayer.initialize((loggedIn) => { if (!loggedIn) assetlayer.loginUser(); });

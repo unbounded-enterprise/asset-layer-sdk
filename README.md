@@ -67,22 +67,37 @@ const assetlayer = new AssetLayer();
 ### Load an App
 
 ```js
-const app = await assetlayer.apps.getApp({ appId: '633b30ca09d1acacd0c50df4' });
+const app = await assetlayer.apps.getApp({ appId: 'YOUR_APP_ID' });
 ```
 
 By default, handlers return the payload and will throw Errors.
 You can get the raw response by calling the raw handler as shown below:
 
 ```js
-const response = await assetlayer.apps.raw.getApp({ appId: '633b30ca09d1acacd0c50df4' });
+const response = await assetlayer.apps.raw.getApp({ appId: 'YOUR_APP_ID' });
 ```
 
 The raw handlers can be useful in situations where more data from the response is required.
 However, it can still throw an error, to fix that we can call the safe handler as shown below:
 
 ```js
-const { result: app, error } = await assetlayer.apps.safe.getApp({ appId: '633b30ca09d1acacd0c50df4' });
+const { result: app, error } = await assetlayer.apps.safe.getApp({ appId: 'YOUR_APP_ID' });
 ```
+
+By default, handlers try to match the api routes for consistency.
+However, some endpoints may have different return types depending on the properties.
+
+```js
+const appOrApps:App|App[] = await assetlayer.apps.info({ appId: 'YOUR_APP_ID', appIds: ['APP_ID_1', 'APP_ID_2'] });
+const app:App = await assetlayer.apps.getApp({ appId: 'YOUR_APP_ID' });
+const apps:App[] = await assetlayer.apps.getApps({ appIds: ['APP_ID_1', 'APP_ID_2'] });
+```
+
+These all call the same core endpoint (https://api-v2.assetlayer.com/api/v1/app/info),
+but getApp & getApps offer stricter type security when passing props and returning values.
+Typescript is highly recommended and the sdk includes extensive typings
+for referencing & importing, allow for turn-key type-safe app development.
+
 
 ### Login a User
 

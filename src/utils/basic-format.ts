@@ -6,7 +6,7 @@ export function propsToQueryString(props?: BasicAnyObject) {
 
     for (const key in props) {
         if (props[key] === undefined) continue;
-        else if (Array.isArray(props[key])) props[key].forEach((value: string) => { if (value) params.append(key, value); });
+        else if (Array.isArray(props[key])) props[key].forEach((value: string) => { if (value) params.append(`${key}[]`, value); });
         else params.append(key, props[key]);
     }
     

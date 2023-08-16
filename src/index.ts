@@ -181,6 +181,8 @@ export class AssetLayer {
       const iframe = document.createElement('iframe');
       iframe.id = 'assetlayer-login-iframe';
       iframe.style.position = 'absolute';
+      iframe.style.left = '0px';
+      iframe.style.top = '0px';
       iframe.style.width = '100vw';
       iframe.style.height = '100vh';
       document.body.appendChild(iframe);

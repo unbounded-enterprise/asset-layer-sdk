@@ -96,7 +96,7 @@ const apps:App[] = await assetlayer.apps.getApps({ appIds: ['APP_ID_1', 'APP_ID_
 These all call the same core endpoint (https://api-v2.assetlayer.com/api/v1/app/info),
 but getApp & getApps offer stricter type security when passing props and returning values.
 Typescript is highly recommended and the sdk includes extensive typings,
-useful for referencing & importing, allow for turn-key type-safe app development.
+useful for referencing & importing, allowing for turn-key type-safe app development.
 
 
 ### Login a User

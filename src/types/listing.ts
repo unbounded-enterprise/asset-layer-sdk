@@ -49,7 +49,7 @@ export type GetCollectionListingsBaseProps = {
 }
 export type GetCollectionListingsProps = GetCollectionListingsBaseProps & { collectionId: string; };
 export type GetCollectionsListingsProps = GetCollectionListingsBaseProps & { collectionIds: string[]; };
-export type GetCollectionListingsAllProps = GetCollectionListingsBaseProps & { 
+export type GetCollectionsListingsAllProps = GetCollectionListingsBaseProps & { 
     collectionId?: string;
     collectionIds?: string;
     countsOnly?: boolean; 
@@ -126,7 +126,7 @@ export type RawListingsHandlers = {
     getUserSalesCounts: (props?: GetUserHistoryProps, headers?: HeadersInit) => Promise<BasicResponse<{ listing: ListingsCounts; }>>;
     getUserPurchases: (props?: GetUserHistoryProps, headers?: HeadersInit) => Promise<BasicResponse<{ listing: Listing[]; }>>;
     getUserPurchasesCounts: (props?: GetUserHistoryProps, headers?: HeadersInit) => Promise<BasicResponse<{ listing: ListingsCounts; }>>;
-    collection: (props: GetCollectionListingsAllProps, headers?: HeadersInit) => Promise<BasicResponse<{ listing: Listing[] | ListingsCounts; }>>;
+    collection: (props: GetCollectionsListingsAllProps, headers?: HeadersInit) => Promise<BasicResponse<{ listing: Listing[] | ListingsCounts; }>>;
     getCollectionListings: (props: GetCollectionListingsProps, headers?: HeadersInit) => Promise<BasicResponse<{ listing: Listing[]; }>>;
     getCollectionsListings: (props: GetCollectionsListingsProps, headers?: HeadersInit) => Promise<BasicResponse<{ listing: Listing[]; }>>;
     getCollectionListingsCounts: (props: GetCollectionListingsProps, headers?: HeadersInit) => Promise<BasicResponse<{ listing: ListingsCounts; }>>;
@@ -155,7 +155,7 @@ export type SafeListingsHandlers = {
     getUserSalesCounts: (props?: GetUserHistoryProps, headers?: HeadersInit) => Promise<BasicResult<ListingsCounts>>;
     getUserPurchases: (props?: GetUserHistoryProps, headers?: HeadersInit) => Promise<BasicResult<Listing[]>>;
     getUserPurchasesCounts: (props?: GetUserHistoryProps, headers?: HeadersInit) => Promise<BasicResult<ListingsCounts>>;
-    collection: (props: GetCollectionListingsAllProps, headers?: HeadersInit) => Promise<BasicResult<Listing[] | ListingsCounts>>;
+    collection: (props: GetCollectionsListingsAllProps, headers?: HeadersInit) => Promise<BasicResult<Listing[] | ListingsCounts>>;
     getCollectionListings: (props: GetCollectionListingsProps, headers?: HeadersInit) => Promise<BasicResult<Listing[]>>;
     getCollectionsListings: (props: GetCollectionsListingsProps, headers?: HeadersInit) => Promise<BasicResult<Listing[]>>;
     getCollectionListingsCounts: (props: GetCollectionListingsProps, headers?: HeadersInit) => Promise<BasicResult<ListingsCounts>>;

@@ -10,7 +10,7 @@ export type Slot = {
     appId: string;
     acceptingCollections: boolean;
     isPublic: boolean;
-    collectionTypes: string;
+    collectionTypes: SlotCollectionTypes;
     createdAt: number;
     updatedAt: number;
     collections: string[];
@@ -20,6 +20,8 @@ export type Slot = {
 export type SlotWithCollections = Omit<Slot, 'collections'> & {
     collections: Collection[];
 }
+
+export type SlotCollectionTypes = 'Identical' | 'Unique' | 'Both';
 
 export type GetSlotProps = { slotId: string; }
 

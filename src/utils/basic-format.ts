@@ -5,9 +5,12 @@ export function propsToQueryString(props?: BasicAnyObject) {
     const params = new URLSearchParams();
 
     for (const key in props) {
-        if (Array.isArray(props[key])) props[key].forEach((value: string) => params.append(key, value));
+        if (props[key] === undefined) continue;
+        else if (Array.isArray(props[key])) props[key].forEach((value: string) => { if (value) params.append(key, value); });
         else params.append(key, props[key]);
     }
     
+    console.log('qs:', params.toString());
+
     return '?' + params.toString();
 }

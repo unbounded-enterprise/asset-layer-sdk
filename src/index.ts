@@ -52,11 +52,13 @@ export class AssetLayer {
   }
 
   async initialize(setter?: (initialized: boolean) => void) {
+    let loggedIn = false;
     const didToken = await this.getUserDidToken();
-    if (didToken) await this.loginUser({ didToken });
+    if (didToken) loggedIn = !!(await this.loginUser({ didToken }));
 
     this.initialized = true;
     if (setter) setter(true);
+    return loggedIn;
   }
 
   async isUserLoggedIn() {
@@ -124,21 +126,20 @@ export class AssetLayer {
           else if (!((await parent.safe.isUserLoggedIn()).result)) parent.logoutUser();
         }
         parent.refreshSessionIID = setInterval(refreshSessionHandler, 300000);
+        return true;
       }
 
       if (event) {
-        if ((event.origin !== window.location.origin || event.data.source !== 'assetlayer-login-email-submission')) return;
+        if ((event.origin !== window.location.origin || event.data.source !== 'assetlayer-login-email-submission')) return false;
 
         window.removeEventListener('message', emailHandler);
         const frame = document.getElementById('assetlayer-login-iframe');
         if (frame) document.body.removeChild(frame);
       }
       else if (props?.didToken) {
-        await register(props.didToken);
-
-        return;
+        return await register(props.didToken);
       }
-      else if (!props?.email) return;
+      else if (!props?.email) return false;
       
       const email = props?.email || event!.data.email;
       console.log('email!', email)
@@ -175,7 +176,7 @@ export class AssetLayer {
         })
     }
 
-    if (props && (props.email || props.didToken)) await emailHandler(undefined);
+    if (props && (props.email || props.didToken)) return await emailHandler(undefined);
     else {
       const iframe = document.createElement('iframe');
       iframe.id = 'assetlayer-login-iframe';

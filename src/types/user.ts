@@ -40,10 +40,10 @@ export type SafeUsersHandlers = {
 };
 
 export type SafeLoginHandlers = {
-    initialize: (setter?: (initialized: boolean) => void) => Promise<BasicResult<void>>;
+    initialize: (setter?: (initialized: boolean) => void) => Promise<BasicResult<boolean|void>>;
     isUserLoggedIn: () => Promise<BasicResult<boolean|undefined>>;
     getUserDidToken: () => Promise<BasicResult<string|undefined>>;
     getUserMetadata: () => Promise<BasicResult<any>>;
-    loginUser: (props: UserLoginProps) => Promise<BasicResult<void>>;
+    loginUser: (props: UserLoginProps) => Promise<BasicResult<boolean|void>>;
     logoutUser: () => Promise<BasicResult<void>>;
 };

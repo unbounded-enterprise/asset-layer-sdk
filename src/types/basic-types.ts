@@ -14,7 +14,7 @@ export interface BasicObject<T> {
 export type BasicAnyObject = BasicObject<any>;
 
 export type BasicResultSuccess<T> = { result: T; error?: undefined; };
-export type BasicResultError = { error: BasicError, result?: undefined };
+export type BasicResultError = { error: BasicError; result?: undefined; };
 export type BasicResult<T> = BasicResultSuccess<T> | BasicResultError;
 
 export type BasicResponse<T> = {

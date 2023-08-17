@@ -1,6 +1,6 @@
 {
   "name": "@assetlayer/sdk-client",
-  "version": "0.0.1-beta.5.0",
+  "version": "0.0.1-beta.5.3",
   "main": "dist/index.js",
   "module": "dist/index.m.js",
   "unpkg": "dist/index.umd.js",
@@ -19,7 +19,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf dist && microbundle --tsconfig tsconfig.json --no-sourcemap --format cjs,esm && microbundle --tsconfig tsconfig.json --no-sourcemap --format umd --external none --name AssetLayer"
+    "build": "rm -rf dist && microbundle --tsconfig tsconfig.json --no-sourcemap",
+    "build-umd": "microbundle --tsconfig tsconfig.json --no-sourcemap --no-pkg-main -o public/index.umd.js --format umd --external none --name AssetLayer"
   },
   "dependencies": {
     "isomorphic-unfetch": "3.1.0",

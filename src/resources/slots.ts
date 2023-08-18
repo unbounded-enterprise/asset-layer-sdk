@@ -36,10 +36,10 @@ export class Slots extends Base {
     getSlotCollections: async (props, headers) => this.request('/slot/collections' + propsToQueryString(props), { headers }),
     getSlotCollectionIds: async (props, headers) => this.request('/slot/collections' + propsToQueryString({ ...props, idOnly: true }), { headers }),
 
-    getExpressionTypes: async () => this.request('slot/expressions/types'),
+    getExpressionTypes: async () => this.request('/slot/expressions/types'),
     getSlotExpressions: async (props, headers) => this.request('/slot/expressions' + propsToQueryString(props), { headers }),
     createExpression: async (props, headers) => this.request('/slot/expressions/new', { method: 'POST', body: JSON.stringify(props), headers }),
-    updateExpression: async (props, headers) => this.request('slot/expressions/update', { method: 'PUT', body: JSON.stringify(props), headers }),
+    updateExpression: async (props, headers) => this.request('/slot/expressions/update', { method: 'PUT', body: JSON.stringify(props), headers }),
   };
 
   safe: SafeSlotsHandlers = {

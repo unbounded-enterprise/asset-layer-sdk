@@ -27,10 +27,10 @@ export class Expressions extends Base {
     // getExpression: async (props) => this.request('/expression/info' + propsToQueryString(props), { headers }),
     // getExpressions: async (props) => this.request('/expression/info' + propsToQueryString(props), { headers }),
 
-    getExpressionTypes: async () => this.request('slot/expressions/types'),
+    getExpressionTypes: async () => this.request('/slot/expressions/types'),
     getSlotExpressions: async (props, headers) => this.request('/slot/expressions' + propsToQueryString(props), { headers }),
     createExpression: async (props, headers) => this.request('/slot/expressions/new', { method: 'POST', body: JSON.stringify(props), headers }),
-    updateExpression: async (props, headers) => this.request('slot/expressions/update', { method: 'PUT', body: JSON.stringify(props), headers }),
+    updateExpression: async (props, headers) => this.request('/slot/expressions/update', { method: 'PUT', body: JSON.stringify(props), headers }),
 
     updateExpressionValues: async (props, headers) => this.request('/asset/expressionValues', { method: 'POST', body: JSON.stringify(props), headers }),
     updateAssetExpressionValue: async (props, headers) => this.request('/asset/expressionValues', { method: 'POST', body: JSON.stringify(props), headers }),

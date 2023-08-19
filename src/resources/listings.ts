@@ -37,7 +37,7 @@ export class Listings extends Base {
     getUserListings: async (props, headers) => this.request('/listing/user' + propsToQueryString(props), { headers }),
     getUserListingsCounts: async (props, headers) => this.request('/listing/user' + propsToQueryString({ ...props, countsOnly: true }), { headers }),
     getUserCollectionListings: async (props, headers) => this.request('/listing/user' + propsToQueryString(props), { headers }),
-    getUserCollectionListingsCounts: async (props, headers) => this.request('/listing/user' + propsToQueryString(props), { headers }),
+    getUserCollectionListingsCounts: async (props, headers) => this.request('/listing/user' + propsToQueryString({ ...props, countsOnly: true }), { headers }),
     getUserSales: async (props, headers) => this.request('/listing/user' + propsToQueryString({ ...props, sellerOnly: true, status: 'sold' }), { headers }),
     getUserSalesCounts: async (props, headers) => this.request('/listing/user' + propsToQueryString({ ...props, sellerOnly: true, status: 'sold', countsOnly: true }), { headers }),
     getUserPurchases: async (props, headers) => this.request('/listing/user' + propsToQueryString({ ...props, buyerOnly: true, status: 'sold' }), { headers }),

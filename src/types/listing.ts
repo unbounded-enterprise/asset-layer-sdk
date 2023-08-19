@@ -38,7 +38,7 @@ export type GetUserListingsProps = {
     status?: ListingStatus;
     walletUserId?: string;
 }
-export type GetUserCollectionListingsProps = GetUserListingsProps & { collectionId?: string; };
+export type GetUserCollectionListingsProps = GetUserListingsProps & { collectionId: string; };
 export type GetUserListingsAllProps = GetUserListingsProps & { collectionId?: string; countsOnly?: boolean; };
 export type GetUserHistoryProps = { walletUserId?: string; };
 

@@ -1,5 +1,5 @@
 import type { BasicAnyObject, BasicResponse, BasicResult, BasicUpdatedResponse } from "../types/basic-types";
-import type { Asset } from "./asset";
+import type { Asset, AssetIdOnly } from "./asset";
 import type { ExpressionValue } from "./expression";
 import type { UserAlias } from "./user";
 
@@ -26,8 +26,8 @@ export type Collection = {
     exampleExpressionValues: ExpressionValue[];
 };
 
-export type CollectionWithAssetIds = Omit<Collection, 'assets'> & {
-    assets: string[];
+export type CollectionWithAssetIdOnlys = Omit<Collection, 'assets'> & {
+    assets: AssetIdOnly[];
 }
 export type CollectionWithAssets = Omit<Collection, 'assets'> & {
     assets: Asset[];
@@ -70,7 +70,7 @@ export type ActivateCollectionProps = { collectionId: string }
 
 export type GetCollectionsResponse = BasicResponse<{ collections: Collection[]; }>;
 export type GetCollectionAssetsResponse = BasicResponse<{ collection: CollectionWithAssets; }>;
-export type GetCollectionAssetIdsResponse = BasicResponse<{ collection: CollectionWithAssetIds; }>;
+export type GetCollectionAssetIdsResponse = BasicResponse<{ collection: CollectionWithAssetIdOnlys; }>;
 export type CreateCollectionResponse = BasicResponse<{ collectionId: string; }>;
 
 export type RawCollectionsHandlers = {
@@ -93,7 +93,7 @@ export type SafeCollectionsHandlers = {
     getCollections: (props: GetCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<Collection[]>>;
     assets: (props: GetCollectionAssetsAllProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]|string[]>>;
     getCollectionAssets: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]>>;
-    getCollectionAssetIds: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
+    getCollectionAssetIds: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<AssetIdOnly[]>>;
     createCollection: (props: CreateCollectionProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
     updateCollectionImage: (props: UpdateCollectionImageProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
     updateCollection: (props: UpdateCollectionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;

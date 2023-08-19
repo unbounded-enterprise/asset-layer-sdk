@@ -2,6 +2,8 @@ import type { BasicResponse, BasicResult, BasicSuccessResponse } from "./basic-t
 import type { Collection } from "./collection";
 import type { CreateExpressionProps, Expression, ExpressionType, GetSlotExpressionsProps, UpdateExpressionProps } from "./expression";
 
+export type SlotCollectionType = 'Identical' | 'Unique' | 'Both';
+
 export type Slot = {
     slotId: string;
     slotName: string;
@@ -10,7 +12,7 @@ export type Slot = {
     appId: string;
     acceptingCollections: boolean;
     isPublic: boolean;
-    collectionTypes: SlotCollectionTypes;
+    collectionTypes: SlotCollectionType;
     createdAt: number;
     updatedAt: number;
     collections: string[];
@@ -26,8 +28,6 @@ export type SlotWithExpressionsAndCollections = Omit<Slot, 'expressions'|'collec
     expressions: Expression[];
     collections: Collection[];
 }
-
-export type SlotCollectionTypes = 'Identical' | 'Unique' | 'Both';
 
 export type GetSlotProps = { slotId: string; }
 

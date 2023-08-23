@@ -30,7 +30,7 @@ export type Listing = {
     cancelledTime?: number;
 };
 
-export type GetListingProps = { listingId: string, status?: ListingStatus };
+export type GetListingProps = { listingId: string; };
 
 export type GetUserListingsProps = {
     sellerOnly?: boolean;

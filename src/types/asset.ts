@@ -3,6 +3,8 @@ import type { BulkExpressionValueLog, ExpressionValue, UpdateAssetExpressionValu
 import type { UserAlias } from "./user";
 
 export type AssetType = 'placeholder' | '';
+export type AssetHistoryType = 'mint' | 'send' | 'update' | 'expValAdd' | 'expValDel';
+export type AssetHistoryRecord = AssetMintHistory | AssetSendHistory | AssetUpdateHistory | AssetExpValAddHistory | AssetExpValDelHistory;
 
 export type Asset = {
     assetId: string;
@@ -16,10 +18,28 @@ export type Asset = {
     properties: BasicAnyObject;
     type?: AssetType;
 };
-export type AssetIdOnly = {
-    assetId: string;
-    serial: number;
+export type AssetIdOnly = { assetId: string; serial: number; expressionValues: ExpressionValue[]; }
+export type AssetHistoryBase = { type: AssetHistoryType; assetId: string; createdAt: number; }
+export type AssetMintHistory = Omit<AssetHistoryBase, 'type'> & { 
+    type: 'mint';
+    expressionValues: ExpressionValue[]; 
+    properties: BasicAnyObject; 
+    user: UserAlias; 
 }
+export type AssetSendHistory = Omit<AssetHistoryBase, 'type'> & { type: 'send'; sender: UserAlias; receiver: UserAlias; }
+export type AssetUpdateHistory = Omit<AssetHistoryBase, 'type'> & { type: 'update'; properties: BasicAnyObject; }
+export type AssetExpValAddHistory = Omit<AssetHistoryBase, 'type'> & { type: 'expValAdd'; expressionValueId: string; expressionValue: string; }
+export type AssetExpValDelHistory = Omit<AssetHistoryBase, 'type'> & { type: 'expValDel'; expressionValueId: string; }
+export type AssetAllHistory = AssetHistoryBase & {
+    sender?: UserAlias;
+    receiver?: UserAlias;
+    user?: UserAlias;
+    properties?: BasicAnyObject;
+    expressionValues?: ExpressionValue[];
+    expressionValueId?: string;
+    expressionValue?: string;
+}
+export type CollectionAssetsObject = { [collectionId: string]: Asset[]; };
 export type GetAssetProps = { assetId: string; }
 export type GetAssetsProps = { assetIds: string[]; }
 export type GetAssetsAllProps = { assetId?: string; assetIds?: string[]; };
@@ -58,6 +78,8 @@ export type GetUserSlotsAssetsProps = {
     countsOnly?: boolean;
 }
 
+export type GetAssetHistoryProps = { assetId: string; limit?: number; start?: number; }
+export type GetAssetOwnershipHistoryProps = GetAssetHistoryProps & { ownersOnly?: boolean; };
 export type MintAssetsProps = {
     collectionId: string;
     number: number;
@@ -95,6 +117,12 @@ export type SendAssetsResponseBody = { to: string; assetIds: string[]; };
 export type GetAssetsResponse = BasicResponse<{ assets: Asset[]; }>;
 export type GetAssetIdsResponse = BasicResponse<{ assets: AssetIdOnly[]; }>;
 export type GetAssetCountsResponse = BasicResponse<{ assets: AssetCounts }>;
+export type GetCollectionsAssetsResponse = BasicResponse<{ collections: Asset[]; }>;
+export type GetCollectionsAssetIdsResponse = BasicResponse<{ collections: AssetIdOnly[]; }>;
+export type GetCollectionsAssetCountsResponse = BasicResponse<{ collections: AssetCounts }>;
+export type GetAssetHistoryResponse = BasicResponse<{ history: AssetHistoryRecord[]; }>;
+export type GetAssetMarketHistoryResponse = BasicResponse<{ history: AssetSendHistory[]; }>;
+export type GetAssetOwnershipHistoryResponse = GetAssetMarketHistoryResponse | BasicResponse<{ history: UserAlias[]; }>;
 export type SendAssetResponse = BasicResponse<SendAssetResponseBody>;
 export type SendAssetsResponse = BasicResponse<SendAssetsResponseBody>;
 export type UpdateAssetResponse = BasicResponse<{ assetId: string; serial: number; }>;
@@ -110,9 +138,12 @@ export type RawAssetsHandlers = {
     getUserAssetIds: (props?: GetUserAssetsBaseProps, headers?: HeadersInit) => Promise<GetAssetIdsResponse>;
     getUserAssetsCounts: (props?: GetUserAssetsBaseProps, headers?: HeadersInit) => Promise<GetAssetCountsResponse>;
     getUserCollectionAssets: (props: GetUserCollectionAssetsProps, headers?: HeadersInit) => Promise<GetAssetsResponse|GetAssetIdsResponse|GetAssetCountsResponse>;
-    getUserCollectionsAssets: (props: GetUserCollectionsAssetsProps, headers?: HeadersInit) => Promise<GetAssetsResponse|GetAssetIdsResponse|GetAssetCountsResponse>;
+    getUserCollectionsAssets: (props: GetUserCollectionsAssetsProps, headers?: HeadersInit) => Promise<GetCollectionsAssetsResponse|GetCollectionsAssetIdsResponse|GetCollectionsAssetCountsResponse>;
     getUserSlotAssets: (props: GetUserSlotAssetsProps, headers?: HeadersInit) => Promise<GetAssetsResponse|GetAssetIdsResponse|GetAssetCountsResponse>;
     getUserSlotsAssets: (props: GetUserSlotsAssetsProps, headers?: HeadersInit) => Promise<GetAssetsResponse|GetAssetIdsResponse|GetAssetCountsResponse>;
+    getAssetHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<GetAssetHistoryResponse>;
+    getAssetMarketHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<GetAssetMarketHistoryResponse>;
+    getAssetOwnershipHistory: (props: GetAssetOwnershipHistoryProps, headers?: HeadersInit) => Promise<GetAssetOwnershipHistoryResponse>;
     mintAssets: (props: MintAssetsProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
     send: (props: SendAssetAllProps, headers?: HeadersInit) => Promise<SendAssetResponse|SendAssetsResponse>;
     sendAsset: (props: SendAssetProps, headers?: HeadersInit) => Promise<SendAssetResponse>;
@@ -144,6 +175,9 @@ export type SafeAssetsHandlers = {
     getUserCollectionsAssets: (props: GetUserCollectionsAssetsProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]|AssetIdOnly[]|AssetCounts>>;
     getUserSlotAssets: (props: GetUserSlotAssetsProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]|AssetIdOnly[]|AssetCounts>>;
     getUserSlotsAssets: (props: GetUserSlotsAssetsProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]|AssetIdOnly[]|AssetCounts>>;
+    getAssetHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<BasicResult<AssetHistoryRecord[]>>;
+    getAssetMarketHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<BasicResult<AssetSendHistory[]>>;
+    getAssetOwnershipHistory: (props: GetAssetOwnershipHistoryProps, headers?: HeadersInit) => Promise<BasicResult<AssetSendHistory[]|UserAlias[]>>;
     mintAssets: (props: MintAssetsProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
     send: (props: SendAssetAllProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetResponseBody|SendAssetsResponseBody>>;
     sendAsset: (props: SendAssetProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetResponseBody>>;

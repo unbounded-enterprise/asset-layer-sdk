@@ -18,12 +18,12 @@ export type Collection = {
     minted: number;
     tags: string[];
     royaltyRecipient: UserAlias;
-    type: CollectionType;
-    properties: BasicAnyObject;
     status: CollectionStatus;
     createdAt: number;
     updatedAt: number;
     exampleExpressionValues: ExpressionValue[];
+    type?: CollectionType;
+    properties?: BasicAnyObject;
 };
 
 export type CollectionWithAssetIdOnlys = Omit<Collection, 'assets'> & {

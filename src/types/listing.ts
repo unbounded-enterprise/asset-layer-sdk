@@ -32,13 +32,9 @@ export type Listing = {
 
 export type GetListingProps = { listingId: string; };
 
-export type GetUserListingsProps = {
-    sellerOnly?: boolean;
-    buyerOnly?: boolean;
-    status?: ListingStatus;
-    walletUserId?: string;
-}
-export type GetUserCollectionListingsProps = GetUserListingsProps & { collectionId: string; };
+export type GetUserListingsMinProps = { status?: ListingStatus; walletUserId?: string; };
+export type GetUserListingsProps = GetUserListingsMinProps & { sellerOnly?: boolean; buyerOnly?: boolean; };
+export type GetUserCollectionListingsProps = GetUserListingsMinProps & { collectionId: string; };
 export type GetUserListingsAllProps = GetUserListingsProps & { collectionId?: string; countsOnly?: boolean; };
 export type GetUserHistoryProps = { walletUserId?: string; };
 
@@ -118,8 +114,8 @@ export type CreateListingsResponse = BasicResponse<{ assetIds: string[]; }>;
 export type RawListingsHandlers = {
     getListing: (props: GetListingProps, headers?: HeadersInit) => Promise<BasicResponse<{ listing: Listing; }>>;
     user: (props?: GetUserListingsAllProps, headers?: HeadersInit) => Promise<BasicResponse<{ listings: Listing[] | ListingsCounts; }>>;
-    getUserListings: (props?: GetUserListingsProps, headers?: HeadersInit) => Promise<BasicResponse<{ listings: Listing[]; }>>;
-    getUserListingsCounts: (props?: GetUserListingsProps, headers?: HeadersInit) => Promise<BasicResponse<{ listings: ListingsCounts; }>>;
+    getUserListings: (props?: GetUserListingsMinProps, headers?: HeadersInit) => Promise<BasicResponse<{ listings: Listing[]; }>>;
+    getUserListingsCounts: (props?: GetUserListingsMinProps, headers?: HeadersInit) => Promise<BasicResponse<{ listings: ListingsCounts; }>>;
     getUserCollectionListings: (props: GetUserCollectionListingsProps, headers?: HeadersInit) => Promise<BasicResponse<{ listings: Listing[]; }>>;
     getUserCollectionListingsCounts: (props: GetUserCollectionListingsProps, headers?: HeadersInit) => Promise<BasicResponse<{ listings: ListingsCounts; }>>;
     getUserSales: (props?: GetUserHistoryProps, headers?: HeadersInit) => Promise<BasicResponse<{ listing: Listing[]; }>>;
@@ -147,8 +143,8 @@ export type RawListingsHandlers = {
 export type SafeListingsHandlers = {
     getListing: (props: GetListingProps, headers?: HeadersInit) => Promise<BasicResult<Listing>>;
     user: (props?: GetUserListingsAllProps, headers?: HeadersInit) => Promise<BasicResult<Listing[] | ListingsCounts>>;
-    getUserListings: (props?: GetUserListingsProps, headers?: HeadersInit) => Promise<BasicResult<Listing[]>>;
-    getUserListingsCounts: (props?: GetUserListingsProps, headers?: HeadersInit) => Promise<BasicResult<ListingsCounts>>;
+    getUserListings: (props?: GetUserListingsMinProps, headers?: HeadersInit) => Promise<BasicResult<Listing[]>>;
+    getUserListingsCounts: (props?: GetUserListingsMinProps, headers?: HeadersInit) => Promise<BasicResult<ListingsCounts>>;
     getUserCollectionListings: (props: GetUserCollectionListingsProps, headers?: HeadersInit) => Promise<BasicResult<Listing[]>>;
     getUserCollectionListingsCounts: (props: GetUserCollectionListingsProps, headers?: HeadersInit) => Promise<BasicResult<ListingsCounts>>;
     getUserSales: (props?: GetUserHistoryProps, headers?: HeadersInit) => Promise<BasicResult<Listing[]>>;

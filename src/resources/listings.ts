@@ -1,4 +1,4 @@
-import type { GetAppListingsProps, GetCollectionListingsProps, GetUserListingsProps, ListAssetProps, UpdateListingProps, GetListingProps, BuyListingProps, RemoveListingProps, RawListingsHandlers, SafeListingsHandlers, ListAssetsProps, ListCollectionAssetsProps, CreateListingAllProps, GetAppListingsAllProps, GetUserListingsAllProps, GetCollectionsListingsAllProps, GetCollectionsListingsProps, GetUserCollectionListingsProps, GetUserHistoryProps } from '../types/listing';
+import type { GetAppListingsProps, GetCollectionListingsProps, GetUserListingsProps, ListAssetProps, UpdateListingProps, GetListingProps, BuyListingProps, RemoveListingProps, RawListingsHandlers, SafeListingsHandlers, ListAssetsProps, ListCollectionAssetsProps, CreateListingAllProps, GetAppListingsAllProps, GetUserListingsAllProps, GetCollectionsListingsAllProps, GetCollectionsListingsProps, GetUserCollectionListingsProps, GetUserHistoryProps, GetUserListingsMinProps } from '../types/listing';
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
@@ -6,8 +6,8 @@ import { parseBasicError } from '../utils/basic-error';
 export class Listings extends Base {
   getListing = async (props: GetListingProps, headers?: HeadersInit) => ((await this.raw.getListing(props, headers)).body.listing);
   user = async (props?: GetUserListingsAllProps, headers?: HeadersInit) => ((await this.raw.user(props, headers)).body.listings);
-  getUserListings = async (props?: GetUserListingsProps, headers?: HeadersInit) => ((await this.raw.getUserListings(props, headers)).body.listings);
-  getUserListingsCounts = async (props?: GetUserListingsProps, headers?: HeadersInit) => ((await this.raw.getUserListingsCounts(props, headers)).body.listings);
+  getUserListings = async (props?: GetUserListingsMinProps, headers?: HeadersInit) => ((await this.raw.getUserListings(props, headers)).body.listings);
+  getUserListingsCounts = async (props?: GetUserListingsMinProps, headers?: HeadersInit) => ((await this.raw.getUserListingsCounts(props, headers)).body.listings);
   getUserCollectionListings = async (props: GetUserCollectionListingsProps, headers?: HeadersInit) => ((await this.raw.getUserCollectionListings(props, headers)).body.listings);
   getUserCollectionListingsCounts = async (props: GetUserCollectionListingsProps, headers?: HeadersInit) => ((await this.raw.getUserCollectionListingsCounts(props, headers)).body.listings);
   getUserSales = async (props?: GetUserHistoryProps, headers?: HeadersInit) => ((await this.raw.getUserSales(props, headers)).body.listing);

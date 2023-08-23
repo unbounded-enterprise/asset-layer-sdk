@@ -51,12 +51,12 @@ export class Listings extends Base {
     getAppListings: async (props, headers) => this.request('/listing/app' + propsToQueryString(props), { headers }),
     getAppListingsCounts: async (props, headers) => this.request('/listing/app' + propsToQueryString({ ...props, countsOnly: true }), { headers }),
     getAppListingsStats: async (props, headers) => this.request('/listing/app' + propsToQueryString({ ...props, countsOnly: true, collectionStats: true }), { headers }),
-    new: async (props, headers) => this.request('/listing/new', { method: 'PUT', body: JSON.stringify(props), headers }),
-    listAsset: async (props, headers) => this.request('/listing/new', { method: 'PUT', body: JSON.stringify(props), headers }),
-    listAssets: async (props, headers) => this.request('/listing/new', { method: 'PUT', body: JSON.stringify(props), headers }),
-    listCollectionAssets: async (props, headers) => this.request('/listing/new', { method: 'PUT', body: JSON.stringify(props), headers }),
+    new: async (props, headers) => this.request('/listing/new', { method: 'POST', body: JSON.stringify(props), headers }),
+    listAsset: async (props, headers) => this.request('/listing/new', { method: 'POST', body: JSON.stringify(props), headers }),
+    listAssets: async (props, headers) => this.request('/listing/new', { method: 'POST', body: JSON.stringify(props), headers }),
+    listCollectionAssets: async (props, headers) => this.request('/listing/new', { method: 'POST', body: JSON.stringify(props), headers }),
     updateListing: async (props, headers) => this.request('/listing/update', { method: 'PUT', body: JSON.stringify(props), headers }),
-    buyListing: async (props, headers) => this.request('/listing/buy', { method: 'PUT', body: JSON.stringify(props), headers }),
+    buyListing: async (props, headers) => this.request('/listing/buy', { method: 'POST', body: JSON.stringify(props), headers }),
     removeListing: async (props, headers) => this.request('/listing', { method: 'DELETE', body: JSON.stringify(props), headers }),
   };
 

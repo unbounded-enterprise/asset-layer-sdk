@@ -8,8 +8,8 @@ export class Listings extends Base {
   user = async (props?: GetUserListingsAllProps, headers?: HeadersInit) => ((await this.raw.user(props, headers)).body.listings);
   getUserListings = async (props?: GetUserListingsProps, headers?: HeadersInit) => ((await this.raw.getUserListings(props, headers)).body.listings);
   getUserListingsCounts = async (props?: GetUserListingsProps, headers?: HeadersInit) => ((await this.raw.getUserListingsCounts(props, headers)).body.listings);
-  getUserCollectionListings = async (props: GetUserCollectionListingsProps, headers?: HeadersInit) => ((await this.raw.getUserCollectionListings(props, headers)).body.listing);
-  getUserCollectionListingsCounts = async (props: GetUserCollectionListingsProps, headers?: HeadersInit) => ((await this.raw.getUserCollectionListingsCounts(props, headers)).body.listing);
+  getUserCollectionListings = async (props: GetUserCollectionListingsProps, headers?: HeadersInit) => ((await this.raw.getUserCollectionListings(props, headers)).body.listings);
+  getUserCollectionListingsCounts = async (props: GetUserCollectionListingsProps, headers?: HeadersInit) => ((await this.raw.getUserCollectionListingsCounts(props, headers)).body.listings);
   getUserSales = async (props?: GetUserHistoryProps, headers?: HeadersInit) => ((await this.raw.getUserSales(props, headers)).body.listing);
   getUserSalesCounts = async (props?: GetUserHistoryProps, headers?: HeadersInit) => ((await this.raw.getUserSalesCounts(props, headers)).body.listing);
   getUserPurchases = async (props?: GetUserHistoryProps, headers?: HeadersInit) => ((await this.raw.getUserPurchases(props, headers)).body.listing);

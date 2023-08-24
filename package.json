@@ -1,6 +1,6 @@
 {
   "name": "@assetlayer/sdk-client",
-  "version": "0.0.1-beta.6.4",
+  "version": "0.0.1-beta.6.5",
   "main": "dist/index.js",
   "module": "dist/index.m.js",
   "unpkg": "dist/index.umd.js",

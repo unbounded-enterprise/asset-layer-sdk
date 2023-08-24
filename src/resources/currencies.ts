@@ -1,7 +1,7 @@
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
-import { DecreaseCurrencyBalanceProps, GetCurrencyBalanceProps, GetCurrencyProps, GetCurrencySummaryProps, IncreaseCurrencyBalanceProps, RawCurrencyHandlers, SafeCurrencyHandlers, TransferCurrencyProps } from 'src/types/currency';
+import { DecreaseCurrencyBalanceProps, GetCurrencyBalanceProps, GetCurrencyProps, GetCurrencySummaryProps, IncreaseCurrencyBalanceProps, RawCurrencyHandlers, SafeCurrencyHandlers, TransferCurrencyProps } from '../types/currency';
 
 export class Currencies extends Base {
   info = async (props: GetCurrencyProps, headers?: HeadersInit) => ((await this.raw.info(props, headers)).body.currency);

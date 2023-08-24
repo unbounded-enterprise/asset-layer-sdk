@@ -1,5 +1,5 @@
 import type { GetSlotCollectionsAllProps, GetSlotCollectionsProps, GetSlotProps, RawSlotsHandlers, SafeSlotsHandlers } from '../types/slot';
-import type { CreateExpressionProps, GetSlotExpressionsProps, UpdateExpressionProps } from 'src/types/expression';
+import type { CreateExpressionProps, GetSlotExpressionsProps, UpdateExpressionProps } from '../types/expression';
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';

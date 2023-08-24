@@ -18,8 +18,8 @@ export type Asset = {
     properties: BasicAnyObject;
     type?: AssetType;
 };
-export type AssetIdOnly = { assetId: string; serial: number; expressionValues: ExpressionValue[]; }
-export type AssetHistoryBase = { type: AssetHistoryType; assetId: string; createdAt: number; }
+export type AssetIdOnly = { assetId: string; serial: number; expressionValues: ExpressionValue[]; };
+export type AssetHistoryBase = { type: AssetHistoryType; assetId: string; createdAt: number; };
 export type AssetMintHistory = Omit<AssetHistoryBase, 'type'> & { 
     type: 'mint';
     expressionValues: ExpressionValue[]; 
@@ -160,7 +160,7 @@ export type RawAssetsHandlers = {
     updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit) => Promise<UpdateAssetExpressionValueResponse>;
     updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps, headers?: HeadersInit) => Promise<UpdateAssetsExpressionValueResponse>;
     updateCollectionAssetsExpressionValue: (props: UpdateCollectionAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
-    updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps, headers?: HeadersInit) => Promise<BasicResponse<{ log: BulkExpressionValueLog[]; }>>;
+    updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps, headers?: HeadersInit) => Promise<BasicResponse<{ log: false|BulkExpressionValueLog[]; }>>;
 };
 
 export type SafeAssetsHandlers = {
@@ -194,5 +194,5 @@ export type SafeAssetsHandlers = {
     updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
     updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
     updateCollectionAssetsExpressionValue: (props: UpdateCollectionAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
-    updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps, headers?: HeadersInit) => Promise<BasicResult<BulkExpressionValueLog[]>>;
+    updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps, headers?: HeadersInit) => Promise<BasicResult<false|(BulkExpressionValueLog[])>>;
 };

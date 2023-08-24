@@ -10,6 +10,7 @@ import { Users } from './resources/users';
 import { Magic } from 'magic-sdk';
 import assetlayerLoginEmail from './modules/assetlayer-login-email';
 import { parseBasicError } from './utils/basic-error';
+import { Currencies } from './resources/currencies';
 
 const magic = (typeof window !== 'undefined') ? new Magic('pk_live_8FB965353AF0A346') : undefined;
 let lastTokenGenerated = 0;
@@ -28,6 +29,7 @@ export class AssetLayer {
   apps: Apps;
   assets: Assets;
   collections: Collections;
+  currencies: Currencies;
   equips: Equips;
   expressions: Expressions;
   listings: Listings;
@@ -42,6 +44,7 @@ export class AssetLayer {
     this.apps = new Apps(parent, config);
     this.assets = new Assets(parent, config);
     this.collections = new Collections(parent, config);
+    this.currencies = new Currencies(parent, config);
     this.equips = new Equips(parent, config);
     this.expressions = new Expressions(parent, config);
     this.listings = new Listings(parent, config);

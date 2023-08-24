@@ -1,6 +1,6 @@
 import type { BasicResponse, BasicResult, BasicSuccessResponse } from "./basic-types";
 
-export type ExpressionAttributeType = 'Image' | 'Audio' | 'Video' | 'Spine 4.0' | 'AssetBundle';
+export type ExpressionAttributeType = 'Image' | 'Audio' | 'Video' | 'Character_Spine4.0' | 'AssetBundle';
 
 export type Expression = {
     slotId: string;

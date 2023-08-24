@@ -121,8 +121,14 @@ With this method you can await the response:
 const success = await assetlayer.loginUser({ didToken });
 ```
 
-When not passing a didToken, you must rely on a callback.
-To handle a successful login you have to pass in an onSuccess handler:
+You can also pass it a pre-registered didtoken:
+
+```js
+const success = await assetlayer.loginUser({ registeredDidToken });
+```
+
+If not passing a didToken, awaiting the response is not effective.
+To receive an update after success you can pass in an onSuccess handler:
 
 ```js
 assetlayer.loginUser({ onSuccess: async () => console.log(await assetlayer.users.getUser()) });

@@ -7,6 +7,7 @@ export type Currency = {
     currencyIcon?: string;
 };
 export type CurrencySummary = Currency & { totalIssued: number; owners: number; };
+export type CurrencyBalance = Currency & { balance: number; };
 
 export type GetCurrencyProps = { currencyId: string; };
 export type GetCurrencyBalanceProps = { appId: string; walletUserId?: string; };
@@ -17,6 +18,8 @@ export type TransferCurrencyProps = { currencyId: string; amount: number; receiv
 
 export type RawCurrencyHandlers = {
     info: (props: GetCurrencyProps, headers?: HeadersInit) => Promise<BasicResponse<{ currency: Currency; }>>;
+    getCurrency: (props: GetCurrencyProps, headers?: HeadersInit) => Promise<BasicResponse<{ currency: Currency; }>>;
+    balance: (props: GetCurrencyBalanceProps, headers?: HeadersInit) => Promise<BasicResponse<CurrencyBalance>>;
     getCurrencyBalance: (props: GetCurrencyBalanceProps, headers?: HeadersInit) => Promise<BasicResponse<{ balance: number; }>>;
     getCurrencySummary: (props: GetCurrencySummaryProps, headers?: HeadersInit) => Promise<BasicResponse<{ currencies: CurrencySummary[]; }>>;
     increaseCurrencyBalance: (props: IncreaseCurrencyBalanceProps, headers?: HeadersInit) => Promise<BasicResponse<{ balance: number; }>>;
@@ -26,6 +29,8 @@ export type RawCurrencyHandlers = {
 
 export type SafeCurrencyHandlers = {
     info: (props: GetCurrencyProps, headers?: HeadersInit) => Promise<BasicResult<Currency>>;
+    getCurrency: (props: GetCurrencyProps, headers?: HeadersInit) => Promise<BasicResult<Currency>>;
+    balance: (props: GetCurrencyBalanceProps, headers?: HeadersInit) => Promise<BasicResult<CurrencyBalance>>;
     getCurrencyBalance: (props: GetCurrencyBalanceProps, headers?: HeadersInit) => Promise<BasicResult<number>>;
     getCurrencySummary: (props: GetCurrencySummaryProps, headers?: HeadersInit) => Promise<BasicResult<CurrencySummary[]>>;
     increaseCurrencyBalance: (props: IncreaseCurrencyBalanceProps, headers?: HeadersInit) => Promise<BasicResult<number>>;

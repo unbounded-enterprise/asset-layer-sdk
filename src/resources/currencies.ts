@@ -5,6 +5,8 @@ import { DecreaseCurrencyBalanceProps, GetCurrencyBalanceProps, GetCurrencyProps
 
 export class Currencies extends Base {
   info = async (props: GetCurrencyProps, headers?: HeadersInit) => ((await this.raw.info(props, headers)).body.currency);
+  getCurrency = async (props: GetCurrencyProps, headers?: HeadersInit) => ((await this.raw.getCurrency(props, headers)).body.currency);
+  balance = async (props: GetCurrencyBalanceProps, headers?: HeadersInit) => ((await this.raw.balance(props, headers)).body);
   getCurrencyBalance = async (props: GetCurrencyBalanceProps, headers?: HeadersInit) => ((await this.raw.getCurrencyBalance(props, headers)).body.balance);
   getCurrencySummary = async (props: GetCurrencySummaryProps, headers?: HeadersInit) => ((await this.raw.getCurrencySummary(props, headers)).body.currencies);
   increaseCurrencyBalance = async (props: IncreaseCurrencyBalanceProps, headers?: HeadersInit) => ((await this.raw.increaseCurrencyBalance(props, headers)).body.balance);
@@ -13,6 +15,8 @@ export class Currencies extends Base {
 
   raw: RawCurrencyHandlers = {
     info: async (props, headers) => this.request('/currency/info' + propsToQueryString(props), { headers }),
+    getCurrency: async (props, headers) => this.request('/currency/info' + propsToQueryString(props), { headers }),
+    balance: async (props, headers) => this.request('/currency/balance' + propsToQueryString(props), { headers }),
     getCurrencyBalance: async (props, headers) => this.request('/currency/balance' + propsToQueryString(props), { headers }),
     getCurrencySummary: async (props, headers) => this.request('/currency/summary' + propsToQueryString(props), { headers }),
     increaseCurrencyBalance: async (props, headers) => this.request('/currency/increaseBalance', { method: 'POST', body: JSON.stringify(props), headers }),
@@ -23,6 +27,12 @@ export class Currencies extends Base {
   safe: SafeCurrencyHandlers = {
     info: async (props, headers) => {
       try { return { result: await this.info(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    getCurrency: async (props, headers) => {
+      try { return { result: await this.getCurrency(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    balance: async (props, headers) => {
+      try { return { result: await this.balance(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
     getCurrencyBalance: async (props, headers) => {
       try { return { result: await this.getCurrencyBalance(props, headers) }; }

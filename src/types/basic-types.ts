@@ -24,4 +24,4 @@ export type BasicResponse<T> = {
 }
 
 export type BasicSuccessResponse = { statusCode: number; success: boolean; };
-export type BasicUpdatedResponse = BasicSuccessResponse & {  updated: boolean; };
+export type BasicUpdatedResponse = BasicSuccessResponse & { updated: boolean; };

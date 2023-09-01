@@ -91,7 +91,7 @@ export type SafeAppsHandlers = {
     slots: (props: GetAppSlotsAllProps, headers?: HeadersInit) => Promise<BasicResult<SlotWithExpressions[]|string[]>>;
     getAppSlots: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<BasicResult<SlotWithExpressions[]>>;
     getAppSlotIds: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
-    listings: (props: GetAppsWithListingsAllProps, headers?: HeadersInit) => Promise<BasicResult<App[]|AppIdOnly[]>>;
+    listings: (props: GetAppsWithListingsAllProps, headers?: HeadersInit) => Promise<BasicResult<AppWithListingsCount[]|AppIdOnly[]>>;
     getAppsWithListings: (headers?: HeadersInit) => Promise<BasicResult<AppWithListingsCount[]>>;
     getAppIdsWithListings: (headers?: HeadersInit) => Promise<BasicResult<AppIdOnly[]>>;
 };

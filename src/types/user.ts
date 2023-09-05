@@ -27,7 +27,8 @@ export type UserLoginProps = {
     registeredDidToken?: string; 
     showUI?: boolean; 
     onSuccess?: () => void; 
-    onError?: (e:BasicError) => void; 
+    onError?: (message:string) => void; 
+    onComplete?: (loggedIn:boolean) => void;
 };
 export type RegisterUserProps = { otp?: string };
 export type RegisterDidProps = { otp: string };

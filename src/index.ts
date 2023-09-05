@@ -94,6 +94,8 @@ export class AssetLayer {
     if (props?.registeredDidToken) {
       this.didToken = props.registeredDidToken;
       this.initialized = true;
+      if (props?.onSuccess) props.onSuccess();
+      if (props?.onComplete) props.onComplete(true);
       return true;
     }
     if (!magic) return false;
@@ -110,19 +112,30 @@ export class AssetLayer {
       async function register(token: string) {
         const { result: otp, error: e1 } = await parent.users.safe.getOTP({ didtoken: token! });
         console.log('otp!', otp);
-        if (!otp) throw new Error('Login Failed [otp]: ' + parseBasicError(e1).message);
+        if (!otp) {
+          const message = 'Login Failed [OTP]: ' + parseBasicError(e1).message;
+          if (props?.onError) props.onError(message);
+          if (props?.onComplete) props.onComplete(false);
+          return false;
+        }
 
         const did = await magic!.user.generateIdToken({ lifespan: 3600, attachment: otp });
         console.log('did2!', did)
         const { result: userInfo, error: e2 } = await parent.users.safe.registerDid({ otp }, { didtoken: did });
 
-        if (!userInfo) throw new Error('Login Failed [reg]: ' + parseBasicError(e2).message);
+        if (!userInfo) {
+          const message = 'Login Failed [Reg]: ' + parseBasicError(e2).message;
+          if (props?.onError) props.onError(message);
+          if (props?.onComplete) props.onComplete(false);
+          return false;
+        }
 
         lastTokenGenerated = Date.now();
         parent.didToken = did;
         if (!parent.initialized) parent.initialized = true;
 
         if (props?.onSuccess) props.onSuccess();
+        if (props?.onComplete) props.onComplete(true);
 
         async function refreshSessionHandler() {
           console.log('refresh time elapsed', Date.now() - lastTokenGenerated);
@@ -144,13 +157,19 @@ export class AssetLayer {
         const frame = document.getElementById('assetlayer-login-iframe');
         if (frame) document.body.removeChild(frame);
 
-        if (!(event.data.type === 'submit')) return false;
+        if (!(event.data.type === 'submit')) {
+          if (props?.onComplete) props.onComplete(false);
+          return false;
+        }
       }
       else if (!props) return false;
       else if (props.didToken) {
         return await register(props.didToken);
       }
-      else if (!props.email) return false;
+      else if (!props.email) {
+        if (props?.onComplete) props.onComplete(false);
+        return false;
+      }
       
       const email = props?.email || event!.data.email;
       console.log('email!', email)
@@ -161,9 +180,8 @@ export class AssetLayer {
         .on('email-otp-sent', () => {
           const otp = window.prompt('Enter Email OTP');
 
-          if (!otp) throw new Error('Invalid OTP');
-      
-          magicHandler.emit('verify-email-otp', otp);
+          if (!otp) console.warn('Invalid OTP');
+          else magicHandler.emit('verify-email-otp', otp);
         })
         .on('invalid-email-otp', () => {
           // magicHandler.emit('cancel');
@@ -184,6 +202,8 @@ export class AssetLayer {
         .catch((e) => {
           const error = parseBasicError(e);
           console.warn('login aborted:', error.message);
+          if (props?.onError) props.onError(error.message);
+          if (props?.onComplete) props.onComplete(false);
         })
     }
 
@@ -209,7 +229,10 @@ export class AssetLayer {
         window.addEventListener('message', emailHandler);
       }
       catch (e) {
-        console.warn('iFrame error');
+        const message = 'iFrame error';
+        console.warn(message);
+        if (props?.onError) props.onError(message);
+        if (props?.onComplete) props.onComplete(false);
       }
     }
   }

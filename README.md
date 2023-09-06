@@ -1,9 +1,9 @@
 [![npm version](https://badge.fury.io/js/isomorphic-unfetch.svg)](https://badge.fury.io/js/isomorphic-unfetch)
 [![npm version](https://badge.fury.io/js/magic-sdk.svg)](https://badge.fury.io/js/magic-sdk)
 
-# Asset Layer Client SDK
+# Asset Layer SDK
 
-> Manage digital assets for your application with [Asset Layer](https://www.assetlayer.com). This Client SDK provides a turn-key solution for integrating your application with Magic Auth and a proxy server.
+> Manage digital assets for your application with [Asset Layer](https://www.assetlayer.com). This Client SDK provides a turn-key solution for integrating your client / server with a proxy or the [Asset Layer API](https://docs.assetlayer.com).
 
 ## Prerequisites
 
@@ -11,15 +11,17 @@ This project requires NodeJS and NPM.
 
 ## Table of contents
 
-- [Asset Layer Client SDK](#asset-layer-client-sdk)
+- [Asset Layer SDK](#asset-layer-sdk)
   - [Getting Started](#getting-started)
   - [Installation](#installation)
   - [Usage](#usage)
     - [Reference the SDK](#reference-the-sdk)
+  - [Client Usage](#client-usage)
     - [Instantiate the SDK](#instantiate-the-sdk)
     - [Load an App](#load-an-app)
     - [Login a User](#login-a-user)
     - [Initialize a User](#handling-an-active-session)
+  - [Server Usage](#server-usage)
   - [Development](#sdk-development)
     - [Building a distribution version](#building-a-distribution-version)
     - [Deploying to NPM](#deploying-to-npm)
@@ -33,13 +35,13 @@ These instructions will help getting started managing your digital assets with [
 To install and set up the library, run:
 
 ```sh
-$ npm install @assetlayer/sdk-client
+$ npm install @assetlayer/sdk
 ```
 
 Or if you prefer using Yarn:
 
 ```sh
-$ yarn add @assetlayer/sdk-client
+$ yarn add @assetlayer/sdk
 ```
 
 ## Usage
@@ -49,19 +51,21 @@ $ yarn add @assetlayer/sdk-client
 You can reference the SDK in two ways:
 
 ```js
-import { AssetLayer } from '@assetlayer/sdk-client';
+import { AssetLayer } from '@assetlayer/sdk';
 ```
 
 OR
 
 ```js
-const { AssetLayer } = require('@assetlayer/sdk-client');
+const { AssetLayer } = require('@assetlayer/sdk');
 ```
+
+## Client Usage
 
 ### Instantiate the SDK
 
 ```js
-const assetlayer = new AssetLayer();
+const assetlayer = new AssetLayer({ baseUrl: "URL_TO_PROXY" });
 ```
 
 ### Load an App
@@ -101,7 +105,7 @@ useful for referencing & importing, allowing for turn-key type-safe app developm
 
 ### Login a User
 
-Logging in a user is as simple as:
+Logging in a user client-side is as simple as:
 
 ```js
 assetlayer.loginUser();
@@ -153,6 +157,17 @@ You can also pass it an onComplete handler:
 
 ```js
 assetlayer.initialize((loggedIn) => { if (!loggedIn) assetlayer.loginUser(); });
+```
+
+## Server Usage
+
+Server use is essentially the same as with the client, minus some user login functionality.
+You can also install the core version for server-only environments that don't need the magic sdk.
+
+### Instantiate the SDK
+
+```js
+const assetlayer = new AssetLayer({ appSecret: process.env.ASSETLAYER_APP_SECRET });
 ```
 
 ## SDK Development

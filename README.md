@@ -3,7 +3,7 @@
 
 # Asset Layer SDK
 
-> Manage digital assets for your application with [Asset Layer](https://www.assetlayer.com). This Client SDK provides a turn-key solution for integrating your client / server with a proxy or the [Asset Layer API](https://docs.assetlayer.com).
+> Manage digital assets for your application with [Asset Layer](https://www.assetlayer.com). This SDK provides a turn-key solution for integrating your client / server with a proxy or the [Asset Layer API](https://docs.assetlayer.com).
 
 ## Prerequisites
 
@@ -22,6 +22,7 @@ This project requires NodeJS and NPM.
     - [Login a User](#login-a-user)
     - [Initialize a User](#handling-an-active-session)
   - [Server Usage](#server-usage)
+    - [Initialize the SDK](#initialize-the-sdk)
   - [Development](#sdk-development)
     - [Building a distribution version](#building-a-distribution-version)
     - [Deploying to NPM](#deploying-to-npm)
@@ -164,7 +165,7 @@ assetlayer.initialize((loggedIn) => { if (!loggedIn) assetlayer.loginUser(); });
 Server use is essentially the same as with the client, minus some user login functionality.
 You can also install the core version for server-only environments that don't need the magic sdk.
 
-### Instantiate the SDK
+### Initialize the SDK
 
 ```js
 const assetlayer = new AssetLayer({ appSecret: process.env.ASSETLAYER_APP_SECRET });

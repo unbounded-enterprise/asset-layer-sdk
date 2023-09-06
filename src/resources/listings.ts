@@ -1,11 +1,11 @@
-import type { GetAppListingsProps, GetCollectionListingsProps, GetUserListingsProps, ListAssetProps, UpdateListingProps, GetListingProps, BuyListingProps, RemoveListingProps, RawListingsHandlers, SafeListingsHandlers, ListAssetsProps, ListCollectionAssetsProps, CreateListingAllProps, GetAppListingsAllProps, GetUserListingsAllProps, GetCollectionsListingsAllProps, GetCollectionsListingsProps, GetUserCollectionListingsProps, GetUserHistoryProps, GetUserListingsMinProps } from '../types/listing';
+import type { GetAppListingsProps, GetCollectionListingsProps, GetUserListingsProps, ListAssetProps, UpdateListingProps, GetListingProps, BuyListingProps, RemoveListingProps, RawListingsHandlers, SafeListingsHandlers, ListAssetsProps, ListCollectionAssetsProps, ListingNewProps, ListingAppProps, ListingUserProps, ListingCollectionProps, GetCollectionsListingsProps, GetUserCollectionListingsProps, GetUserHistoryProps, GetUserListingsMinProps } from '../types/listing';
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
 
 export class Listings extends Base {
   getListing = async (props: GetListingProps, headers?: HeadersInit) => ((await this.raw.getListing(props, headers)).body.listing);
-  user = async (props?: GetUserListingsAllProps, headers?: HeadersInit) => ((await this.raw.user(props, headers)).body.listings);
+  user = async (props?: ListingUserProps, headers?: HeadersInit) => ((await this.raw.user(props, headers)).body.listings);
   getUserListings = async (props?: GetUserListingsMinProps, headers?: HeadersInit) => ((await this.raw.getUserListings(props, headers)).body.listings);
   getUserListingsCounts = async (props?: GetUserListingsMinProps, headers?: HeadersInit) => ((await this.raw.getUserListingsCounts(props, headers)).body.listings);
   getUserCollectionListings = async (props: GetUserCollectionListingsProps, headers?: HeadersInit) => ((await this.raw.getUserCollectionListings(props, headers)).body.listings);
@@ -14,16 +14,16 @@ export class Listings extends Base {
   getUserSalesCounts = async (props?: GetUserHistoryProps, headers?: HeadersInit) => ((await this.raw.getUserSalesCounts(props, headers)).body.listings);
   getUserPurchases = async (props?: GetUserHistoryProps, headers?: HeadersInit) => ((await this.raw.getUserPurchases(props, headers)).body.listings);
   getUserPurchasesCounts = async (props?: GetUserHistoryProps, headers?: HeadersInit) => ((await this.raw.getUserPurchasesCounts(props, headers)).body.listings);
-  collection = async (props: GetCollectionsListingsAllProps, headers?: HeadersInit) => ((await this.raw.collection(props, headers)).body.listing);
+  collection = async (props: ListingCollectionProps, headers?: HeadersInit) => ((await this.raw.collection(props, headers)).body.listing);
   getCollectionListings = async (props: GetCollectionListingsProps, headers?: HeadersInit) => ((await this.raw.getCollectionListings(props, headers)).body.listing);
   getCollectionsListings = async (props: GetCollectionsListingsProps, headers?: HeadersInit) => ((await this.raw.getCollectionsListings(props, headers)).body.listing);
   getCollectionListingsCounts = async (props: GetCollectionListingsProps, headers?: HeadersInit) => ((await this.raw.getCollectionListingsCounts(props, headers)).body.listing);
   getCollectionsListingsCounts = async (props: GetCollectionsListingsProps, headers?: HeadersInit) => ((await this.raw.getCollectionsListingsCounts(props, headers)).body.listing);
-  app = async (props: GetAppListingsAllProps, headers?: HeadersInit) => ((await this.raw.app(props, headers)).body.listing);
+  app = async (props: ListingAppProps, headers?: HeadersInit) => ((await this.raw.app(props, headers)).body.listing);
   getAppListings = async (props: GetAppListingsProps, headers?: HeadersInit) => ((await this.raw.getAppListings(props, headers)).body.listing);
   getAppListingsCounts = async (props: GetAppListingsProps, headers?: HeadersInit) => ((await this.raw.getAppListingsCounts(props, headers)).body.listing);
   getAppListingsStats = async (props: GetAppListingsProps, headers?: HeadersInit) => ((await this.raw.getAppListingsStats(props, headers)).body.listing);
-  new = async (props: CreateListingAllProps, headers?: HeadersInit) => (((await this.raw.new(props, headers)).body as any)[(props.collectionId || props.assetIds) ? 'assetIds' : 'listing']);
+  new = async (props: ListingNewProps, headers?: HeadersInit) => (((await this.raw.new(props, headers)).body as any)[(props.collectionId || props.assetIds) ? 'assetIds' : 'listing']);
   listAsset = async (props: ListAssetProps, headers?: HeadersInit) => ((await this.raw.listAsset(props, headers)).body.listing);
   listAssets = async (props: ListAssetsProps, headers?: HeadersInit) => ((await this.raw.listAssets(props, headers)).body.assetIds);
   listCollectionAssets = async (props: ListCollectionAssetsProps, headers?: HeadersInit) => ((await this.raw.listCollectionAssets(props, headers)).body.assetIds);

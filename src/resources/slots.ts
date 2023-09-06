@@ -1,4 +1,4 @@
-import type { GetSlotCollectionsAllProps, GetSlotCollectionsProps, GetSlotProps, RawSlotsHandlers, SafeSlotsHandlers } from '../types/slot';
+import type { SlotCollectionsProps, GetSlotCollectionsProps, GetSlotProps, RawSlotsHandlers, SafeSlotsHandlers } from '../types/slot';
 import type { CreateExpressionProps, GetSlotExpressionsProps, UpdateExpressionProps } from '../types/expression';
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
@@ -6,7 +6,7 @@ import { parseBasicError } from '../utils/basic-error';
 
 export class Slots extends Base {
   getSlot = async (props: GetSlotProps, headers?: HeadersInit) => ((await this.raw.getSlot(props, headers)).body.slot);
-  collections = async (props: GetSlotCollectionsAllProps, headers?: HeadersInit) => ((await this.raw.collections(props, headers)).body.slot.collections);
+  collections = async (props: SlotCollectionsProps, headers?: HeadersInit) => ((await this.raw.collections(props, headers)).body.slot.collections);
   getSlotCollections = async (props: GetSlotCollectionsProps, headers?: HeadersInit) => ((await this.raw.getSlotCollections(props, headers)).body.slot.collections);
   getSlotCollectionIds = async (props: GetSlotCollectionsProps, headers?: HeadersInit) => ((await this.raw.getSlotCollectionIds(props, headers)).body.slot.collections);
 

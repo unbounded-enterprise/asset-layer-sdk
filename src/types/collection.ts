@@ -35,10 +35,10 @@ export type CollectionWithAssets = Omit<Collection, 'assets'> & {
 
 export type GetCollectionProps = { collectionId: string; }
 export type GetCollectionsProps = { collectionIds: string[]; }
-export type GetCollectionsAllProps = { collectionId?: string; collectionIds?: string[]; };
+export type CollectionInfoProps = { collectionId?: string; collectionIds?: string[]; };
 
 export type GetCollectionAssetsProps = { collectionId: string; serials?: string; };
-export type GetCollectionAssetsAllProps = GetCollectionAssetsProps & { idOnly?: boolean; };
+export type CollectionAssetsProps = GetCollectionAssetsProps & { idOnly?: boolean; };
 
 export type CreateCollectionProps = {
     collectionName: string;
@@ -74,10 +74,10 @@ export type GetCollectionAssetIdsResponse = BasicResponse<{ collection: Collecti
 export type CreateCollectionResponse = BasicResponse<{ collectionId: string; }>;
 
 export type RawCollectionsHandlers = {
-    info: (props: GetCollectionsAllProps, headers?: HeadersInit) => Promise<GetCollectionsResponse>;
+    info: (props: CollectionInfoProps, headers?: HeadersInit) => Promise<GetCollectionsResponse>;
     getCollection: (props: GetCollectionProps, headers?: HeadersInit) => Promise<GetCollectionsResponse>;
     getCollections: (props: GetCollectionsProps, headers?: HeadersInit) => Promise<GetCollectionsResponse>;
-    assets: (props: GetCollectionAssetsAllProps, headers?: HeadersInit) => Promise<GetCollectionAssetsResponse|GetCollectionAssetIdsResponse>;
+    assets: (props: CollectionAssetsProps, headers?: HeadersInit) => Promise<GetCollectionAssetsResponse|GetCollectionAssetIdsResponse>;
     getCollectionAssets: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<GetCollectionAssetsResponse>;
     getCollectionAssetIds: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<GetCollectionAssetIdsResponse>;
     createCollection: (props: CreateCollectionProps, headers?: HeadersInit) => Promise<CreateCollectionResponse>;
@@ -88,10 +88,10 @@ export type RawCollectionsHandlers = {
 }
 
 export type SafeCollectionsHandlers = {
-    info: (props: GetCollectionsAllProps, headers?: HeadersInit) => Promise<BasicResult<Collection|Collection[]>>;
+    info: (props: CollectionInfoProps, headers?: HeadersInit) => Promise<BasicResult<Collection|Collection[]>>;
     getCollection: (props: GetCollectionProps, headers?: HeadersInit) => Promise<BasicResult<Collection>>;
     getCollections: (props: GetCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<Collection[]>>;
-    assets: (props: GetCollectionAssetsAllProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]|string[]>>;
+    assets: (props: CollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]|string[]>>;
     getCollectionAssets: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]>>;
     getCollectionAssetIds: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<AssetIdOnly[]>>;
     createCollection: (props: CreateCollectionProps, headers?: HeadersInit) => Promise<BasicResult<string>>;

@@ -1,16 +1,16 @@
-import type { GetAppProps, GetAppSlotsAllProps, GetAppSlotsProps, GetAppsAllProps, GetAppsProps, GetAppsWithListingsAllProps, RawAppsHandlers, SafeAppsHandlers } from '../types/app';
+import type { GetAppProps, AppSlotsProps, GetAppSlotsProps, AppInfoProps, GetAppsProps, AppListingsProps, RawAppsHandlers, SafeAppsHandlers } from '../types/app';
 import { Base } from './base';
 import { parseBasicError } from '../utils/basic-error';
 import { propsToQueryString } from '../utils/basic-format';
 
 export class Apps extends Base {
-  info = async (props: GetAppsAllProps, headers?: HeadersInit) => ((await this.raw.info(props, headers)).body.app);
+  info = async (props: AppInfoProps, headers?: HeadersInit) => ((await this.raw.info(props, headers)).body.app);
   getApp = async (props: GetAppProps, headers?: HeadersInit) => ((await this.raw.getApp(props, headers)).body.app);
   getApps = async (props: GetAppsProps, headers?: HeadersInit) => ((await this.raw.getApps(props, headers)).body.app);
-  slots = async (props: GetAppSlotsAllProps, headers?: HeadersInit) => ((await this.raw.slots(props, headers)).body.app.slots);
+  slots = async (props: AppSlotsProps, headers?: HeadersInit) => ((await this.raw.slots(props, headers)).body.app.slots);
   getAppSlots = async (props: GetAppSlotsProps, headers?: HeadersInit) => ((await this.raw.getAppSlots(props, headers)).body.app.slots);
   getAppSlotIds = async (props: GetAppSlotsProps, headers?: HeadersInit) => ((await this.raw.getAppSlotIds(props, headers)).body.app.slots);
-  listings = async (props: GetAppsWithListingsAllProps, headers?: HeadersInit) => ((await this.raw.listings(props, headers)).body.apps);
+  listings = async (props: AppListingsProps, headers?: HeadersInit) => ((await this.raw.listings(props, headers)).body.apps);
   getAppsWithListings = async (headers?: HeadersInit) => ((await this.raw.getAppsWithListings(headers)).body.apps);
   getAppIdsWithListings = async (headers?: HeadersInit) => ((await this.raw.getAppIdsWithListings(headers)).body.apps);
 

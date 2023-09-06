@@ -1,17 +1,17 @@
-import type { UpdateAssetProps, GetUserCollectionAssetsProps, GetUserCollectionsAssetsProps, GetUserSlotAssetsProps, GetUserSlotsAssetsProps, GetAssetProps, GetAssetsProps, MintAssetsProps, SendAssetProps, SendAssetsProps, SendCollectionAssetsProps, SendLowestAssetProps, SendRandomAssetProps, UpdateAssetsProps, UpdateCollectionAssetsProps, SafeAssetsHandlers, RawAssetsHandlers, SendAssetAllProps, UpdateAssetsAllProps, UpdateAssetResponse, UpdateAssetsResponse, UpdateCollectionAssetsResponse, GetAssetsAllProps, GetUserAssetsAllProps, GetUserAssetsBaseProps, GetAssetHistoryProps, GetAssetOwnershipHistoryProps } from '../types/asset';
+import type { UpdateAssetProps, GetUserCollectionAssetsProps, GetUserCollectionsAssetsProps, GetUserSlotAssetsProps, GetUserSlotsAssetsProps, GetAssetProps, GetAssetsProps, MintAssetsProps, SendAssetProps, SendAssetsProps, SendCollectionAssetsProps, SendLowestAssetProps, SendRandomAssetProps, UpdateAssetsProps, UpdateCollectionAssetsProps, SafeAssetsHandlers, RawAssetsHandlers, AssetSendProps, AssetUpdateProps, UpdateAssetResponse, UpdateAssetsResponse, UpdateCollectionAssetsResponse, AssetInfoProps, AssetUserProps, GetUserAssetsBaseProps, GetAssetHistoryProps, GetAssetOwnershipHistoryProps } from '../types/asset';
 import type { UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from '../types/expression';
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
 
 export class Assets extends Base {
-  info = async (props: GetAssetsAllProps, headers?: HeadersInit) => {
+  info = async (props: AssetInfoProps, headers?: HeadersInit) => {
     const response = await this.raw.info(props, headers);
     return (props.assetIds) ? response.body.assets : response.body.assets[0];
   };
   getAsset = async (props: GetAssetProps, headers?: HeadersInit) => ((await this.raw.getAsset(props, headers)).body.assets[0]);
   getAssets = async (props: GetAssetsProps, headers?: HeadersInit) => ((await this.raw.getAssets(props, headers)).body.assets);
-  user = async (props?: GetUserAssetsAllProps, headers?: HeadersInit) => ((await this.raw.user(props, headers)).body.assets);
+  user = async (props?: AssetUserProps, headers?: HeadersInit) => ((await this.raw.user(props, headers)).body.assets);
   getUserAssets = async (props?: GetUserAssetsBaseProps, headers?: HeadersInit) => ((await this.raw.getUserAssets(props, headers)).body.assets);
   getUserAssetIds = async (props?: GetUserAssetsBaseProps, headers?: HeadersInit) => ((await this.raw.getUserAssetIds(props, headers)).body.assets);
   getUserAssetsCounts = async (props?: GetUserAssetsBaseProps, headers?: HeadersInit) => ((await this.raw.getUserAssetsCounts(props, headers)).body.assets);
@@ -23,13 +23,13 @@ export class Assets extends Base {
   getAssetMarketHistory = async (props: GetAssetHistoryProps, headers?: HeadersInit) => ((await this.raw.getAssetMarketHistory(props, headers)).body.history);
   getAssetOwnershipHistory = async (props: GetAssetOwnershipHistoryProps, headers?: HeadersInit) => ((await this.raw.getAssetOwnershipHistory(props, headers)).body.history);
   mintAssets = async (props: MintAssetsProps, headers?: HeadersInit) => ((await this.raw.mintAssets(props, headers)).success);
-  send = async (props: SendAssetAllProps, headers?: HeadersInit) => ((await this.raw.send(props, headers)).body);
+  send = async (props: AssetSendProps, headers?: HeadersInit) => ((await this.raw.send(props, headers)).body);
   sendAsset = async (props: SendAssetProps, headers?: HeadersInit) => ((await this.raw.sendAsset(props, headers)).body);
   sendAssets = async (props: SendAssetsProps, headers?: HeadersInit) => ((await this.raw.sendAssets(props, headers)).body);
   sendCollectionAssets = async (props: SendCollectionAssetsProps, headers?: HeadersInit) => ((await this.raw.sendCollectionAssets(props, headers)).body);
   sendLowestAsset = async (props: SendLowestAssetProps, headers?: HeadersInit) => ((await this.raw.sendLowestAsset(props, headers)).body);
   sendRandomAsset = async (props: SendRandomAssetProps, headers?: HeadersInit) => ((await this.raw.sendRandomAsset(props, headers)).body);
-  update = async (props: UpdateAssetsAllProps, headers?: HeadersInit) => {
+  update = async (props: AssetUpdateProps, headers?: HeadersInit) => {
     const response = await this.raw.update(props, headers);
     return (props.collectionId) ? (response as UpdateCollectionAssetsResponse).body.collectionId
       : (props.assetIds) ? (response as UpdateAssetsResponse).body.assetIds

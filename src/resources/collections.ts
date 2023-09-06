@@ -1,16 +1,16 @@
-import type { ActivateCollectionProps, CreateCollectionProps, GetCollectionAssetsAllProps, GetCollectionAssetsProps, GetCollectionProps, GetCollectionsAllProps, GetCollectionsProps, RawCollectionsHandlers, SafeCollectionsHandlers, UpdateCollectionImageProps, UpdateCollectionProps } from '../types/collection';
+import type { ActivateCollectionProps, CreateCollectionProps, CollectionAssetsProps, GetCollectionAssetsProps, GetCollectionProps, CollectionInfoProps, GetCollectionsProps, RawCollectionsHandlers, SafeCollectionsHandlers, UpdateCollectionImageProps, UpdateCollectionProps } from '../types/collection';
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
 
 export class Collections extends Base {
-  info = async (props: GetCollectionsAllProps, headers?: HeadersInit) => {
+  info = async (props: CollectionInfoProps, headers?: HeadersInit) => {
     const response = await this.raw.info(props, headers);
     return (props.collectionIds) ? response.body.collections : response.body.collections[0];
   };
   getCollection = async (props: GetCollectionProps, headers?: HeadersInit) => ((await this.raw.getCollection(props, headers)).body.collections[0]);
   getCollections = async (props: GetCollectionsProps, headers?: HeadersInit) => ((await this.raw.getCollections(props, headers)).body.collections);
-  assets = async (props: GetCollectionAssetsAllProps, headers?: HeadersInit) => ((await this.raw.getCollectionAssets(props, headers)).body.collection.assets);
+  assets = async (props: CollectionAssetsProps, headers?: HeadersInit) => ((await this.raw.getCollectionAssets(props, headers)).body.collection.assets);
   getCollectionAssets = async (props: GetCollectionAssetsProps, headers?: HeadersInit) => ((await this.raw.getCollectionAssets(props, headers)).body.collection.assets);
   getCollectionAssetIds = async (props: GetCollectionAssetsProps, headers?: HeadersInit) => ((await this.raw.getCollectionAssetIds(props, headers)).body.collection.assets);
   createCollection = async (props: CreateCollectionProps, headers?: HeadersInit) => ((await this.raw.createCollection(props, headers)).body.collectionId);

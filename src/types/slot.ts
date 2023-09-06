@@ -32,7 +32,7 @@ export type SlotWithExpressionsAndCollections = Omit<Slot, 'expressions'|'collec
 export type GetSlotProps = { slotId: string; }
 
 export type GetSlotCollectionsProps = { slotId: string; includeDeactivated?: boolean; };
-export type GetSlotCollectionsAllProps = GetSlotCollectionsProps & { idOnly?: boolean; };
+export type SlotCollectionsProps = GetSlotCollectionsProps & { idOnly?: boolean; };
 
 export type GetSlotResponse = BasicResponse<{ slot: Slot; }>;
 export type GetSlotCollectionsResponse = BasicResponse<{ slot: SlotWithCollections; }>;
@@ -40,7 +40,7 @@ export type GetSlotCollectionsIdsResponse = BasicResponse<{ slot: Slot; }>;
 
 export type RawSlotsHandlers = {
     getSlot: (props: GetSlotProps, headers?: HeadersInit) => Promise<GetSlotResponse>;
-    collections: (props: GetSlotCollectionsAllProps, headers?: HeadersInit) => Promise<GetSlotCollectionsResponse|GetSlotCollectionsIdsResponse>;
+    collections: (props: SlotCollectionsProps, headers?: HeadersInit) => Promise<GetSlotCollectionsResponse|GetSlotCollectionsIdsResponse>;
     getSlotCollections: (props: GetSlotCollectionsProps, headers?: HeadersInit) => Promise<GetSlotCollectionsResponse>;
     getSlotCollectionIds: (props: GetSlotCollectionsProps, headers?: HeadersInit) => Promise<GetSlotCollectionsIdsResponse>;
 
@@ -52,7 +52,7 @@ export type RawSlotsHandlers = {
 
 export type SafeSlotsHandlers = {
     getSlot: (props: GetSlotProps, headers?: HeadersInit) => Promise<BasicResult<Slot>>;
-    collections: (props: GetSlotCollectionsAllProps, headers?: HeadersInit) => Promise<BasicResult<Collection[]|string[]>>;
+    collections: (props: SlotCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<Collection[]|string[]>>;
     getSlotCollections: (props: GetSlotCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<Collection[]>>;
     getSlotCollectionIds: (props: GetSlotCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
     

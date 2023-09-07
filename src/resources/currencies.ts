@@ -6,8 +6,8 @@ import { DecreaseCurrencyBalanceProps, GetCurrencyBalanceProps, GetCurrencyProps
 export class Currencies extends Base {
   info = async (props: GetCurrencyProps, headers?: HeadersInit) => ((await this.raw.info(props, headers)).body.currency);
   getCurrency = async (props: GetCurrencyProps, headers?: HeadersInit) => ((await this.raw.getCurrency(props, headers)).body.currency);
-  balance = async (props: GetCurrencyBalanceProps, headers?: HeadersInit) => ((await this.raw.balance(props, headers)).body);
-  getCurrencyBalance = async (props: GetCurrencyBalanceProps, headers?: HeadersInit) => ((await this.raw.getCurrencyBalance(props, headers)).body);
+  balance = async (props?: GetCurrencyBalanceProps, headers?: HeadersInit) => ((await this.raw.balance(props, headers)).body);
+  getCurrencyBalance = async (props?: GetCurrencyBalanceProps, headers?: HeadersInit) => ((await this.raw.getCurrencyBalance(props, headers)).body);
   getCurrencySummary = async (props: GetCurrencySummaryProps, headers?: HeadersInit) => ((await this.raw.getCurrencySummary(props, headers)).body.currencies);
   increaseCurrencyBalance = async (props: IncreaseCurrencyBalanceProps, headers?: HeadersInit) => ((await this.raw.increaseCurrencyBalance(props, headers)).body.balance);
   decreaseCurrencyBalance = async (props: DecreaseCurrencyBalanceProps, headers?: HeadersInit) => ((await this.raw.decreaseCurrencyBalance(props, headers)).body.balance);

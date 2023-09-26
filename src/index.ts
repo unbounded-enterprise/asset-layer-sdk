@@ -250,8 +250,9 @@ export class AssetLayer {
 
     try {
       await magic.user.logout();
-    
+      
       this.didToken = '';
+      AssetLayerSessionTokenManager.del();
       if (this.refreshSessionIID) clearInterval(this.refreshSessionIID);
     } catch {
       console.warn('logout err');

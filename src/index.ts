@@ -11,6 +11,7 @@ import { Magic } from 'magic-sdk';
 import assetlayerLoginEmail from './modules/assetlayer-login-email';
 import { parseBasicError } from './utils/basic-error';
 import { Currencies } from './resources/currencies';
+import AssetLayerSessionTokenManager from './resources/sessions';
 
 const magic = (typeof window !== 'undefined') ? new Magic('pk_live_8FB965353AF0A346') : undefined;
 let lastTokenGenerated = 0;
@@ -56,8 +57,14 @@ export class AssetLayer {
 
   async initialize(onComplete?: (loggedIn: boolean) => void) {
     let loggedIn = false;
-    const didToken = await this.getUserDidToken();
-    if (didToken) loggedIn = !!(await this.loginUser({ didToken }));
+
+    const cachedToken = AssetLayerSessionTokenManager.get();
+    if (cachedToken) loggedIn = !!(await this.loginUser({ registeredDidToken: cachedToken }));
+
+    if (!loggedIn) {
+      const didToken = await this.getUserDidToken();
+      if (didToken) loggedIn = !!(await this.loginUser({ didToken }));
+    }
 
     this.initialized = true;
     if (onComplete) onComplete(loggedIn);
@@ -121,6 +128,7 @@ export class AssetLayer {
 
         const did = await magic!.user.generateIdToken({ lifespan: 3600, attachment: otp });
         console.log('did2!', did)
+        const tokenTimestamp = Date.now();
         const { result: userInfo, error: e2 } = await parent.users.safe.registerDid({ otp }, { didtoken: did });
 
         if (!userInfo) {
@@ -130,7 +138,8 @@ export class AssetLayer {
           return false;
         }
 
-        lastTokenGenerated = Date.now();
+        AssetLayerSessionTokenManager.set(did, tokenTimestamp);
+        lastTokenGenerated = tokenTimestamp;
         parent.didToken = did;
         if (!parent.initialized) parent.initialized = true;
 

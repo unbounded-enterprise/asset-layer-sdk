@@ -83,8 +83,8 @@ export type GetAssetOwnershipHistoryProps = GetAssetHistoryProps & { ownersOnly?
 export type MintAssetsProps = {
     collectionId: string;
     number: number;
+    mintTo: string;
     walletUserId?: string;
-    mintTo?: string;
 }
 
 type SendAssetBase = { receiver: string; walletUserId?: string; };

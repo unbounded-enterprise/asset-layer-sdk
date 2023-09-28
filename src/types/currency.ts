@@ -12,8 +12,8 @@ export type CurrencyWithBalance = Currency & { balance: number; };
 export type GetCurrencyProps = { currencyId: string; };
 export type GetCurrencyBalanceProps = { appId?: string; walletUserId?: string; };
 export type GetCurrencySummaryProps = { appId: string; };
-export type IncreaseCurrencyBalanceProps = { currencyId: string; amount: number; walletUserId?: string; };
-export type DecreaseCurrencyBalanceProps = { currencyId: string; amount: number; walletUserId?: string; };
+export type IncreaseCurrencyBalanceProps = { currencyId: string; amount: number; userId?: string; walletUserId?: string; };
+export type DecreaseCurrencyBalanceProps = { currencyId: string; amount: number; userId?: string; walletUserId?: string; };
 export type TransferCurrencyProps = { currencyId: string; amount: number; receiver: string; walletUserId?: string; };
 
 export type RawCurrencyHandlers = {

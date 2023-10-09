@@ -5,6 +5,7 @@ import { Collections } from './resources/collections';
 import { Equips } from './resources/equips';
 import { Expressions } from './resources/expressions';
 import { Listings } from './resources/listings';
+import { Shop } from './resources/shop';
 import { Slots } from './resources/slots';
 import { Users } from './resources/users';
 import { Magic } from 'magic-sdk';
@@ -34,6 +35,7 @@ export class AssetLayer {
   equips: Equips;
   expressions: Expressions;
   listings: Listings;
+  shop: Shop;
   slots: Slots;
   users: Users;
 
@@ -49,6 +51,7 @@ export class AssetLayer {
     this.equips = new Equips(parent, config);
     this.expressions = new Expressions(parent, config);
     this.listings = new Listings(parent, config);
+    this.shop = new Shop(parent, config);
     this.slots = new Slots(parent, config);
     this.users = new Users(parent, config);
 
@@ -289,5 +292,6 @@ export * from './types/currency';
 export * from './types/equip';
 export * from './types/expression';
 export * from './types/listing';
+export * from './types/shop';
 export * from './types/slot';
 export * from './types/user';

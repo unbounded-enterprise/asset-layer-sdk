@@ -20,10 +20,11 @@ export type Listing = {
     appId: string;
     price: number;
     status: ListingStatus;
-    currency: string;
     seller: UserAlias;
     createdAt: number;
     updatedAt: number;
+    currency?: string;
+    currencyId?: string;
     txids?: ListingTXIDs;
     buyer?: UserAlias;
     soldTime?: number;
@@ -63,6 +64,8 @@ type ListAssetBase = {
     liveTime?: number;
     status?: ListingUpdateStatus;
     walletUserId?: string;
+    currencyId?: string;
+    currency?: string;
 }
 export type ListAssetProps = ListAssetBase & { assetId: string; };
 export type ListAssetsProps = ListAssetBase & { assetIds: string[]; };
@@ -75,6 +78,8 @@ export type UpdateListingProps = {
     liveTime?: number;
     status?: ListingUpdateStatus;
     walletUserId?: string;
+    currencyId?: string;
+    currency?: string;
 }
 
 export type BuyListingProps = {

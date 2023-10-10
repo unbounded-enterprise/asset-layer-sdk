@@ -84,7 +84,9 @@ export type UpdateListingProps = {
 
 export type BuyListingProps = {
     listingId: string;
-    price?: number | string;
+    price: number | string;
+    currencyId?: string;
+    currency?: string;
 }
 
 export type RemoveListingProps = {

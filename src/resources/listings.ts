@@ -19,6 +19,8 @@ export class Listings extends Base {
   getCollectionsListings = async (props: GetCollectionsListingsProps, headers?: HeadersInit) => ((await this.raw.getCollectionsListings(props, headers)).body.listing);
   getCollectionListingsCounts = async (props: GetCollectionListingsProps, headers?: HeadersInit) => ((await this.raw.getCollectionListingsCounts(props, headers)).body.listing);
   getCollectionsListingsCounts = async (props: GetCollectionsListingsProps, headers?: HeadersInit) => ((await this.raw.getCollectionsListingsCounts(props, headers)).body.listing);
+  getCollectionListingsStats = async (props: GetCollectionListingsProps, headers?: HeadersInit) => ((await this.raw.getCollectionListingsStats(props, headers)).body.listing);
+  getCollectionsListingsStats = async (props: GetCollectionsListingsProps, headers?: HeadersInit) => ((await this.raw.getCollectionsListingsStats(props, headers)).body.listing);
   app = async (props: ListingAppProps, headers?: HeadersInit) => ((await this.raw.app(props, headers)).body.listing);
   getAppListings = async (props: GetAppListingsProps, headers?: HeadersInit) => ((await this.raw.getAppListings(props, headers)).body.listing);
   getAppListingsCounts = async (props: GetAppListingsProps, headers?: HeadersInit) => ((await this.raw.getAppListingsCounts(props, headers)).body.listing);
@@ -47,6 +49,8 @@ export class Listings extends Base {
     getCollectionsListings: async (props, headers) => this.request('/listing/collection' + propsToQueryString(props), { headers }),
     getCollectionListingsCounts: async (props, headers) => this.request('/listing/collection' + propsToQueryString({ ...props, countsOnly: true }), { headers }),
     getCollectionsListingsCounts: async (props, headers) => this.request('/listing/collection' + propsToQueryString({ ...props, countsOnly: true }), { headers }),
+    getCollectionListingsStats: async (props, headers) => this.request('/listing/collection' + propsToQueryString({ ...props, countsOnly: true, collectionStats: true }), { headers }),
+    getCollectionsListingsStats: async (props, headers) => this.request('/listing/collection' + propsToQueryString({ ...props, countsOnly: true, collectionStats: true }), { headers }),
     app: async (props, headers) => this.request('/listing/app' + propsToQueryString(props), { headers }),
     getAppListings: async (props, headers) => this.request('/listing/app' + propsToQueryString(props), { headers }),
     getAppListingsCounts: async (props, headers) => this.request('/listing/app' + propsToQueryString({ ...props, countsOnly: true }), { headers }),
@@ -105,6 +109,12 @@ export class Listings extends Base {
       catch (e) { return { error: parseBasicError(e) }; } },
     getCollectionsListingsCounts: async (props, headers) => {
       try { return { result: await this.getCollectionsListingsCounts(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    getCollectionListingsStats: async (props, headers) => {
+      try { return { result: await this.getCollectionListingsStats(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    getCollectionsListingsStats: async (props, headers) => {
+      try { return { result: await this.getCollectionsListingsStats(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
     app: async (props, headers) => {
       try { return { result: await this.app(props, headers) }; }

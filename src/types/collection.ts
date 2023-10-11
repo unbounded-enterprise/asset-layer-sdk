@@ -56,6 +56,7 @@ export type CreateCollectionProps = {
 
 export type UpdateCollectionProps = {
     collectionId: string;
+    collectionName?: string;
     description?: string;
     tags?: string[];
     royaltyRecipient?: string;

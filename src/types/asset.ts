@@ -85,7 +85,7 @@ export type MintAssetsProps = {
     number: number;
     mintTo: string;
     walletUserId?: string;
-    includeAssetIds?: string;
+    includeAssetIds?: boolean;
 }
 // export type MintAssetsProps = MintAssetsPropsBase & { includeAssetIds?: string; }
 

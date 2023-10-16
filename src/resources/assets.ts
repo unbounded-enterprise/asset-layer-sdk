@@ -3,6 +3,7 @@ import type { UpdateAssetExpressionValueProps, UpdateAssetExpressionValueRespons
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
+import { BasicSuccessResponse } from 'src/types/basic-types';
 
 export class Assets extends Base {
   info = async (props: AssetInfoProps, headers?: HeadersInit) => {
@@ -24,7 +25,7 @@ export class Assets extends Base {
   getAssetOwnershipHistory = async (props: GetAssetOwnershipHistoryProps, headers?: HeadersInit) => ((await this.raw.getAssetOwnershipHistory(props, headers)).body.history);
   mint = async (props: MintAssetsProps, headers?: HeadersInit) => {
     const response = await this.raw.mint(props, headers);
-    return (props.includeAssetIds) ? (response as MintAssetsWithIdsResponse).body.assetIds : response.success;
+    return (props.includeAssetIds) ? response.body.assetIds : response.success;
   };
   mintAssets = async (props: MintAssetsProps, headers?: HeadersInit) => ((await this.raw.mintAssets(props, headers)).success);
   send = async (props: AssetSendProps, headers?: HeadersInit) => ((await this.raw.send(props, headers)).body);
@@ -69,7 +70,10 @@ export class Assets extends Base {
     getAssetHistory: async (props, headers) => this.request('/asset/history' + propsToQueryString(props), { headers }),
     getAssetMarketHistory: async (props, headers) => this.request('/asset/marketHistory' + propsToQueryString(props), { headers }),
     getAssetOwnershipHistory: async (props, headers) => this.request('/asset/ownershipHistory' + propsToQueryString(props), { headers }),
-    mint: async (props, headers) => this.request('/asset/mint', { method: 'POST', body: JSON.stringify(props), headers }),
+    mint: async (props, headers) => {
+      const response = await this.request<BasicSuccessResponse|MintAssetsWithIdsResponse>('/asset/mint', { method: 'POST', body: JSON.stringify(props), headers });
+      return (props.includeAssetIds) ? response as MintAssetsWithIdsResponse : response as BasicSuccessResponse;
+    },
     mintAssets: async (props, headers) => this.request('/asset/mint', { method: 'POST', body: JSON.stringify(props), headers }),
     send: async (props, headers) => this.request('/asset/send', { method: 'POST', body: JSON.stringify(props), headers }),
     sendAsset: async (props, headers) => this.request('/asset/send', { method: 'POST', body: JSON.stringify(props), headers }),

@@ -1,4 +1,4 @@
-import type { UpdateAssetProps, GetUserCollectionAssetsProps, GetUserCollectionsAssetsProps, GetUserSlotAssetsProps, GetUserSlotsAssetsProps, GetAssetProps, GetAssetsProps, MintAssetsProps, SendAssetProps, SendAssetsProps, SendCollectionAssetsProps, SendLowestAssetProps, SendRandomAssetProps, UpdateAssetsProps, UpdateCollectionAssetsProps, SafeAssetsHandlers, RawAssetsHandlers, AssetSendProps, AssetUpdateProps, UpdateAssetResponse, UpdateAssetsResponse, UpdateCollectionAssetsResponse, AssetInfoProps, AssetUserProps, GetUserAssetsBaseProps, GetAssetHistoryProps, GetAssetOwnershipHistoryProps } from '../types/asset';
+import type { UpdateAssetProps, GetUserCollectionAssetsProps, GetUserCollectionsAssetsProps, GetUserSlotAssetsProps, GetUserSlotsAssetsProps, GetAssetProps, GetAssetsProps, MintAssetsProps, SendAssetProps, SendAssetsProps, SendCollectionAssetsProps, SendLowestAssetProps, SendRandomAssetProps, UpdateAssetsProps, UpdateCollectionAssetsProps, SafeAssetsHandlers, RawAssetsHandlers, AssetSendProps, AssetUpdateProps, UpdateAssetResponse, UpdateAssetsResponse, UpdateCollectionAssetsResponse, AssetInfoProps, AssetUserProps, GetUserAssetsBaseProps, GetAssetHistoryProps, GetAssetOwnershipHistoryProps, MintAssetsWithIdsResponse } from '../types/asset';
 import type { UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from '../types/expression';
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
@@ -22,6 +22,10 @@ export class Assets extends Base {
   getAssetHistory = async (props: GetAssetHistoryProps, headers?: HeadersInit) => ((await this.raw.getAssetHistory(props, headers)).body.history);
   getAssetMarketHistory = async (props: GetAssetHistoryProps, headers?: HeadersInit) => ((await this.raw.getAssetMarketHistory(props, headers)).body.history);
   getAssetOwnershipHistory = async (props: GetAssetOwnershipHistoryProps, headers?: HeadersInit) => ((await this.raw.getAssetOwnershipHistory(props, headers)).body.history);
+  mint = async (props: MintAssetsProps, headers?: HeadersInit) => {
+    const response = await this.raw.mint(props, headers);
+    return (props.includeAssetIds) ? (response as MintAssetsWithIdsResponse).body.assetIds : response.success;
+  };
   mintAssets = async (props: MintAssetsProps, headers?: HeadersInit) => ((await this.raw.mintAssets(props, headers)).success);
   send = async (props: AssetSendProps, headers?: HeadersInit) => ((await this.raw.send(props, headers)).body);
   sendAsset = async (props: SendAssetProps, headers?: HeadersInit) => ((await this.raw.sendAsset(props, headers)).body);
@@ -65,6 +69,7 @@ export class Assets extends Base {
     getAssetHistory: async (props, headers) => this.request('/asset/history' + propsToQueryString(props), { headers }),
     getAssetMarketHistory: async (props, headers) => this.request('/asset/marketHistory' + propsToQueryString(props), { headers }),
     getAssetOwnershipHistory: async (props, headers) => this.request('/asset/ownershipHistory' + propsToQueryString(props), { headers }),
+    mint: async (props, headers) => this.request('/asset/mint', { method: 'POST', body: JSON.stringify(props), headers }),
     mintAssets: async (props, headers) => this.request('/asset/mint', { method: 'POST', body: JSON.stringify(props), headers }),
     send: async (props, headers) => this.request('/asset/send', { method: 'POST', body: JSON.stringify(props), headers }),
     sendAsset: async (props, headers) => this.request('/asset/send', { method: 'POST', body: JSON.stringify(props), headers }),
@@ -126,6 +131,9 @@ export class Assets extends Base {
       catch (e) { return { error: parseBasicError(e) }; } },
     getAssetOwnershipHistory: async (props, headers) => {
       try { return { result: await this.getAssetOwnershipHistory(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    mint: async (props, headers) => {
+      try { return { result: await this.mint(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
     mintAssets: async (props, headers) => {
       try { return { result: await this.mintAssets(props, headers) }; }

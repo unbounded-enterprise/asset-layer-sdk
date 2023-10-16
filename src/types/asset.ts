@@ -85,7 +85,9 @@ export type MintAssetsProps = {
     number: number;
     mintTo: string;
     walletUserId?: string;
+    includeAssetIds?: string;
 }
+// export type MintAssetsProps = MintAssetsPropsBase & { includeAssetIds?: string; }
 
 type SendAssetBase = { receiver: string; walletUserId?: string; };
 export type SendAssetProps = SendAssetBase & { assetId: string; };
@@ -123,6 +125,7 @@ export type GetCollectionsAssetCountsResponse = BasicResponse<{ collections: Ass
 export type GetAssetHistoryResponse = BasicResponse<{ history: AssetHistoryRecord[]; }>;
 export type GetAssetMarketHistoryResponse = BasicResponse<{ history: AssetSendHistory[]; }>;
 export type GetAssetOwnershipHistoryResponse = GetAssetMarketHistoryResponse | BasicResponse<{ history: UserAlias[]; }>;
+export type MintAssetsWithIdsResponse = BasicResponse<{ assetIds: string[]; }>;
 export type SendAssetResponse = BasicResponse<SendAssetResponseBody>;
 export type SendAssetsResponse = BasicResponse<SendAssetsResponseBody>;
 export type UpdateAssetResponse = BasicResponse<{ assetId: string; serial: number; }>;
@@ -144,6 +147,7 @@ export type RawAssetsHandlers = {
     getAssetHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<GetAssetHistoryResponse>;
     getAssetMarketHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<GetAssetMarketHistoryResponse>;
     getAssetOwnershipHistory: (props: GetAssetOwnershipHistoryProps, headers?: HeadersInit) => Promise<GetAssetOwnershipHistoryResponse>;
+    mint: (props: MintAssetsProps, headers?: HeadersInit) => Promise<BasicSuccessResponse|MintAssetsWithIdsResponse>;
     mintAssets: (props: MintAssetsProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
     send: (props: AssetSendProps, headers?: HeadersInit) => Promise<SendAssetResponse|SendAssetsResponse>;
     sendAsset: (props: SendAssetProps, headers?: HeadersInit) => Promise<SendAssetResponse>;
@@ -178,6 +182,7 @@ export type SafeAssetsHandlers = {
     getAssetHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<BasicResult<AssetHistoryRecord[]>>;
     getAssetMarketHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<BasicResult<AssetSendHistory[]>>;
     getAssetOwnershipHistory: (props: GetAssetOwnershipHistoryProps, headers?: HeadersInit) => Promise<BasicResult<AssetSendHistory[]|UserAlias[]>>;
+    mint: (props: MintAssetsProps, headers?: HeadersInit) => Promise<BasicResult<boolean|string[]>>;
     mintAssets: (props: MintAssetsProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
     send: (props: AssetSendProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetResponseBody|SendAssetsResponseBody>>;
     sendAsset: (props: SendAssetProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetResponseBody>>;

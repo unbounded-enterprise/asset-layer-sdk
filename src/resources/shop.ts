@@ -5,7 +5,7 @@ import { BuyItemProps, RawShopHandlers, SafeShopHandlers } from 'src/types/shop'
 
 export class Shop extends Base {
   // newItem = async (props: NewItemProps, headers?: HeadersInit) => ((await this.raw.newItem(props, headers)).body.newItem);
-  buyItem = async (props: BuyItemProps, headers?: HeadersInit) => ((await this.raw.buyItem(props, headers)).buy);
+  buyItem = async (props: BuyItemProps, headers?: HeadersInit) => ((await this.raw.buyItem(props, headers)).assetId);
   summary = async (headers?: HeadersInit) => ((await this.raw.summary(headers)).body.summary);
   // removeItem = async (props: RemoveItemProps, headers?: HeadersInit) => ((await this.raw.removeItem(props, headers)).success);
 

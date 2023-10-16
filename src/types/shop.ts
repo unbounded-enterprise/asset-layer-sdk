@@ -28,7 +28,7 @@ export type NewItemResponseData = {
     price: number;
 };
 
-export type BuyItemResponse = BasicSuccessResponse & { buy: boolean; };
+export type BuyItemResponse = BasicSuccessResponse & { buy: boolean; assetId: string; };
 
 export type ShopItemSummary = {
     itemId: string;
@@ -50,7 +50,7 @@ export type RawShopHandlers = {
 
 export type SafeShopHandlers = {
     // newItem: (props: NewItemProps, headers?: HeadersInit) => Promise<BasicResult<NewItemResponseData>>;
-    buyItem: (props: BuyItemProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+    buyItem: (props: BuyItemProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
     summary: (headers?: HeadersInit) => Promise<BasicResult<ShopItemSummary>>;
     // removeItem: (props: RemoveItemProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
 };

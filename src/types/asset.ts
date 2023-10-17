@@ -147,7 +147,8 @@ export type RawAssetsHandlers = {
     getAssetHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<GetAssetHistoryResponse>;
     getAssetMarketHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<GetAssetMarketHistoryResponse>;
     getAssetOwnershipHistory: (props: GetAssetOwnershipHistoryProps, headers?: HeadersInit) => Promise<GetAssetOwnershipHistoryResponse>;
-    mint: <T extends MintAssetsProps>(props: T, headers?: HeadersInit) => Promise<T['includeAssetIds'] extends true ? MintAssetsWithIdsResponse : BasicSuccessResponse>;
+    mint: <T extends MintAssetsProps>(props: T, headers?: HeadersInit)
+        => Promise<T['includeAssetIds'] extends true ? MintAssetsWithIdsResponse : BasicSuccessResponse>;
     send: (props: AssetSendProps, headers?: HeadersInit) => Promise<SendAssetResponse|SendAssetsResponse>;
     sendAsset: (props: SendAssetProps, headers?: HeadersInit) => Promise<SendAssetResponse>;
     sendAssets: (props: SendAssetsProps, headers?: HeadersInit) => Promise<SendAssetsResponse>;
@@ -181,7 +182,8 @@ export type SafeAssetsHandlers = {
     getAssetHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<BasicResult<AssetHistoryRecord[]>>;
     getAssetMarketHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<BasicResult<AssetSendHistory[]>>;
     getAssetOwnershipHistory: (props: GetAssetOwnershipHistoryProps, headers?: HeadersInit) => Promise<BasicResult<AssetSendHistory[]|UserAlias[]>>;
-    mint: <T extends MintAssetsProps>(props: T, headers?: HeadersInit) => Promise<BasicResult<T['includeAssetIds'] extends true ? string[] : boolean>>;
+    mint: <T extends MintAssetsProps>(props: T, headers?: HeadersInit)
+        => Promise<BasicResult<T['includeAssetIds'] extends true ? string[] : boolean>>;
     send: (props: AssetSendProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetResponseBody|SendAssetsResponseBody>>;
     sendAsset: (props: SendAssetProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetResponseBody>>;
     sendAssets: (props: SendAssetsProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetsResponseBody>>;

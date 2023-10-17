@@ -3,13 +3,7 @@ import type { UpdateAssetExpressionValueProps, UpdateAssetExpressionValueRespons
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
-import { AssetLayer } from 'src';
-
-const al = new AssetLayer();
-// async function mint<T extends MintAssetsProps>(props: T, headers?: HeadersInit): Promise<T['includeAssetIds'] extends true ? string[] : boolean>;
-async function func1() {
-  const raw = await al.assets.safe.mint({ collectionId: '123', number: 1, mintTo: '', includeAssetIds: true });
-}
+import { BasicSuccessResponse } from 'src/types/basic-types';
 
 export class Assets extends Base {
   info = async (props: AssetInfoProps, headers?: HeadersInit) => {
@@ -30,7 +24,7 @@ export class Assets extends Base {
   getAssetMarketHistory = async (props: GetAssetHistoryProps, headers?: HeadersInit) => ((await this.raw.getAssetMarketHistory(props, headers)).body.history);
   getAssetOwnershipHistory = async (props: GetAssetOwnershipHistoryProps, headers?: HeadersInit) => ((await this.raw.getAssetOwnershipHistory(props, headers)).body.history);
   async mint<T extends MintAssetsProps> (props: T, headers?: HeadersInit): Promise<T['includeAssetIds'] extends true ? string[] : boolean>;
-  async mint(props: MintAssetsProps, headers?: HeadersInit) {
+  async mint<T extends MintAssetsProps> (props: T, headers?: HeadersInit) {
     const response = await this.raw.mint(props, headers);
     return (props.includeAssetIds) ? (response as MintAssetsWithIdsResponse).body.assetIds : response.success;
   };

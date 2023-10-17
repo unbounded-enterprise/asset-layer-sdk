@@ -1,16 +1,21 @@
-import type { GetAppProps, AppSlotsProps, GetAppSlotsProps, AppInfoProps, GetAppsProps, AppListingsProps, RawAppsHandlers, SafeAppsHandlers } from '../types/app';
+import type { GetAppProps, AppSlotsProps, GetAppSlotsProps, AppInfoProps, GetAppsProps, AppListingsProps, RawAppsHandlers, SafeAppsHandlers, App, GetAppResponse, GetAppsResponse, AppIdOnly, AppWithListingsCount } from '../types/app';
+import type { SlotWithExpressions } from '../types/slot';
 import { Base } from './base';
 import { parseBasicError } from '../utils/basic-error';
 import { propsToQueryString } from '../utils/basic-format';
+import { AssetLayer } from 'src';
 
 export class Apps extends Base {
-  info = async (props: AppInfoProps, headers?: HeadersInit) => ((await this.raw.info(props, headers)).body.app);
+  async info<T extends AppInfoProps> (props: T, headers?: HeadersInit): Promise<T['appIds'] extends string[] ? App[] : App>;
+  async info<T extends AppInfoProps> (props: T, headers?: HeadersInit) { return ((await this.raw.info<T>(props, headers)).body.app); };
   getApp = async (props: GetAppProps, headers?: HeadersInit) => ((await this.raw.getApp(props, headers)).body.app);
   getApps = async (props: GetAppsProps, headers?: HeadersInit) => ((await this.raw.getApps(props, headers)).body.app);
-  slots = async (props: AppSlotsProps, headers?: HeadersInit) => ((await this.raw.slots(props, headers)).body.app.slots);
+  async slots<T extends AppSlotsProps> (props: T, headers?: HeadersInit): Promise<T['idOnly'] extends true ? string[] : SlotWithExpressions[]>;
+  async slots<T extends AppSlotsProps> (props: T, headers?: HeadersInit) { return ((await this.raw.slots<T>(props, headers)).body.app.slots); };
   getAppSlots = async (props: GetAppSlotsProps, headers?: HeadersInit) => ((await this.raw.getAppSlots(props, headers)).body.app.slots);
   getAppSlotIds = async (props: GetAppSlotsProps, headers?: HeadersInit) => ((await this.raw.getAppSlotIds(props, headers)).body.app.slots);
-  listings = async (props: AppListingsProps, headers?: HeadersInit) => ((await this.raw.listings(props, headers)).body.apps);
+  async listings<T extends AppListingsProps = {}> (props?: T, headers?: HeadersInit): Promise<T['idOnly'] extends true ? AppIdOnly[] : AppWithListingsCount[]>;
+  async listings<T extends AppListingsProps = {}> (props?: T, headers?: HeadersInit) { return ((await this.raw.listings<T>(props, headers)).body.apps); };
   getAppsWithListings = async (headers?: HeadersInit) => ((await this.raw.getAppsWithListings(headers)).body.apps);
   getAppIdsWithListings = async (headers?: HeadersInit) => ((await this.raw.getAppIdsWithListings(headers)).body.apps);
 

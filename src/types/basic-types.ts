@@ -17,11 +17,7 @@ export type BasicResultSuccess<T> = { result: T; error?: undefined; };
 export type BasicResultError = { error: BasicError; result?: undefined; };
 export type BasicResult<T> = BasicResultSuccess<T> | BasicResultError;
 
-export type BasicResponse<T> = {
-  statusCode: number;
-  success: boolean;
-  body: T;
-}
 
 export type BasicSuccessResponse = { statusCode: number; success: boolean; };
+export type BasicResponse<T> = BasicSuccessResponse & { body: T; }
 export type BasicUpdatedResponse = BasicSuccessResponse & { updated: boolean; };

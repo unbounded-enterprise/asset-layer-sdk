@@ -72,7 +72,6 @@ export type GetAppSlotIdsResponse = BasicResponse<{ app: App; }>;
 export type GetAppsWithListingsResponse = BasicResponse<{ apps: AppWithListingsCount[]; }>;
 export type GetAppIdsWithListingsResponse = BasicResponse<{ apps: AppIdOnly[]; }>;
 
-// better conditional return types
 export type RawAppsHandlers = {
     info: <T extends AppInfoProps>(props: T, headers?: HeadersInit) 
         => Promise<T['appIds'] extends string[] ? GetAppsResponse : GetAppResponse>;

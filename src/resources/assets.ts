@@ -3,7 +3,13 @@ import type { UpdateAssetExpressionValueProps, UpdateAssetExpressionValueRespons
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
-import { BasicSuccessResponse } from 'src/types/basic-types';
+import { AssetLayer } from 'src';
+
+const al = new AssetLayer();
+// async function mint<T extends MintAssetsProps>(props: T, headers?: HeadersInit): Promise<T['includeAssetIds'] extends true ? string[] : boolean>;
+async function func1() {
+  const raw = await al.assets.safe.mint({ collectionId: '123', number: 1, mintTo: '', includeAssetIds: true });
+}
 
 export class Assets extends Base {
   info = async (props: AssetInfoProps, headers?: HeadersInit) => {
@@ -23,11 +29,11 @@ export class Assets extends Base {
   getAssetHistory = async (props: GetAssetHistoryProps, headers?: HeadersInit) => ((await this.raw.getAssetHistory(props, headers)).body.history);
   getAssetMarketHistory = async (props: GetAssetHistoryProps, headers?: HeadersInit) => ((await this.raw.getAssetMarketHistory(props, headers)).body.history);
   getAssetOwnershipHistory = async (props: GetAssetOwnershipHistoryProps, headers?: HeadersInit) => ((await this.raw.getAssetOwnershipHistory(props, headers)).body.history);
-  mint = async (props: MintAssetsProps, headers?: HeadersInit) => {
+  async mint<T extends MintAssetsProps> (props: T, headers?: HeadersInit): Promise<T['includeAssetIds'] extends true ? string[] : boolean>;
+  async mint(props: MintAssetsProps, headers?: HeadersInit) {
     const response = await this.raw.mint(props, headers);
-    return (props.includeAssetIds) ? response.body.assetIds : response.success;
+    return (props.includeAssetIds) ? (response as MintAssetsWithIdsResponse).body.assetIds : response.success;
   };
-  mintAssets = async (props: MintAssetsProps, headers?: HeadersInit) => ((await this.raw.mintAssets(props, headers)).success);
   send = async (props: AssetSendProps, headers?: HeadersInit) => ((await this.raw.send(props, headers)).body);
   sendAsset = async (props: SendAssetProps, headers?: HeadersInit) => ((await this.raw.sendAsset(props, headers)).body);
   sendAssets = async (props: SendAssetsProps, headers?: HeadersInit) => ((await this.raw.sendAssets(props, headers)).body);
@@ -70,11 +76,7 @@ export class Assets extends Base {
     getAssetHistory: async (props, headers) => this.request('/asset/history' + propsToQueryString(props), { headers }),
     getAssetMarketHistory: async (props, headers) => this.request('/asset/marketHistory' + propsToQueryString(props), { headers }),
     getAssetOwnershipHistory: async (props, headers) => this.request('/asset/ownershipHistory' + propsToQueryString(props), { headers }),
-    mint: async (props, headers) => {
-      const response = await this.request<BasicSuccessResponse|MintAssetsWithIdsResponse>('/asset/mint', { method: 'POST', body: JSON.stringify(props), headers });
-      return (props.includeAssetIds) ? response as MintAssetsWithIdsResponse : response as BasicSuccessResponse;
-    },
-    mintAssets: async (props, headers) => this.request('/asset/mint', { method: 'POST', body: JSON.stringify(props), headers }),
+    mint: async (props, headers) => this.request('/asset/mint', { method: 'POST', body: JSON.stringify(props), headers }),
     send: async (props, headers) => this.request('/asset/send', { method: 'POST', body: JSON.stringify(props), headers }),
     sendAsset: async (props, headers) => this.request('/asset/send', { method: 'POST', body: JSON.stringify(props), headers }),
     sendAssets: async (props, headers) => this.request('/asset/send', { method: 'POST', body: JSON.stringify(props), headers }),
@@ -138,9 +140,6 @@ export class Assets extends Base {
       catch (e) { return { error: parseBasicError(e) }; } },
     mint: async (props, headers) => {
       try { return { result: await this.mint(props, headers) }; }
-      catch (e) { return { error: parseBasicError(e) }; } },
-    mintAssets: async (props, headers) => {
-      try { return { result: await this.mintAssets(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
     send: async (props, headers) => {
       try { return { result: await this.send(props, headers) }; }

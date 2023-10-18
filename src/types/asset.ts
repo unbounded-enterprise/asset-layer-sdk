@@ -1,4 +1,4 @@
-import type { BasicAnyObject, BasicResponse, BasicResult, BasicSuccessResponse } from "../types/basic-types";
+import type { BasicAnyObject, BasicConditionalBoolResult, BasicResponse, BasicResult, BasicSuccessResponse } from "../types/basic-types";
 import type { BulkExpressionValueLog, ExpressionValue, UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from "./expression";
 import type { UserAlias } from "./user";
 
@@ -85,7 +85,9 @@ export type MintAssetsProps = {
     number: number;
     mintTo: string;
     walletUserId?: string;
+    includeAssetIds?: boolean;
 }
+// export type MintAssetsProps = MintAssetsPropsBase & { includeAssetIds?: string; }
 
 type SendAssetBase = { receiver: string; walletUserId?: string; };
 export type SendAssetProps = SendAssetBase & { assetId: string; };
@@ -123,6 +125,7 @@ export type GetCollectionsAssetCountsResponse = BasicResponse<{ collections: Ass
 export type GetAssetHistoryResponse = BasicResponse<{ history: AssetHistoryRecord[]; }>;
 export type GetAssetMarketHistoryResponse = BasicResponse<{ history: AssetSendHistory[]; }>;
 export type GetAssetOwnershipHistoryResponse = GetAssetMarketHistoryResponse | BasicResponse<{ history: UserAlias[]; }>;
+export type MintAssetsWithIdsResponse = BasicResponse<{ assetIds: string[]; }>;
 export type SendAssetResponse = BasicResponse<SendAssetResponseBody>;
 export type SendAssetsResponse = BasicResponse<SendAssetsResponseBody>;
 export type UpdateAssetResponse = BasicResponse<{ assetId: string; serial: number; }>;
@@ -144,7 +147,8 @@ export type RawAssetsHandlers = {
     getAssetHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<GetAssetHistoryResponse>;
     getAssetMarketHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<GetAssetMarketHistoryResponse>;
     getAssetOwnershipHistory: (props: GetAssetOwnershipHistoryProps, headers?: HeadersInit) => Promise<GetAssetOwnershipHistoryResponse>;
-    mintAssets: (props: MintAssetsProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
+    mint: <T extends MintAssetsProps>(props: T, headers?: HeadersInit)
+        => Promise<T['includeAssetIds'] extends true ? MintAssetsWithIdsResponse : BasicSuccessResponse>;
     send: (props: AssetSendProps, headers?: HeadersInit) => Promise<SendAssetResponse|SendAssetsResponse>;
     sendAsset: (props: SendAssetProps, headers?: HeadersInit) => Promise<SendAssetResponse>;
     sendAssets: (props: SendAssetsProps, headers?: HeadersInit) => Promise<SendAssetsResponse>;
@@ -178,7 +182,8 @@ export type SafeAssetsHandlers = {
     getAssetHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<BasicResult<AssetHistoryRecord[]>>;
     getAssetMarketHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<BasicResult<AssetSendHistory[]>>;
     getAssetOwnershipHistory: (props: GetAssetOwnershipHistoryProps, headers?: HeadersInit) => Promise<BasicResult<AssetSendHistory[]|UserAlias[]>>;
-    mintAssets: (props: MintAssetsProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+    mint: <T extends MintAssetsProps>(props: T, headers?: HeadersInit)
+        => Promise<BasicResult<BasicConditionalBoolResult<T, 'includeAssetIds', string[], boolean>>>;
     send: (props: AssetSendProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetResponseBody|SendAssetsResponseBody>>;
     sendAsset: (props: SendAssetProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetResponseBody>>;
     sendAssets: (props: SendAssetsProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetsResponseBody>>;
@@ -194,5 +199,5 @@ export type SafeAssetsHandlers = {
     updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
     updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
     updateCollectionAssetsExpressionValue: (props: UpdateCollectionAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
-    updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps, headers?: HeadersInit) => Promise<BasicResult<false|(BulkExpressionValueLog[])>>;
+    updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps, headers?: HeadersInit) => Promise<BasicResult<false|BulkExpressionValueLog[]>>;
 };

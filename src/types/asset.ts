@@ -1,4 +1,4 @@
-import type { BasicAnyObject, BasicResponse, BasicResult, BasicSuccessResponse } from "../types/basic-types";
+import type { BasicAnyObject, BasicConditionalBoolResult, BasicResponse, BasicResult, BasicSuccessResponse } from "../types/basic-types";
 import type { BulkExpressionValueLog, ExpressionValue, UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from "./expression";
 import type { UserAlias } from "./user";
 
@@ -183,7 +183,7 @@ export type SafeAssetsHandlers = {
     getAssetMarketHistory: (props: GetAssetHistoryProps, headers?: HeadersInit) => Promise<BasicResult<AssetSendHistory[]>>;
     getAssetOwnershipHistory: (props: GetAssetOwnershipHistoryProps, headers?: HeadersInit) => Promise<BasicResult<AssetSendHistory[]|UserAlias[]>>;
     mint: <T extends MintAssetsProps>(props: T, headers?: HeadersInit)
-        => Promise<BasicResult<T['includeAssetIds'] extends true ? string[] : boolean>>;
+        => Promise<BasicResult<BasicConditionalBoolResult<T, 'includeAssetIds', string[], boolean>>>;
     send: (props: AssetSendProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetResponseBody|SendAssetsResponseBody>>;
     sendAsset: (props: SendAssetProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetResponseBody>>;
     sendAssets: (props: SendAssetsProps, headers?: HeadersInit) => Promise<BasicResult<SendAssetsResponseBody>>;

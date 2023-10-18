@@ -1,7 +1,6 @@
+import type { BuyItemProps, RawShopHandlers, SafeShopHandlers } from '../types/shop';
 import { Base } from './base';
-import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
-import { BuyItemProps, RawShopHandlers, SafeShopHandlers } from 'src/types/shop';
 
 export class Shop extends Base {
   // newItem = async (props: NewItemProps, headers?: HeadersInit) => ((await this.raw.newItem(props, headers)).body.newItem);

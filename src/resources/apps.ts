@@ -1,20 +1,20 @@
+import type { BasicConditionalBoolResult, BasicConditionalExtResult } from '../types/basic-types';
 import type { GetAppProps, AppSlotsProps, GetAppSlotsProps, AppInfoProps, GetAppsProps, AppListingsProps, RawAppsHandlers, SafeAppsHandlers, App, GetAppResponse, GetAppsResponse, AppIdOnly, AppWithListingsCount } from '../types/app';
 import type { SlotWithExpressions } from '../types/slot';
 import { Base } from './base';
 import { parseBasicError } from '../utils/basic-error';
 import { propsToQueryString } from '../utils/basic-format';
-import { AssetLayer } from 'src';
 
 export class Apps extends Base {
-  async info<T extends AppInfoProps> (props: T, headers?: HeadersInit): Promise<T['appIds'] extends string[] ? App[] : App>;
+  async info<T extends AppInfoProps> (props: T, headers?: HeadersInit): Promise<BasicConditionalExtResult<T, 'appIds', string[], App[], 'appId', string, App>>;
   async info<T extends AppInfoProps> (props: T, headers?: HeadersInit) { return ((await this.raw.info<T>(props, headers)).body.app); };
   getApp = async (props: GetAppProps, headers?: HeadersInit) => ((await this.raw.getApp(props, headers)).body.app);
   getApps = async (props: GetAppsProps, headers?: HeadersInit) => ((await this.raw.getApps(props, headers)).body.app);
-  async slots<T extends AppSlotsProps> (props: T, headers?: HeadersInit): Promise<T['idOnly'] extends true ? string[] : SlotWithExpressions[]>;
+  async slots<T extends AppSlotsProps> (props: T, headers?: HeadersInit): Promise<BasicConditionalBoolResult<T, 'idOnly', string[], SlotWithExpressions[]>>;
   async slots<T extends AppSlotsProps> (props: T, headers?: HeadersInit) { return ((await this.raw.slots<T>(props, headers)).body.app.slots); };
   getAppSlots = async (props: GetAppSlotsProps, headers?: HeadersInit) => ((await this.raw.getAppSlots(props, headers)).body.app.slots);
   getAppSlotIds = async (props: GetAppSlotsProps, headers?: HeadersInit) => ((await this.raw.getAppSlotIds(props, headers)).body.app.slots);
-  async listings<T extends AppListingsProps = {}> (props?: T, headers?: HeadersInit): Promise<T['idOnly'] extends true ? AppIdOnly[] : AppWithListingsCount[]>;
+  async listings<T extends AppListingsProps = {}> (props?: T, headers?: HeadersInit): Promise<BasicConditionalBoolResult<T, 'idOnly', AppIdOnly[], AppWithListingsCount[]>>;
   async listings<T extends AppListingsProps = {}> (props?: T, headers?: HeadersInit) { return ((await this.raw.listings<T>(props, headers)).body.apps); };
   getAppsWithListings = async (headers?: HeadersInit) => ((await this.raw.getAppsWithListings(headers)).body.apps);
   getAppIdsWithListings = async (headers?: HeadersInit) => ((await this.raw.getAppIdsWithListings(headers)).body.apps);

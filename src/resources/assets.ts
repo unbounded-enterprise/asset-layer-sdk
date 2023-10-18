@@ -1,9 +1,9 @@
+import type { BasicConditionalBoolResult } from '../types/basic-types';
 import type { UpdateAssetProps, GetUserCollectionAssetsProps, GetUserCollectionsAssetsProps, GetUserSlotAssetsProps, GetUserSlotsAssetsProps, GetAssetProps, GetAssetsProps, MintAssetsProps, SendAssetProps, SendAssetsProps, SendCollectionAssetsProps, SendLowestAssetProps, SendRandomAssetProps, UpdateAssetsProps, UpdateCollectionAssetsProps, SafeAssetsHandlers, RawAssetsHandlers, AssetSendProps, AssetUpdateProps, UpdateAssetResponse, UpdateAssetsResponse, UpdateCollectionAssetsResponse, AssetInfoProps, AssetUserProps, GetUserAssetsBaseProps, GetAssetHistoryProps, GetAssetOwnershipHistoryProps, MintAssetsWithIdsResponse } from '../types/asset';
 import type { UpdateAssetExpressionValueProps, UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueProps, UpdateAssetsExpressionValueResponse, UpdateBulkExpressionValuesProps, UpdateCollectionAssetsExpressionValueProps, UpdateExpressionValuesProps } from '../types/expression';
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
-import { BasicSuccessResponse } from 'src/types/basic-types';
 
 export class Assets extends Base {
   info = async (props: AssetInfoProps, headers?: HeadersInit) => {
@@ -23,7 +23,7 @@ export class Assets extends Base {
   getAssetHistory = async (props: GetAssetHistoryProps, headers?: HeadersInit) => ((await this.raw.getAssetHistory(props, headers)).body.history);
   getAssetMarketHistory = async (props: GetAssetHistoryProps, headers?: HeadersInit) => ((await this.raw.getAssetMarketHistory(props, headers)).body.history);
   getAssetOwnershipHistory = async (props: GetAssetOwnershipHistoryProps, headers?: HeadersInit) => ((await this.raw.getAssetOwnershipHistory(props, headers)).body.history);
-  async mint<T extends MintAssetsProps> (props: T, headers?: HeadersInit): Promise<T['includeAssetIds'] extends true ? string[] : boolean>;
+  async mint<T extends MintAssetsProps> (props: T, headers?: HeadersInit): Promise<BasicConditionalBoolResult<T, 'includeAssetIds', string[], boolean>>;
   async mint<T extends MintAssetsProps> (props: T, headers?: HeadersInit) {
     const response = await this.raw.mint(props, headers);
     return (props.includeAssetIds) ? (response as MintAssetsWithIdsResponse).body.assetIds : response.success;

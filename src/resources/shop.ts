@@ -4,7 +4,7 @@ import { parseBasicError } from '../utils/basic-error';
 
 export class Shop extends Base {
   // newItem = async (props: NewItemProps, headers?: HeadersInit) => ((await this.raw.newItem(props, headers)).body.newItem);
-  buyItem = async (props: BuyItemProps, headers?: HeadersInit) => ((await this.raw.buyItem(props, headers)).assetId);
+  buyItem = async (props: BuyItemProps, headers?: HeadersInit) => ((await this.raw.buyItem(props, headers)).body.assetId);
   summary = async (headers?: HeadersInit) => ((await this.raw.summary(headers)).body.summary);
   // removeItem = async (props: RemoveItemProps, headers?: HeadersInit) => ((await this.raw.removeItem(props, headers)).success);
 

@@ -10,9 +10,9 @@ export type NewItemProps = {
 
 export type BuyItemProps = {
     itemId: string;
-    // price: number;
-    // currencyId?: string;
-    // currency?: string;
+    price: number;
+    currencyId?: string;
+    currency?: string;
 };
 
 export type RemoveItemProps = {

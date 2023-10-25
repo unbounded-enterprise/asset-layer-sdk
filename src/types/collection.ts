@@ -67,8 +67,9 @@ export type UpdateCollectionProps = {
 }
 
 export type UpdateCollectionImageProps = { collectionId: string; value: string; };
-export type ActivateCollectionProps = { collectionId: string };
 export type UpdateDefaultPropertiesProps = { collectionId: string; defaultProperties: BasicAnyObject; };
+export type ActivateCollectionProps = { collectionId: string };
+export type DeactivateCollectionProps = ActivateCollectionProps;
 
 export type GetCollectionsResponse = BasicResponse<{ collections: Collection[]; }>;
 export type GetCollectionAssetsResponse = BasicResponse<{ collection: CollectionWithAssets; }>;
@@ -83,11 +84,11 @@ export type RawCollectionsHandlers = {
     getCollectionAssets: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<GetCollectionAssetsResponse>;
     getCollectionAssetIds: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<GetCollectionAssetIdsResponse>;
     createCollection: (props: CreateCollectionProps, headers?: HeadersInit) => Promise<CreateCollectionResponse>;
-    updateCollectionImage: (props: UpdateCollectionImageProps, headers?: HeadersInit) => Promise<BasicResponse<{ uploaded: boolean; }>>;
     updateCollection: (props: UpdateCollectionProps, headers?: HeadersInit) => Promise<BasicUpdatedResponse>;
+    updateCollectionImage: (props: UpdateCollectionImageProps, headers?: HeadersInit) => Promise<BasicResponse<{ uploaded: boolean; }>>;
+    updateDefaultProperties: (props: UpdateDefaultPropertiesProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
     activateCollection: (props: ActivateCollectionProps, headers?: HeadersInit) => Promise<BasicUpdatedResponse>;
     deactivateCollection: (props: ActivateCollectionProps, headers?: HeadersInit) => Promise<BasicUpdatedResponse>;
-    updateDefaultProperties: (props: UpdateDefaultPropertiesProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
 }
 
 export type SafeCollectionsHandlers = {
@@ -98,9 +99,9 @@ export type SafeCollectionsHandlers = {
     getCollectionAssets: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]>>;
     getCollectionAssetIds: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<AssetIdOnly[]>>;
     createCollection: (props: CreateCollectionProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
-    updateCollectionImage: (props: UpdateCollectionImageProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
     updateCollection: (props: UpdateCollectionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+    updateCollectionImage: (props: UpdateCollectionImageProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+    updateDefaultProperties: (props: UpdateDefaultPropertiesProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
     activateCollection: (props: ActivateCollectionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
     deactivateCollection: (props: ActivateCollectionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
-    updateDefaultProperties: (props: UpdateDefaultPropertiesProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
 }

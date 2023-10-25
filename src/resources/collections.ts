@@ -14,11 +14,11 @@ export class Collections extends Base {
   getCollectionAssets = async (props: GetCollectionAssetsProps, headers?: HeadersInit) => ((await this.raw.getCollectionAssets(props, headers)).body.collection.assets);
   getCollectionAssetIds = async (props: GetCollectionAssetsProps, headers?: HeadersInit) => ((await this.raw.getCollectionAssetIds(props, headers)).body.collection.assets);
   createCollection = async (props: CreateCollectionProps, headers?: HeadersInit) => ((await this.raw.createCollection(props, headers)).body.collectionId);
-  updateCollectionImage = async (props: UpdateCollectionImageProps, headers?: HeadersInit) => ((await this.raw.updateCollectionImage(props, headers)).success);
   updateCollection = async (props: UpdateCollectionProps, headers?: HeadersInit) => ((await this.raw.updateCollection(props, headers)).success);
+  updateCollectionImage = async (props: UpdateCollectionImageProps, headers?: HeadersInit) => ((await this.raw.updateCollectionImage(props, headers)).success);
+  updateDefaultProperties = async (props: UpdateDefaultPropertiesProps, headers?: HeadersInit) => ((await this.raw.updateDefaultProperties(props, headers)).success);
   activateCollection = async (props: ActivateCollectionProps, headers?: HeadersInit) => ((await this.raw.activateCollection(props, headers)).success);
   deactivateCollection = async (props: ActivateCollectionProps, headers?: HeadersInit) => ((await this.raw.deactivateCollection(props, headers)).success);
-  updateDefaultProperties = async (props: UpdateDefaultPropertiesProps, headers?: HeadersInit) => ((await this.raw.updateDefaultProperties(props, headers)).success);
 
   raw: RawCollectionsHandlers = {
     info: async (props, headers) => this.request('/collection/info' + propsToQueryString(props), { headers }),
@@ -28,11 +28,11 @@ export class Collections extends Base {
     getCollectionAssets: async (props, headers) => this.request('/collection/assets' + propsToQueryString(props), { headers }),
     getCollectionAssetIds: async (props, headers) => this.request('/collection/assets' + propsToQueryString({ ...props, idOnly: true }), { headers }),
     createCollection: async (props, headers) => this.request('/collection/new', { method: 'POST', body: JSON.stringify(props), headers }),
-    updateCollectionImage: async (props, headers) => this.request('/collection/image', { method: 'POST', body: JSON.stringify(props), headers }),
     updateCollection: async (props, headers) => this.request('/collection/update', { method: 'PUT', body: JSON.stringify(props), headers }),
+    updateCollectionImage: async (props, headers) => this.request('/collection/image', { method: 'POST', body: JSON.stringify(props), headers }),
+    updateDefaultProperties: async (props, headers) => this.request('/collection/defaultProperties', { method: 'PUT', body: JSON.stringify(props), headers }),
     activateCollection: async (props, headers) => this.request('/collection/activate', { method: 'PUT', body: JSON.stringify(props), headers }),
     deactivateCollection: async (props, headers) => this.request('/collection/deactivate', { method: 'PUT', body: JSON.stringify(props), headers }),
-    updateDefaultProperties: async (props, headers) => this.request('/collection/defaultProperties', { method: 'PUT', body: JSON.stringify(props), headers }),
   };
 
   safe: SafeCollectionsHandlers = {
@@ -57,20 +57,20 @@ export class Collections extends Base {
     createCollection: async (props, headers) => {
       try { return { result: await this.createCollection(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
+    updateCollection: async (props, headers) => {
+      try { return { result: await this.updateCollection(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
     updateCollectionImage: async (props, headers) => {
       try { return { result: await this.updateCollectionImage(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    updateCollection: async (props, headers) => {
-      try { return { result: await this.updateCollection(props, headers) }; }
+    updateDefaultProperties: async (props, headers) => {
+      try { return { result: await this.updateDefaultProperties(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
     activateCollection: async (props, headers) => {
       try { return { result: await this.activateCollection(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
     deactivateCollection: async (props, headers) => {
       try { return { result: await this.deactivateCollection(props, headers) }; }
-      catch (e) { return { error: parseBasicError(e) }; } },
-    updateDefaultProperties: async (props, headers) => {
-      try { return { result: await this.updateDefaultProperties(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
   };
 }

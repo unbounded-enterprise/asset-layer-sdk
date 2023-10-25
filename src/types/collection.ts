@@ -1,4 +1,4 @@
-import type { BasicAnyObject, BasicResponse, BasicResult, BasicUpdatedResponse } from "../types/basic-types";
+import type { BasicAnyObject, BasicResponse, BasicResult, BasicSuccessResponse, BasicUpdatedResponse } from "../types/basic-types";
 import type { Asset, AssetIdOnly } from "./asset";
 import type { ExpressionValue } from "./expression";
 import type { UserAlias } from "./user";
@@ -65,9 +65,9 @@ export type UpdateCollectionProps = {
     properties?: BasicAnyObject;
 }
 
-export type UpdateCollectionImageProps = { collectionId: string; value: string; }
-
-export type ActivateCollectionProps = { collectionId: string }
+export type UpdateCollectionImageProps = { collectionId: string; value: string; };
+export type ActivateCollectionProps = { collectionId: string };
+export type UpdateDefaultPropertiesProps = { collectionId: string; defaultProperties: BasicAnyObject; };
 
 export type GetCollectionsResponse = BasicResponse<{ collections: Collection[]; }>;
 export type GetCollectionAssetsResponse = BasicResponse<{ collection: CollectionWithAssets; }>;
@@ -86,6 +86,7 @@ export type RawCollectionsHandlers = {
     updateCollection: (props: UpdateCollectionProps, headers?: HeadersInit) => Promise<BasicUpdatedResponse>;
     activateCollection: (props: ActivateCollectionProps, headers?: HeadersInit) => Promise<BasicUpdatedResponse>;
     deactivateCollection: (props: ActivateCollectionProps, headers?: HeadersInit) => Promise<BasicUpdatedResponse>;
+    updateDefaultProperties: (props: UpdateDefaultPropertiesProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
 }
 
 export type SafeCollectionsHandlers = {
@@ -100,4 +101,5 @@ export type SafeCollectionsHandlers = {
     updateCollection: (props: UpdateCollectionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
     activateCollection: (props: ActivateCollectionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
     deactivateCollection: (props: ActivateCollectionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+    updateDefaultProperties: (props: UpdateDefaultPropertiesProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
 }

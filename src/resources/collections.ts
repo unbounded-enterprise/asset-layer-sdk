@@ -1,4 +1,4 @@
-import type { ActivateCollectionProps, CreateCollectionProps, CollectionAssetsProps, GetCollectionAssetsProps, GetCollectionProps, CollectionInfoProps, GetCollectionsProps, RawCollectionsHandlers, SafeCollectionsHandlers, UpdateCollectionImageProps, UpdateCollectionProps } from '../types/collection';
+import type { ActivateCollectionProps, CreateCollectionProps, CollectionAssetsProps, GetCollectionAssetsProps, GetCollectionProps, CollectionInfoProps, GetCollectionsProps, RawCollectionsHandlers, SafeCollectionsHandlers, UpdateCollectionImageProps, UpdateCollectionProps, UpdateDefaultPropertiesProps } from '../types/collection';
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
@@ -18,6 +18,7 @@ export class Collections extends Base {
   updateCollection = async (props: UpdateCollectionProps, headers?: HeadersInit) => ((await this.raw.updateCollection(props, headers)).success);
   activateCollection = async (props: ActivateCollectionProps, headers?: HeadersInit) => ((await this.raw.activateCollection(props, headers)).success);
   deactivateCollection = async (props: ActivateCollectionProps, headers?: HeadersInit) => ((await this.raw.deactivateCollection(props, headers)).success);
+  updateDefaultProperties = async (props: UpdateDefaultPropertiesProps, headers?: HeadersInit) => ((await this.raw.updateDefaultProperties(props, headers)).success);
 
   raw: RawCollectionsHandlers = {
     info: async (props, headers) => this.request('/collection/info' + propsToQueryString(props), { headers }),
@@ -31,6 +32,7 @@ export class Collections extends Base {
     updateCollection: async (props, headers) => this.request('/collection/update', { method: 'PUT', body: JSON.stringify(props), headers }),
     activateCollection: async (props, headers) => this.request('/collection/activate', { method: 'PUT', body: JSON.stringify(props), headers }),
     deactivateCollection: async (props, headers) => this.request('/collection/deactivate', { method: 'PUT', body: JSON.stringify(props), headers }),
+    updateDefaultProperties: async (props, headers) => this.request('/collection/defaultProperties', { method: 'PUT', body: JSON.stringify(props), headers }),
   };
 
   safe: SafeCollectionsHandlers = {
@@ -66,6 +68,9 @@ export class Collections extends Base {
       catch (e) { return { error: parseBasicError(e) }; } },
     deactivateCollection: async (props, headers) => {
       try { return { result: await this.deactivateCollection(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    updateDefaultProperties: async (props, headers) => {
+      try { return { result: await this.updateDefaultProperties(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
   };
 }

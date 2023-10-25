@@ -26,7 +26,7 @@ export type AssetLayerConfig = {
 export class AssetLayer {
   initialized: boolean;
   didToken: string;
-  refreshSessionIID?: NodeJS.Timer;
+  refreshSessionTID?: NodeJS.Timer;
 
   apps: Apps;
   assets: Assets;
@@ -149,16 +149,26 @@ export class AssetLayer {
         if (props?.onSuccess) props.onSuccess();
         if (props?.onComplete) props.onComplete(true);
 
-        async function refreshSessionHandler() {
-          console.log('refresh time elapsed', Date.now() - lastTokenGenerated);
-          if (Date.now() - lastTokenGenerated < 3000000) return;
+        if (!parent.refreshSessionTID) {
+          async function refreshSessionHandler() {
+            console.log('refresh time elapsed', Date.now() - lastTokenGenerated);
+            if (Date.now() - lastTokenGenerated < 1000 * 60 * 60 * 23) {
+              parent.refreshSessionTID = setTimeout(refreshSessionHandler, 900000);
+              return;
+            }
+  
+            const { result: didToken } = await parent.safe.getUserDidToken();
+            console.log('refresh did!', didToken);
+            if (didToken) {
+              await parent.safe.loginUser({ didToken });
+              parent.refreshSessionTID = setTimeout(refreshSessionHandler, 300000);
+            }
+            else if (!((await parent.safe.isUserLoggedIn()).result)) parent.logoutUser();
+          }
 
-          const { result: didToken } = await parent.safe.getUserDidToken();
-          console.log('refresh did!', didToken);
-          if (didToken) await parent.safe.loginUser({ didToken });
-          else if (!((await parent.safe.isUserLoggedIn()).result)) parent.logoutUser();
+          parent.refreshSessionTID = setTimeout(refreshSessionHandler, 3600000);
         }
-        parent.refreshSessionIID = setInterval(refreshSessionHandler, 300000);
+
         return true;
       }
 
@@ -256,7 +266,10 @@ export class AssetLayer {
       
       this.didToken = '';
       AssetLayerSessionTokenManager.del();
-      if (this.refreshSessionIID) clearInterval(this.refreshSessionIID);
+      if (this.refreshSessionTID) {
+        clearTimeout(this.refreshSessionTID);
+        this.refreshSessionTID = undefined;
+      }
     } catch {
       console.warn('logout err');
     }

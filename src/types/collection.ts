@@ -24,6 +24,7 @@ export type Collection = {
     exampleExpressionValues: ExpressionValue[];
     type?: CollectionType;
     properties?: BasicAnyObject;
+    defaultProperties?: BasicAnyObject;
 };
 
 export type CollectionWithAssetIdOnlys = Omit<Collection, 'assets'> & {

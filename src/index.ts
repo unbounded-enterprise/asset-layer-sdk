@@ -275,11 +275,12 @@ export class AssetLayer {
     }
   }
 
-  async newRegisteredDidToken() {
+  async newRegisteredDidToken(headers?: HeadersInit) {
     const didtoken = await this.getUserDidToken();
     if (!didtoken) return undefined;
 
-    const { result: otp, error: e1 } = await this.users.safe.getOTP({ didtoken });
+    const h1 = (headers) ? { ...headers, didtoken } : { didtoken };
+    const { result: otp, error: e1 } = await this.users.safe.getOTP(h1);
     if (!otp) {
       const message = 'Register Failed [OTP]: ' + parseBasicError(e1).message;
       console.warn(message);
@@ -287,7 +288,8 @@ export class AssetLayer {
     }
 
     const did = await magic!.user.generateIdToken({ lifespan: 86400, attachment: otp });
-    const { result: userInfo, error: e2 } = await this.users.safe.registerDid({ otp }, { didtoken: did });
+    const h2 = (headers) ? { ...headers, didtoken: did } : { didtoken: did };
+    const { result: userInfo, error: e2 } = await this.users.safe.registerDid({ otp }, h2);
 
     if (!userInfo) {
       const message = 'Register Failed [Reg]: ' + parseBasicError(e2).message;

@@ -129,7 +129,7 @@ export class AssetLayer {
           return false;
         }
 
-        const did = await magic!.user.generateIdToken({ lifespan: 3600, attachment: otp });
+        const did = await magic!.user.generateIdToken({ lifespan: 86400, attachment: otp });
         console.log('did2!', did)
         const tokenTimestamp = Date.now();
         const { result: userInfo, error: e2 } = await parent.users.safe.registerDid({ otp }, { didtoken: did });
@@ -275,6 +275,29 @@ export class AssetLayer {
     }
   }
 
+  async newRegisteredDidToken() {
+    const didtoken = await this.getUserDidToken();
+    if (!didtoken) return undefined;
+
+    const { result: otp, error: e1 } = await this.users.safe.getOTP({ didtoken });
+    if (!otp) {
+      const message = 'Register Failed [OTP]: ' + parseBasicError(e1).message;
+      console.warn(message);
+      return undefined;
+    }
+
+    const did = await magic!.user.generateIdToken({ lifespan: 86400, attachment: otp });
+    const { result: userInfo, error: e2 } = await this.users.safe.registerDid({ otp }, { didtoken: did });
+
+    if (!userInfo) {
+      const message = 'Register Failed [Reg]: ' + parseBasicError(e2).message;
+      console.warn(message);
+      return undefined;
+    }
+
+    return did;
+  }
+
   safe: SafeLoginHandlers = {
     initialize: async (setter) => {
       try { return { result: await this.initialize(setter) } }
@@ -294,6 +317,11 @@ export class AssetLayer {
     logoutUser: async () => {
       try { return { result: await this.logoutUser() } }
       catch (e) { return { error: parseBasicError(e) } } },
+    /*
+    newRegisteredDidToken: async () => {
+      try { return { result: await this.generateDidToken() } }
+      catch (e) { return { error: parseBasicError(e) } } },
+    */
   }
 }
 

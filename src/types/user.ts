@@ -54,4 +54,5 @@ export type SafeLoginHandlers = {
     getUserMetadata: () => Promise<BasicResult<any>>;
     loginUser: (props: UserLoginProps) => Promise<BasicResult<boolean|void>>;
     logoutUser: () => Promise<BasicResult<void>>;
+    // newRegisteredDidToken: () => Promise<BasicResult<string|undefined>>;
 };

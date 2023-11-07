@@ -18,9 +18,10 @@ const magic = (typeof window !== 'undefined') ? new Magic('pk_live_8FB965353AF0A
 let lastTokenGenerated = 0;
 
 export type AssetLayerConfig = {
-  appSecret?: string;
-  baseUrl?: string;
   initialize?: boolean;
+  baseUrl?: string;
+  appSecret?: string;
+  didToken?: string;
 }
 
 export class AssetLayer {
@@ -41,7 +42,7 @@ export class AssetLayer {
 
   constructor(config?: AssetLayerConfig) {
     this.initialized = false;
-    this.didToken = '';
+    this.didToken = config?.didToken || '';
     const parent = this;
     
     this.apps = new Apps(parent, config);

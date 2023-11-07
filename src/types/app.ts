@@ -1,3 +1,4 @@
+import { AssetLayerRequestOptions } from "src/resources/base";
 import type { BasicConditionalBoolResult, BasicConditionalExtResult, BasicResponse, BasicResult } from "./basic-types";
 import { Currency } from "./currency";
 import type { Slot, SlotWithExpressions } from "./slot";
@@ -73,31 +74,31 @@ export type GetAppsWithListingsResponse = BasicResponse<{ apps: AppWithListingsC
 export type GetAppIdsWithListingsResponse = BasicResponse<{ apps: AppIdOnly[]; }>;
 
 export type RawAppsHandlers = {
-    info: <T extends AppInfoProps>(props: T, headers?: HeadersInit) 
+    info: <T extends AppInfoProps>(props: T, headers?: HeadersInit, options?: AssetLayerRequestOptions) 
         => Promise<T['appIds'] extends string[] ? GetAppsResponse : GetAppResponse>;
-    getApp: (props: GetAppProps, headers?: HeadersInit) => Promise<GetAppResponse>;
-    getApps: (props: GetAppsProps, headers?: HeadersInit) => Promise<GetAppsResponse>;
-    slots: <T extends AppSlotsProps>(props: T, headers?: HeadersInit) 
+    getApp: (props: GetAppProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetAppResponse>;
+    getApps: (props: GetAppsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetAppsResponse>;
+    slots: <T extends AppSlotsProps>(props: T, headers?: HeadersInit, options?: AssetLayerRequestOptions) 
         => Promise<T['idOnly'] extends true ? GetAppSlotIdsResponse : GetAppSlotsResponse>;
-    getAppSlots: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<GetAppSlotsResponse>;
-    getAppSlotIds: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<GetAppSlotIdsResponse>;
-    listings: <T extends AppListingsProps>(props?: T, headers?: HeadersInit) 
+    getAppSlots: (props: GetAppSlotsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetAppSlotsResponse>;
+    getAppSlotIds: (props: GetAppSlotsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetAppSlotIdsResponse>;
+    listings: <T extends AppListingsProps>(props?: T, headers?: HeadersInit, options?: AssetLayerRequestOptions) 
         => Promise<T['idOnly'] extends true ? GetAppIdsWithListingsResponse : GetAppsWithListingsResponse>;
-    getAppsWithListings: (headers?: HeadersInit) => Promise<GetAppsWithListingsResponse>;
-    getAppIdsWithListings: (headers?: HeadersInit) => Promise<GetAppIdsWithListingsResponse>;
+    getAppsWithListings: (headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetAppsWithListingsResponse>;
+    getAppIdsWithListings: (headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetAppIdsWithListingsResponse>;
 };
 
 export type SafeAppsHandlers = {
-    info: <T extends AppInfoProps>(props: T, headers?: HeadersInit) 
+    info: <T extends AppInfoProps>(props: T, headers?: HeadersInit, options?: AssetLayerRequestOptions) 
         => Promise<BasicResult<BasicConditionalExtResult<T, 'appIds', string[], App[], 'appId', string, App>>>;
-    getApp: (props: GetAppProps, headers?: HeadersInit) => Promise<BasicResult<App>>;
-    getApps: (props: GetAppsProps, headers?: HeadersInit) => Promise<BasicResult<App[]>>;
-    slots: <T extends AppSlotsProps>(props: T, headers?: HeadersInit) 
+    getApp: (props: GetAppProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<App>>;
+    getApps: (props: GetAppsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<App[]>>;
+    slots: <T extends AppSlotsProps>(props: T, headers?: HeadersInit, options?: AssetLayerRequestOptions) 
         => Promise<BasicResult<BasicConditionalBoolResult<T, 'idOnly', string[], SlotWithExpressions[]>>>;
-    getAppSlots: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<BasicResult<SlotWithExpressions[]>>;
-    getAppSlotIds: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
-    listings: <T extends AppListingsProps>(props?: T, headers?: HeadersInit) 
+    getAppSlots: (props: GetAppSlotsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<SlotWithExpressions[]>>;
+    getAppSlotIds: (props: GetAppSlotsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<string[]>>;
+    listings: <T extends AppListingsProps>(props?: T, headers?: HeadersInit, options?: AssetLayerRequestOptions) 
         => Promise<BasicResult<BasicConditionalBoolResult<T, 'idOnly', AppIdOnly[], AppWithListingsCount[]>>>;
-    getAppsWithListings: (headers?: HeadersInit) => Promise<BasicResult<AppWithListingsCount[]>>;
-    getAppIdsWithListings: (headers?: HeadersInit) => Promise<BasicResult<AppIdOnly[]>>;
+    getAppsWithListings: (headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<AppWithListingsCount[]>>;
+    getAppIdsWithListings: (headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<AppIdOnly[]>>;
 };

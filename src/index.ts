@@ -13,6 +13,7 @@ import assetlayerLoginEmail from './modules/assetlayer-login-email';
 import { parseBasicError } from './utils/basic-error';
 import { Currencies } from './resources/currencies';
 import AssetLayerSessionTokenManager from './resources/sessions';
+import { AssetLayerRequestOptions } from './resources/base';
 
 const magic = (typeof window !== 'undefined') ? new Magic('pk_live_8FB965353AF0A346') : undefined;
 let lastTokenGenerated = 0;
@@ -275,12 +276,12 @@ export class AssetLayer {
     }
   }
 
-  async newRegisteredDidToken(headers?: HeadersInit) {
+  async newRegisteredDidToken(headers?: HeadersInit, options?: AssetLayerRequestOptions) {
     const didtoken = await this.getUserDidToken();
     if (!didtoken) return undefined;
 
     const h1 = (headers) ? { ...headers, didtoken } : { didtoken };
-    const { result: otp, error: e1 } = await this.users.safe.getOTP(h1);
+    const { result: otp, error: e1 } = await this.users.safe.getOTP(h1, options);
     if (!otp) {
       const message = 'Register Failed [OTP]: ' + parseBasicError(e1).message;
       console.warn(message);
@@ -289,7 +290,7 @@ export class AssetLayer {
 
     const did = await magic!.user.generateIdToken({ lifespan: 86400, attachment: otp });
     const h2 = (headers) ? { ...headers, didtoken: did } : { didtoken: did };
-    const { result: userInfo, error: e2 } = await this.users.safe.registerDid({ otp }, h2);
+    const { result: userInfo, error: e2 } = await this.users.safe.registerDid({ otp }, h2, options);
 
     if (!userInfo) {
       const message = 'Register Failed [Reg]: ' + parseBasicError(e2).message;

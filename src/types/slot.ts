@@ -1,3 +1,4 @@
+import { AssetLayerRequestOptions } from "src/resources/base";
 import type { BasicResponse, BasicResult, BasicSuccessResponse } from "./basic-types";
 import type { Collection } from "./collection";
 import type { CreateExpressionProps, Expression, ExpressionType, GetSlotExpressionsProps, UpdateExpressionProps } from "./expression";
@@ -39,25 +40,25 @@ export type GetSlotCollectionsResponse = BasicResponse<{ slot: SlotWithCollectio
 export type GetSlotCollectionsIdsResponse = BasicResponse<{ slot: Slot; }>;
 
 export type RawSlotsHandlers = {
-    getSlot: (props: GetSlotProps, headers?: HeadersInit) => Promise<GetSlotResponse>;
-    collections: (props: SlotCollectionsProps, headers?: HeadersInit) => Promise<GetSlotCollectionsResponse|GetSlotCollectionsIdsResponse>;
-    getSlotCollections: (props: GetSlotCollectionsProps, headers?: HeadersInit) => Promise<GetSlotCollectionsResponse>;
-    getSlotCollectionIds: (props: GetSlotCollectionsProps, headers?: HeadersInit) => Promise<GetSlotCollectionsIdsResponse>;
+    getSlot: (props: GetSlotProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetSlotResponse>;
+    collections: (props: SlotCollectionsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetSlotCollectionsResponse|GetSlotCollectionsIdsResponse>;
+    getSlotCollections: (props: GetSlotCollectionsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetSlotCollectionsResponse>;
+    getSlotCollectionIds: (props: GetSlotCollectionsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetSlotCollectionsIdsResponse>;
 
     getExpressionTypes: () => Promise<BasicResponse<{ expressionTypes: ExpressionType[]; }>>;
-    getSlotExpressions: (props: GetSlotExpressionsProps, headers?: HeadersInit) => Promise<BasicResponse<{ expressions: Expression[]; }>>;
-    createExpression: (props: CreateExpressionProps, headers?: HeadersInit) => Promise<BasicResponse<{ expressionId: string; }>>;
-    updateExpression: (props: UpdateExpressionProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
+    getSlotExpressions: (props: GetSlotExpressionsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ expressions: Expression[]; }>>;
+    createExpression: (props: CreateExpressionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ expressionId: string; }>>;
+    updateExpression: (props: UpdateExpressionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicSuccessResponse>;
 };
 
 export type SafeSlotsHandlers = {
-    getSlot: (props: GetSlotProps, headers?: HeadersInit) => Promise<BasicResult<Slot>>;
-    collections: (props: SlotCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<Collection[]|string[]>>;
-    getSlotCollections: (props: GetSlotCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<Collection[]>>;
-    getSlotCollectionIds: (props: GetSlotCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
+    getSlot: (props: GetSlotProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<Slot>>;
+    collections: (props: SlotCollectionsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<Collection[]|string[]>>;
+    getSlotCollections: (props: GetSlotCollectionsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<Collection[]>>;
+    getSlotCollectionIds: (props: GetSlotCollectionsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<string[]>>;
     
     getExpressionTypes: () => Promise<BasicResult<ExpressionType[]>>;
-    getSlotExpressions: (props: GetSlotExpressionsProps, headers?: HeadersInit) => Promise<BasicResult<Expression[]>>;
-    createExpression: (props: CreateExpressionProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
-    updateExpression: (props: UpdateExpressionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+    getSlotExpressions: (props: GetSlotExpressionsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<Expression[]>>;
+    createExpression: (props: CreateExpressionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<string>>;
+    updateExpression: (props: UpdateExpressionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<boolean>>;
 };

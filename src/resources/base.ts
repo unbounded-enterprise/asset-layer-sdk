@@ -9,6 +9,9 @@ type Config = {
   baseUrl?: string;
   appSecret?: string;
 };
+export type AssetLayerRequestOptions = {
+  baseUrl?: string;
+};
 
 export abstract class Base {
   private parent: AssetLayer;
@@ -21,18 +24,15 @@ export abstract class Base {
     this.appSecret = config?.appSecret || '';
   }
 
-  protected request<T>(endpoint: string, options?: RequestInit): Promise<T> {
-    const url = `${this.baseUrl}${endpoint}`;
+  protected request<T>(endpoint: string, config: RequestInit = {}, options: AssetLayerRequestOptions = {}): Promise<T> {
+    const url = `${options.baseUrl || this.baseUrl}${endpoint}`;
     const headers = {
       'Content-Type': 'application/json',
       'appsecret': this.appSecret,
       'didtoken': this.parent.didToken,
-      ...(options?.headers || {}),
+      ...(config.headers || {}),
     };
-    const config = {
-      ...options,
-      headers,
-    };
+    config.headers = headers;
 
     return fetch(url, config).then(async (response) => {
       const body = await response.json();

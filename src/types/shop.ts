@@ -1,3 +1,4 @@
+import { AssetLayerRequestOptions } from "src/resources/base";
 import { BasicResponse, BasicResult, BasicSuccessResponse } from "./basic-types";
 
 export type NewItemProps = {
@@ -43,15 +44,15 @@ export type ShopItemSummary = {
 };
 
 export type RawShopHandlers = {
-    // newItem: (props: NewItemProps, headers?: HeadersInit) => Promise<BasicResponse<{ newItem: NewItemResponseData; }>>;
-    buyItem: (props: BuyItemProps, headers?: HeadersInit) => Promise<BuyItemResponse>;
-    summary: (headers?: HeadersInit) => Promise<BasicResponse<{ summary: ShopItemSummary; }>>;
-    // removeItem: (props: RemoveItemProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
+    // newItem: (props: NewItemProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ newItem: NewItemResponseData; }>>;
+    buyItem: (props: BuyItemProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BuyItemResponse>;
+    summary: (headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ summary: ShopItemSummary; }>>;
+    // removeItem: (props: RemoveItemProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicSuccessResponse>;
 };
 
 export type SafeShopHandlers = {
-    // newItem: (props: NewItemProps, headers?: HeadersInit) => Promise<BasicResult<NewItemResponseData>>;
-    buyItem: (props: BuyItemProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
-    summary: (headers?: HeadersInit) => Promise<BasicResult<ShopItemSummary>>;
-    // removeItem: (props: RemoveItemProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+    // newItem: (props: NewItemProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<NewItemResponseData>>;
+    buyItem: (props: BuyItemProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<string>>;
+    summary: (headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<ShopItemSummary>>;
+    // removeItem: (props: RemoveItemProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<boolean>>;
 };

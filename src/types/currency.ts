@@ -1,3 +1,4 @@
+import { AssetLayerRequestOptions } from "src/resources/base";
 import { BasicResponse, BasicResult } from "./basic-types";
 
 export type Currency = {
@@ -17,23 +18,23 @@ export type DecreaseCurrencyBalanceProps = { currencyId: string; amount: number;
 export type TransferCurrencyProps = { currencyId: string; amount: number; receiver: string; walletUserId?: string; };
 
 export type RawCurrencyHandlers = {
-    info: (props: GetCurrencyProps, headers?: HeadersInit) => Promise<BasicResponse<{ currency: Currency; }>>;
-    getCurrency: (props: GetCurrencyProps, headers?: HeadersInit) => Promise<BasicResponse<{ currency: Currency; }>>;
-    balance: (props?: GetCurrencyBalanceProps, headers?: HeadersInit) => Promise<BasicResponse<CurrencyWithBalance[]>>;
-    getCurrencyBalance: (props?: GetCurrencyBalanceProps, headers?: HeadersInit) => Promise<BasicResponse<CurrencyWithBalance[]>>;
-    getCurrencySummary: (props: GetCurrencySummaryProps, headers?: HeadersInit) => Promise<BasicResponse<{ currencies: CurrencySummary[]; }>>;
-    increaseCurrencyBalance: (props: IncreaseCurrencyBalanceProps, headers?: HeadersInit) => Promise<BasicResponse<{ balance: number; }>>;
-    decreaseCurrencyBalance: (props: DecreaseCurrencyBalanceProps, headers?: HeadersInit) => Promise<BasicResponse<{ balance: number; }>>;
-    transferCurrency: (props: TransferCurrencyProps, headers?: HeadersInit) => Promise<BasicResponse<{ balance: number; }>>;
+    info: (props: GetCurrencyProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ currency: Currency; }>>;
+    getCurrency: (props: GetCurrencyProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ currency: Currency; }>>;
+    balance: (props?: GetCurrencyBalanceProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<CurrencyWithBalance[]>>;
+    getCurrencyBalance: (props?: GetCurrencyBalanceProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<CurrencyWithBalance[]>>;
+    getCurrencySummary: (props: GetCurrencySummaryProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ currencies: CurrencySummary[]; }>>;
+    increaseCurrencyBalance: (props: IncreaseCurrencyBalanceProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ balance: number; }>>;
+    decreaseCurrencyBalance: (props: DecreaseCurrencyBalanceProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ balance: number; }>>;
+    transferCurrency: (props: TransferCurrencyProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ balance: number; }>>;
 };
 
 export type SafeCurrencyHandlers = {
-    info: (props: GetCurrencyProps, headers?: HeadersInit) => Promise<BasicResult<Currency>>;
-    getCurrency: (props: GetCurrencyProps, headers?: HeadersInit) => Promise<BasicResult<Currency>>;
-    balance: (props?: GetCurrencyBalanceProps, headers?: HeadersInit) => Promise<BasicResult<CurrencyWithBalance[]>>;
-    getCurrencyBalance: (props?: GetCurrencyBalanceProps, headers?: HeadersInit) => Promise<BasicResult<CurrencyWithBalance[]>>;
-    getCurrencySummary: (props: GetCurrencySummaryProps, headers?: HeadersInit) => Promise<BasicResult<CurrencySummary[]>>;
-    increaseCurrencyBalance: (props: IncreaseCurrencyBalanceProps, headers?: HeadersInit) => Promise<BasicResult<number>>;
-    decreaseCurrencyBalance: (props: DecreaseCurrencyBalanceProps, headers?: HeadersInit) => Promise<BasicResult<number>>;
-    transferCurrency: (props: TransferCurrencyProps, headers?: HeadersInit) => Promise<BasicResult<number>>;
+    info: (props: GetCurrencyProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<Currency>>;
+    getCurrency: (props: GetCurrencyProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<Currency>>;
+    balance: (props?: GetCurrencyBalanceProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<CurrencyWithBalance[]>>;
+    getCurrencyBalance: (props?: GetCurrencyBalanceProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<CurrencyWithBalance[]>>;
+    getCurrencySummary: (props: GetCurrencySummaryProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<CurrencySummary[]>>;
+    increaseCurrencyBalance: (props: IncreaseCurrencyBalanceProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<number>>;
+    decreaseCurrencyBalance: (props: DecreaseCurrencyBalanceProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<number>>;
+    transferCurrency: (props: TransferCurrencyProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<number>>;
 };

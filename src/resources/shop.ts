@@ -1,32 +1,32 @@
 import type { BuyItemProps, RawShopHandlers, SafeShopHandlers } from '../types/shop';
-import { Base } from './base';
+import { AssetLayerRequestOptions, Base } from './base';
 import { parseBasicError } from '../utils/basic-error';
 
 export class Shop extends Base {
-  // newItem = async (props: NewItemProps, headers?: HeadersInit) => ((await this.raw.newItem(props, headers)).body.newItem);
-  buyItem = async (props: BuyItemProps, headers?: HeadersInit) => ((await this.raw.buyItem(props, headers)).body.assetId);
-  summary = async (headers?: HeadersInit) => ((await this.raw.summary(headers)).body.summary);
-  // removeItem = async (props: RemoveItemProps, headers?: HeadersInit) => ((await this.raw.removeItem(props, headers)).success);
+  // newItem = async (props: NewItemProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => ((await this.raw.newItem(props, headers, options)).body.newItem);
+  buyItem = async (props: BuyItemProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => ((await this.raw.buyItem(props, headers, options)).body.assetId);
+  summary = async (headers?: HeadersInit, options?: AssetLayerRequestOptions) => ((await this.raw.summary(headers, options)).body.summary);
+  // removeItem = async (props: RemoveItemProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => ((await this.raw.removeItem(props, headers, options)).success);
 
   raw: RawShopHandlers = {
-    // newItem: async (props, headers) => this.request('/shop/newItem', { method: 'POST', body: JSON.stringify(props), headers }),
-    buyItem: async (props, headers) => this.request('/shop/buy', { method: 'POST', body: JSON.stringify(props), headers }),
-    summary: async (headers) => this.request('/shop/summary', { headers }),
-    // removeItem: async (props, headers) => this.request('/shop/removeItem', { method: 'PUT', body: JSON.stringify(props), headers }),
+    // newItem: async (props, headers, options) => this.request('/shop/newItem', { method: 'POST', body: JSON.stringify(props), headers }, options),
+    buyItem: async (props, headers, options) => this.request('/shop/buy', { method: 'POST', body: JSON.stringify(props), headers }, options),
+    summary: async (headers, options) => this.request('/shop/summary', { headers }, options),
+    // removeItem: async (props, headers, options) => this.request('/shop/removeItem', { method: 'PUT', body: JSON.stringify(props), headers }, options),
   };
 
   safe: SafeShopHandlers = {
-    // newItem: async (props, headers) => {
-    //   try { return { result: await this.newItem(props, headers) }; }
+    // newItem: async (props, headers, options) => {
+    //   try { return { result: await this.newItem(props, headers, options) }; }
     //   catch (e) { return { error: parseBasicError(e) }; } },
-    buyItem: async (props, headers) => {
-      try { return { result: await this.buyItem(props, headers) }; }
+    buyItem: async (props, headers, options) => {
+      try { return { result: await this.buyItem(props, headers, options) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    summary: async (headers) => {
-      try { return { result: await this.summary(headers) }; }
+    summary: async (headers, options) => {
+      try { return { result: await this.summary(headers, options) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
-    // removeItem: async (props, headers) => {
-    //   try { return { result: await this.removeItem(props, headers) }; }
+    // removeItem: async (props, headers, options) => {
+    //   try { return { result: await this.removeItem(props, headers, options) }; }
     //   catch (e) { return { error: parseBasicError(e) }; } },
   };
 }

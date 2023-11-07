@@ -1,3 +1,4 @@
+import { AssetLayerRequestOptions } from "src/resources/base";
 import type { BasicResponse, BasicResult, BasicSuccessResponse } from "./basic-types";
 
 export type Equip = {
@@ -19,13 +20,13 @@ export type SetEquipProps = {
 export type RemoveEquipProps = { equipId: string; };
 
 export type RawEquipsHandlers = {
-  getEquips: (props: GetEquipsProps, headers?: HeadersInit) => Promise<BasicResponse<{ equip: Equip[]; }>>;
-  setEquip: (props: SetEquipProps, headers?: HeadersInit) => Promise<SetEquipResponse>;
-  removeEquip: (props: RemoveEquipProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
+  getEquips: (props: GetEquipsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ equip: Equip[]; }>>;
+  setEquip: (props: SetEquipProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<SetEquipResponse>;
+  removeEquip: (props: RemoveEquipProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicSuccessResponse>;
 };
 
 export type SafeEquipsHandlers = {
-  getEquips: (props: GetEquipsProps, headers?: HeadersInit) => Promise<BasicResult<Equip[]>>;
-  setEquip: (props: SetEquipProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
-  removeEquip: (props: RemoveEquipProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+  getEquips: (props: GetEquipsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<Equip[]>>;
+  setEquip: (props: SetEquipProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<string>>;
+  removeEquip: (props: RemoveEquipProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<boolean>>;
 };

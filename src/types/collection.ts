@@ -1,3 +1,4 @@
+import { AssetLayerRequestOptions } from "src/resources/base";
 import type { BasicAnyObject, BasicResponse, BasicResult, BasicSuccessResponse, BasicUpdatedResponse } from "../types/basic-types";
 import type { Asset, AssetIdOnly } from "./asset";
 import type { ExpressionValue } from "./expression";
@@ -77,31 +78,31 @@ export type GetCollectionAssetIdsResponse = BasicResponse<{ collection: Collecti
 export type CreateCollectionResponse = BasicResponse<{ collectionId: string; }>;
 
 export type RawCollectionsHandlers = {
-    info: (props: CollectionInfoProps, headers?: HeadersInit) => Promise<GetCollectionsResponse>;
-    getCollection: (props: GetCollectionProps, headers?: HeadersInit) => Promise<GetCollectionsResponse>;
-    getCollections: (props: GetCollectionsProps, headers?: HeadersInit) => Promise<GetCollectionsResponse>;
-    assets: (props: CollectionAssetsProps, headers?: HeadersInit) => Promise<GetCollectionAssetsResponse|GetCollectionAssetIdsResponse>;
-    getCollectionAssets: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<GetCollectionAssetsResponse>;
-    getCollectionAssetIds: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<GetCollectionAssetIdsResponse>;
-    createCollection: (props: CreateCollectionProps, headers?: HeadersInit) => Promise<CreateCollectionResponse>;
-    updateCollection: (props: UpdateCollectionProps, headers?: HeadersInit) => Promise<BasicUpdatedResponse>;
-    updateCollectionImage: (props: UpdateCollectionImageProps, headers?: HeadersInit) => Promise<BasicResponse<{ uploaded: boolean; }>>;
-    updateDefaultProperties: (props: UpdateDefaultPropertiesProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
-    activateCollection: (props: ActivateCollectionProps, headers?: HeadersInit) => Promise<BasicUpdatedResponse>;
-    deactivateCollection: (props: ActivateCollectionProps, headers?: HeadersInit) => Promise<BasicUpdatedResponse>;
+    info: (props: CollectionInfoProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetCollectionsResponse>;
+    getCollection: (props: GetCollectionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetCollectionsResponse>;
+    getCollections: (props: GetCollectionsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetCollectionsResponse>;
+    assets: (props: CollectionAssetsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetCollectionAssetsResponse|GetCollectionAssetIdsResponse>;
+    getCollectionAssets: (props: GetCollectionAssetsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetCollectionAssetsResponse>;
+    getCollectionAssetIds: (props: GetCollectionAssetsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<GetCollectionAssetIdsResponse>;
+    createCollection: (props: CreateCollectionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<CreateCollectionResponse>;
+    updateCollection: (props: UpdateCollectionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicUpdatedResponse>;
+    updateCollectionImage: (props: UpdateCollectionImageProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ uploaded: boolean; }>>;
+    updateDefaultProperties: (props: UpdateDefaultPropertiesProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicSuccessResponse>;
+    activateCollection: (props: ActivateCollectionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicUpdatedResponse>;
+    deactivateCollection: (props: ActivateCollectionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicUpdatedResponse>;
 }
 
 export type SafeCollectionsHandlers = {
-    info: (props: CollectionInfoProps, headers?: HeadersInit) => Promise<BasicResult<Collection|Collection[]>>;
-    getCollection: (props: GetCollectionProps, headers?: HeadersInit) => Promise<BasicResult<Collection>>;
-    getCollections: (props: GetCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<Collection[]>>;
-    assets: (props: CollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]|string[]>>;
-    getCollectionAssets: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<Asset[]>>;
-    getCollectionAssetIds: (props: GetCollectionAssetsProps, headers?: HeadersInit) => Promise<BasicResult<AssetIdOnly[]>>;
-    createCollection: (props: CreateCollectionProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
-    updateCollection: (props: UpdateCollectionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
-    updateCollectionImage: (props: UpdateCollectionImageProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
-    updateDefaultProperties: (props: UpdateDefaultPropertiesProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
-    activateCollection: (props: ActivateCollectionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
-    deactivateCollection: (props: ActivateCollectionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+    info: (props: CollectionInfoProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<Collection|Collection[]>>;
+    getCollection: (props: GetCollectionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<Collection>>;
+    getCollections: (props: GetCollectionsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<Collection[]>>;
+    assets: (props: CollectionAssetsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<Asset[]|string[]>>;
+    getCollectionAssets: (props: GetCollectionAssetsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<Asset[]>>;
+    getCollectionAssetIds: (props: GetCollectionAssetsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<AssetIdOnly[]>>;
+    createCollection: (props: CreateCollectionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<string>>;
+    updateCollection: (props: UpdateCollectionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<boolean>>;
+    updateCollectionImage: (props: UpdateCollectionImageProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<boolean>>;
+    updateDefaultProperties: (props: UpdateDefaultPropertiesProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<boolean>>;
+    activateCollection: (props: ActivateCollectionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<boolean>>;
+    deactivateCollection: (props: ActivateCollectionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<boolean>>;
 }

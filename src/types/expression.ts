@@ -1,3 +1,4 @@
+import { AssetLayerRequestOptions } from "src/resources/base";
 import type { BasicResponse, BasicResult, BasicSuccessResponse } from "./basic-types";
 
 export type ExpressionAttributeType = 'Image' | 'Audio' | 'Video' | 'Character_Spine4.0' | 'AssetBundle';
@@ -68,33 +69,33 @@ export type UpdateAssetsExpressionValueResponse = BasicResponse<{ assetIds: stri
 export type BulkExpressionValueLog = { filename: string; success: boolean; };
 
 export type RawExpressionsHandlers = {
-    // getExpression: (props: GetExpressionProps, headers?: HeadersInit) => Promise<BasicResponse<{ expression: Expression; }>>;
-    // getExpressions: (props: GetExpressionsProps, headers?: HeadersInit) => Promise<BasicResponse<{ expressions: Expression[]; }>>;
+    // getExpression: (props: GetExpressionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ expression: Expression; }>>;
+    // getExpressions: (props: GetExpressionsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ expressions: Expression[]; }>>;
 
     getExpressionTypes: () => Promise<BasicResponse<{ expressionTypes: ExpressionType[]; }>>;
-    getSlotExpressions: (props: GetSlotExpressionsProps, headers?: HeadersInit) => Promise<BasicResponse<{ expressions: Expression[]; }>>;
-    createExpression: (props: CreateExpressionProps, headers?: HeadersInit) => Promise<BasicResponse<{ expressionId: string; }>>;
-    updateExpression: (props: UpdateExpressionProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
+    getSlotExpressions: (props: GetSlotExpressionsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ expressions: Expression[]; }>>;
+    createExpression: (props: CreateExpressionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ expressionId: string; }>>;
+    updateExpression: (props: UpdateExpressionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicSuccessResponse>;
     
-    updateExpressionValues: (props: UpdateExpressionValuesProps, headers?: HeadersInit) => Promise<UpdateAssetExpressionValueResponse|UpdateAssetsExpressionValueResponse|BasicSuccessResponse>;
-    updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit) => Promise<UpdateAssetExpressionValueResponse>;
-    updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps, headers?: HeadersInit) => Promise<UpdateAssetsExpressionValueResponse>;
-    updateCollectionAssetsExpressionValue: (props: UpdateCollectionAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
-    updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps, headers?: HeadersInit) => Promise<BasicResponse<{ log: BulkExpressionValueLog[]; }>>;
+    updateExpressionValues: (props: UpdateExpressionValuesProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<UpdateAssetExpressionValueResponse|UpdateAssetsExpressionValueResponse|BasicSuccessResponse>;
+    updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<UpdateAssetExpressionValueResponse>;
+    updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<UpdateAssetsExpressionValueResponse>;
+    updateCollectionAssetsExpressionValue: (props: UpdateCollectionAssetsExpressionValueProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicSuccessResponse>;
+    updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResponse<{ log: BulkExpressionValueLog[]; }>>;
 };
 
 export type SafeExpressionsHandlers = {
-    // getExpression: (props: GetExpressionProps, headers?: HeadersInit) => Promise<BasicResult<Expression>>;
-    // getExpressions: (props: GetExpressionsProps, headers?: HeadersInit) => Promise<BasicResult<Expression[]>>;
+    // getExpression: (props: GetExpressionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<Expression>>;
+    // getExpressions: (props: GetExpressionsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<Expression[]>>;
 
     getExpressionTypes: () => Promise<BasicResult<ExpressionType[]>>;
-    getSlotExpressions: (props: GetSlotExpressionsProps, headers?: HeadersInit) => Promise<BasicResult<Expression[]>>;
-    createExpression: (props: CreateExpressionProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
-    updateExpression: (props: UpdateExpressionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+    getSlotExpressions: (props: GetSlotExpressionsProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<Expression[]>>;
+    createExpression: (props: CreateExpressionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<string>>;
+    updateExpression: (props: UpdateExpressionProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<boolean>>;
     
-    updateExpressionValues: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<string|string[]|boolean>>;
-    updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<string>>;
-    updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
-    updateCollectionAssetsExpressionValue: (props: UpdateCollectionAssetsExpressionValueProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
-    updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps, headers?: HeadersInit) => Promise<BasicResult<BulkExpressionValueLog[]>>;
+    updateExpressionValues: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<string|string[]|boolean>>;
+    updateAssetExpressionValue: (props: UpdateAssetExpressionValueProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<string>>;
+    updateAssetsExpressionValue: (props: UpdateAssetsExpressionValueProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<string[]>>;
+    updateCollectionAssetsExpressionValue: (props: UpdateCollectionAssetsExpressionValueProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<boolean>>;
+    updateBulkExpressionValues: (props: UpdateBulkExpressionValuesProps, headers?: HeadersInit, options?: AssetLayerRequestOptions) => Promise<BasicResult<BulkExpressionValueLog[]>>;
 };

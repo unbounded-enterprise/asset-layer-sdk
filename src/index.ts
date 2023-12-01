@@ -27,7 +27,7 @@ export type AssetLayerConfig = {
 export class AssetLayer {
   initialized: boolean;
   didToken: string;
-  refreshSessionTID?: NodeJS.Timer;
+  refreshSessionTID?: ReturnType<typeof setTimeout>;
 
   apps: Apps;
   assets: Assets;

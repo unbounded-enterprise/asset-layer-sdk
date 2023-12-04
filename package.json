@@ -1,6 +1,6 @@
 {
   "name": "@assetlayer/sdk",
-  "version": "0.0.1-beta.5.5",
+  "version": "0.0.1-beta.6.3",
   "main": "dist/index.js",
   "module": "dist/index.m.js",
   "unpkg": "dist/index.umd.js",
@@ -19,7 +19,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf dist && microbundle --tsconfig tsconfig.json --no-sourcemap && npm run build-umd && npm run build-umd-public",
+    "build": "rimraf dist && microbundle --tsconfig tsconfig.json --no-sourcemap && npm run build-umd && npm run build-umd-public",
     "build-umd": "microbundle --tsconfig tsconfig.json --no-sourcemap --no-pkg-main -o dist/index.umd.js --format umd --external none --name AssetLayer",
     "build-umd-public": "microbundle --tsconfig tsconfig.json --no-sourcemap --no-pkg-main -o public/index.umd.js --format umd --external none --name AssetLayer"
   },
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "microbundle": "^0.15.1",
+    "rimraf": "^5.0.5",
     "typescript": "^5.1.6"
   },
   "exports": {

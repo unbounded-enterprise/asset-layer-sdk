@@ -10,9 +10,9 @@ export type NewItemProps = {
 
 export type BuyItemProps = {
     itemId: string;
-    // price: number;
-    // currencyId?: string;
-    // currency?: string;
+    price: number;
+    currencyId?: string;
+    currency?: string;
 };
 
 export type RemoveItemProps = {
@@ -28,7 +28,8 @@ export type NewItemResponseData = {
     price: number;
 };
 
-export type BuyItemResponse = BasicSuccessResponse & { buy: boolean; assetId: string; };
+export type BuyItemResponse = BasicResponse<BuyItemBody>;
+export type BuyItemBody = { buy: boolean; assetId: string; };
 
 export type ShopItemSummary = {
     itemId: string;

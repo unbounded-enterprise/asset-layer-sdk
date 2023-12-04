@@ -1,6 +1,7 @@
 import { BasicResponse, BasicResult } from "./basic-types";
 
 export type Currency = {
+    appId: string;
     currencyId: string;
     currencyCode: string;
     name?: string;

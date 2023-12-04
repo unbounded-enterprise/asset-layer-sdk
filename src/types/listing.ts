@@ -114,7 +114,11 @@ export type CollectionListingsStats = {
     oldest: number;
     oldestDate: number;
 };
-export type ListingsStats = { [collectionId: string]: CollectionListingsStats; };
+export type ListingsStats = { 
+    [collectionId: string]: {
+        [currencyId: string]: CollectionListingsStats; 
+    };
+};
 
 export type CreateListingResponse = BasicResponse<{ listing: CreateListingResponseBody; }>;
 export type CreateListingsResponse = BasicResponse<{ assetIds: string[]; }>;

@@ -18,15 +18,16 @@ const magic = (typeof window !== 'undefined') ? new Magic('pk_live_8FB965353AF0A
 let lastTokenGenerated = 0;
 
 export type AssetLayerConfig = {
-  appSecret?: string;
-  baseUrl?: string;
   initialize?: boolean;
+  baseUrl?: string;
+  appSecret?: string;
+  didToken?: string;
 }
 
 export class AssetLayer {
   initialized: boolean;
   didToken: string;
-  refreshSessionIID?: NodeJS.Timer;
+  refreshSessionTID?: ReturnType<typeof setTimeout>;
 
   apps: Apps;
   assets: Assets;
@@ -41,7 +42,7 @@ export class AssetLayer {
 
   constructor(config?: AssetLayerConfig) {
     this.initialized = false;
-    this.didToken = '';
+    this.didToken = config?.didToken || '';
     const parent = this;
     
     this.apps = new Apps(parent, config);
@@ -129,7 +130,7 @@ export class AssetLayer {
           return false;
         }
 
-        const did = await magic!.user.generateIdToken({ lifespan: 3600, attachment: otp });
+        const did = await magic!.user.generateIdToken({ lifespan: 86400, attachment: otp });
         console.log('did2!', did)
         const tokenTimestamp = Date.now();
         const { result: userInfo, error: e2 } = await parent.users.safe.registerDid({ otp }, { didtoken: did });
@@ -149,16 +150,26 @@ export class AssetLayer {
         if (props?.onSuccess) props.onSuccess();
         if (props?.onComplete) props.onComplete(true);
 
-        async function refreshSessionHandler() {
-          console.log('refresh time elapsed', Date.now() - lastTokenGenerated);
-          if (Date.now() - lastTokenGenerated < 3000000) return;
+        if (!parent.refreshSessionTID) {
+          async function refreshSessionHandler() {
+            console.log('refresh time elapsed', Date.now() - lastTokenGenerated);
+            if (Date.now() - lastTokenGenerated < 1000 * 60 * 60 * 23) {
+              parent.refreshSessionTID = setTimeout(refreshSessionHandler, 900000);
+              return;
+            }
+  
+            const { result: didToken } = await parent.safe.getUserDidToken();
+            console.log('refresh did!', didToken);
+            if (didToken) {
+              await parent.safe.loginUser({ didToken });
+              parent.refreshSessionTID = setTimeout(refreshSessionHandler, 300000);
+            }
+            else if (!((await parent.safe.isUserLoggedIn()).result)) parent.logoutUser();
+          }
 
-          const { result: didToken } = await parent.safe.getUserDidToken();
-          console.log('refresh did!', didToken);
-          if (didToken) await parent.safe.loginUser({ didToken });
-          else if (!((await parent.safe.isUserLoggedIn()).result)) parent.logoutUser();
+          parent.refreshSessionTID = setTimeout(refreshSessionHandler, 3600000);
         }
-        parent.refreshSessionIID = setInterval(refreshSessionHandler, 300000);
+
         return true;
       }
 
@@ -256,10 +267,38 @@ export class AssetLayer {
       
       this.didToken = '';
       AssetLayerSessionTokenManager.del();
-      if (this.refreshSessionIID) clearInterval(this.refreshSessionIID);
+      if (this.refreshSessionTID) {
+        clearTimeout(this.refreshSessionTID);
+        this.refreshSessionTID = undefined;
+      }
     } catch {
       console.warn('logout err');
     }
+  }
+
+  async newRegisteredDidToken(headers?: HeadersInit) {
+    const didtoken = await this.getUserDidToken();
+    if (!didtoken) return undefined;
+
+    const h1 = (headers) ? { ...headers, didtoken } : { didtoken };
+    const { result: otp, error: e1 } = await this.users.safe.getOTP(h1);
+    if (!otp) {
+      const message = 'Register Failed [OTP]: ' + parseBasicError(e1).message;
+      console.warn(message);
+      return undefined;
+    }
+
+    const did = await magic!.user.generateIdToken({ lifespan: 86400, attachment: otp });
+    const h2 = (headers) ? { ...headers, didtoken: did } : { didtoken: did };
+    const { result: userInfo, error: e2 } = await this.users.safe.registerDid({ otp }, h2);
+
+    if (!userInfo) {
+      const message = 'Register Failed [Reg]: ' + parseBasicError(e2).message;
+      console.warn(message);
+      return undefined;
+    }
+
+    return did;
   }
 
   safe: SafeLoginHandlers = {
@@ -281,6 +320,11 @@ export class AssetLayer {
     logoutUser: async () => {
       try { return { result: await this.logoutUser() } }
       catch (e) { return { error: parseBasicError(e) } } },
+    /*
+    newRegisteredDidToken: async () => {
+      try { return { result: await this.generateDidToken() } }
+      catch (e) { return { error: parseBasicError(e) } } },
+    */
   }
 }
 

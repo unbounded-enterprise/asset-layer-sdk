@@ -8,7 +8,7 @@ export class Currencies extends Base {
   getCurrency = async (props: GetCurrencyProps, headers?: HeadersInit) => ((await this.raw.getCurrency(props, headers)).body.currency);
   balance = async (props?: GetCurrencyBalanceProps, headers?: HeadersInit) => ((await this.raw.balance(props, headers)).body);
   getCurrencyBalance = async (props?: GetCurrencyBalanceProps, headers?: HeadersInit) => ((await this.raw.getCurrencyBalance(props, headers)).body);
-  getCurrencySummary = async (props: GetCurrencySummaryProps, headers?: HeadersInit) => ((await this.raw.getCurrencySummary(props, headers)).body.currencies);
+  getCurrencySummary = async (props: GetCurrencySummaryProps, headers?: HeadersInit) => ((await this.raw.getCurrencySummary(props, headers)).body);
   increaseCurrencyBalance = async (props: IncreaseCurrencyBalanceProps, headers?: HeadersInit) => ((await this.raw.increaseCurrencyBalance(props, headers)).body.balance);
   decreaseCurrencyBalance = async (props: DecreaseCurrencyBalanceProps, headers?: HeadersInit) => ((await this.raw.decreaseCurrencyBalance(props, headers)).body.balance);
   transferCurrency = async (props: TransferCurrencyProps, headers?: HeadersInit) => ((await this.raw.transferCurrency(props, headers)).body.balance);

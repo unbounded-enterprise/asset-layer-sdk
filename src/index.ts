@@ -22,11 +22,13 @@ export type AssetLayerConfig = {
   baseUrl?: string;
   appSecret?: string;
   didToken?: string;
+  logs?: boolean;
 }
 
 export class AssetLayer {
   initialized: boolean;
   didToken: string;
+  logs: boolean;
   refreshSessionTID?: ReturnType<typeof setTimeout>;
 
   apps: Apps;
@@ -43,6 +45,7 @@ export class AssetLayer {
   constructor(config?: AssetLayerConfig) {
     this.initialized = false;
     this.didToken = config?.didToken || '';
+    this.logs = config?.logs || false;
     const parent = this;
     
     this.apps = new Apps(parent, config);
@@ -101,7 +104,7 @@ export class AssetLayer {
   }
 
   async loginUser(props?: UserLoginProps) {
-    console.log('loginprops', props)
+    if (this.logs) console.log('login props:', props)
     if (props?.registeredDidToken) {
       this.didToken = props.registeredDidToken;
       this.initialized = true;
@@ -122,7 +125,7 @@ export class AssetLayer {
     async function emailHandler(event?: MessageEvent) {
       async function register(token: string) {
         const { result: otp, error: e1 } = await parent.users.safe.getOTP({ didtoken: token! });
-        console.log('otp!', otp);
+        if (parent.logs) console.log('pre-registered did:', otp);
         if (!otp) {
           const message = 'Login Failed [OTP]: ' + parseBasicError(e1).message;
           if (props?.onError) props.onError(message);
@@ -131,7 +134,7 @@ export class AssetLayer {
         }
 
         const did = await magic!.user.generateIdToken({ lifespan: 86400, attachment: otp });
-        console.log('did2!', did)
+        if (parent.logs) console.log('registered did:', did)
         const tokenTimestamp = Date.now();
         const { result: userInfo, error: e2 } = await parent.users.safe.registerDid({ otp }, { didtoken: did });
 
@@ -152,14 +155,14 @@ export class AssetLayer {
 
         if (!parent.refreshSessionTID) {
           async function refreshSessionHandler() {
-            console.log('refresh time elapsed', Date.now() - lastTokenGenerated);
+            if (parent.logs) console.log('login refresh time elapsed', Date.now() - lastTokenGenerated);
             if (Date.now() - lastTokenGenerated < 1000 * 60 * 60 * 23) {
               parent.refreshSessionTID = setTimeout(refreshSessionHandler, 900000);
               return;
             }
   
             const { result: didToken } = await parent.safe.getUserDidToken();
-            console.log('refresh did!', didToken);
+            if (parent.logs) console.log('refreshed did:', didToken);
             if (didToken) {
               await parent.safe.loginUser({ didToken });
               parent.refreshSessionTID = setTimeout(refreshSessionHandler, 300000);
@@ -195,8 +198,6 @@ export class AssetLayer {
       }
       
       const email = props?.email || event!.data.email;
-      console.log('email!', email)
-      
       const magicHandler = magic!.auth.loginWithEmailOTP({ email, /*showUI: props.showUI*/ });
 
       magicHandler
@@ -211,7 +212,7 @@ export class AssetLayer {
         })
         .on('done', async (result) => {
           const didToken = result;
-          console.log('did1!', didToken);
+          
           if (!didToken) throw new Error('Invalid DID Token');
 
           await register(didToken);

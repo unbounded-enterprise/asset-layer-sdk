@@ -38,7 +38,7 @@ export function propsToQueryString(props?: BasicAnyObject) {
         else params.append(key, props[key]);
     }
     
-    console.log('qs:', params.toString());
+    // console.log('qs:', params.toString());
 
     return '?' + params.toString();
 }
@@ -60,7 +60,7 @@ export function propsToQueryString2(props?: BasicAnyObject) {
     if (!queryProps.length) return '';
     const qs = queryProps.join('&');
     
-    console.log('qs:', qs);
+    // console.log('qs:', qs);
 
     return '?' + qs;
 }

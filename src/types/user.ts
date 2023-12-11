@@ -3,7 +3,7 @@ import type { BasicError, BasicResponse, BasicResult } from "./basic-types";
 export type UserStatus = string;
 export type UserTeamRole = 'admin' | 'developer';
 export type UserRole = { teamId: string; role: UserTeamRole; };
-export type UserAlias = { userId: string; handle: string; };
+export type UserAlias = { userId: string; handle: string; handcashHandle?: string; };
 export type User = {
     userId: string;
     email: string;
@@ -13,6 +13,7 @@ export type User = {
     updatedAt: number;
     name?: string;
     status?: UserStatus;
+    handcashHandle?: string;
 };
 export type GetOTPResponseBody = { otp: string; };
 export type RegisterUserResponseBody = {

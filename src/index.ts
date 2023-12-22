@@ -23,12 +23,14 @@ export type AssetLayerConfig = {
   appSecret?: string;
   didToken?: string;
   logs?: boolean;
+  sessionCache?: boolean;
 }
 
 export class AssetLayer {
   initialized: boolean;
   didToken: string;
   logs: boolean;
+  sessionCache: boolean;
   refreshSessionTID?: ReturnType<typeof setTimeout>;
 
   apps: Apps;
@@ -46,6 +48,7 @@ export class AssetLayer {
     this.initialized = false;
     this.didToken = config?.didToken || '';
     this.logs = config?.logs || false;
+    this.sessionCache = (typeof config?.sessionCache === 'boolean') ? config.sessionCache : true;
     const parent = this;
     
     this.apps = new Apps(parent, config);
@@ -65,7 +68,7 @@ export class AssetLayer {
   async initialize(onComplete?: (loggedIn: boolean) => void) {
     let loggedIn = false;
 
-    const cachedToken = AssetLayerSessionTokenManager.get();
+    const cachedToken = (this.sessionCache) ? AssetLayerSessionTokenManager.get() : undefined;
     if (cachedToken) loggedIn = !!(await this.loginUser({ registeredDidToken: cachedToken }));
 
     if (!loggedIn) {
@@ -145,7 +148,7 @@ export class AssetLayer {
           return false;
         }
 
-        AssetLayerSessionTokenManager.set(did, tokenTimestamp);
+        if (parent.sessionCache) AssetLayerSessionTokenManager.set(did, tokenTimestamp);
         lastTokenGenerated = tokenTimestamp;
         parent.didToken = did;
         if (!parent.initialized) parent.initialized = true;

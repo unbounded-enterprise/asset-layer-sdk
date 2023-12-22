@@ -45,6 +45,11 @@ Or if you prefer using Yarn:
 $ yarn add @assetlayer/sdk
 ```
 
+Install the latest pre-release version by adding the beta tag:
+```sh
+$ npm install @assetlayer/sdk@beta
+```
+
 ## Usage
 
 ### Reference the SDK
@@ -188,10 +193,16 @@ $ npm run build
 This task will use microbundle to create a distribution version of the project
 inside your local `dist/` folder
 
-### Deploying to NPM
+### Deploying to NPM (Release)
 
 ```sh
 $ npm login
 
 $ npm publish --access public
+```
+
+### Deploying to NPM (Pre-Release)
+
+```sh
+$ npm publish --tag beta --access public
 ```

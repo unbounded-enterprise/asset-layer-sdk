@@ -14,6 +14,7 @@ import { parseBasicError } from './utils/basic-error';
 import { Currencies } from './resources/currencies';
 import AssetLayerSessionTokenManager from './resources/sessions';
 
+export const assetlayerUrl = 'https://api-v2.assetlayer.com/api/v1';
 const magic = (typeof window !== 'undefined') ? new Magic('pk_live_8FB965353AF0A346') : undefined;
 let lastTokenGenerated = 0;
 

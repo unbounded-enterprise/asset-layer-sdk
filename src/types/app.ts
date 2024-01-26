@@ -4,6 +4,10 @@ import type { Slot, SlotWithExpressions } from "./slot";
 import type { UserAlias } from "./user";
 
 export type AppStatus = 'active' | 'inactive';
+export type AppRevShare = {
+    appShare: number;
+    creatorShare: number;
+}
 
 export type AppBase = {
     appId: string;
@@ -34,6 +38,7 @@ export type App = {
     url?: string;
     handcashAppId?: string;
     marketCurrencies?: string[];
+    revShare?: AppRevShare;
 };
 export type AppIdOnly = { appId: string; };
 export type AppWithSlots = Omit<App, 'slots'> & {
@@ -56,6 +61,7 @@ export type UpdateAppProps = {
     status?: AppStatus;
     autoGrantRead?: boolean;
     handcashAppId?: string;
+    revShare?: AppRevShare;
 }
 
 export type GetAppProps = { appId: string; };

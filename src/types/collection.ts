@@ -4,7 +4,7 @@ import type { ExpressionValue } from "./expression";
 import type { UserAlias } from "./user";
 
 export type CollectionType = 'Identical' | 'Unique';
-export type CollectionStatus = 'active' | 'inactive';
+export type CollectionStatus = 'active' | 'inactive' | 'draft';
 
 export type Collection = {
     collectionId: string;

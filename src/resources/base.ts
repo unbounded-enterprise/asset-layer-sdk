@@ -1,9 +1,7 @@
 import fetch from 'isomorphic-unfetch';
-import { AssetLayer } from '..';
+import { AssetLayer, assetlayerUrl } from '..';
 import { BasicError } from '../types/basic-types';
 import { parseBasicError } from '../utils/basic-error';
-
-const assetlayerUrl = 'https://api-v2.assetlayer.com/api/v1';
 
 type Config = {
   baseUrl?: string;

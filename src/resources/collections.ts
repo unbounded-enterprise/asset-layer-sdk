@@ -1,4 +1,4 @@
-import type { ActivateCollectionProps, CreateCollectionProps, CollectionAssetsProps, GetCollectionAssetsProps, GetCollectionProps, CollectionInfoProps, GetCollectionsProps, RawCollectionsHandlers, SafeCollectionsHandlers, UpdateCollectionImageProps, UpdateCollectionProps, UpdateDefaultPropertiesProps } from '../types/collection';
+import type { ActivateCollectionProps, CreateCollectionProps, CollectionAssetsProps, GetCollectionAssetsProps, GetCollectionProps, CollectionInfoProps, GetCollectionsProps, RawCollectionsHandlers, SafeCollectionsHandlers, UpdateCollectionImageProps, UpdateCollectionProps, UpdateDefaultPropertiesProps, CreateCollectionSubmissionProps, UpdateCollectionSubmissionProps, CollectionSubmissionRequestProps } from '../types/collection';
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
@@ -19,6 +19,10 @@ export class Collections extends Base {
   updateDefaultProperties = async (props: UpdateDefaultPropertiesProps, headers?: HeadersInit) => ((await this.raw.updateDefaultProperties(props, headers)).success);
   activateCollection = async (props: ActivateCollectionProps, headers?: HeadersInit) => ((await this.raw.activateCollection(props, headers)).success);
   deactivateCollection = async (props: ActivateCollectionProps, headers?: HeadersInit) => ((await this.raw.deactivateCollection(props, headers)).success);
+  
+  createCollectionSubmission = async (props: CreateCollectionSubmissionProps, headers?: HeadersInit) => ((await this.raw.createCollectionSubmission(props, headers)).body);
+  updateCollectionSubmission = async (props: UpdateCollectionSubmissionProps, headers?: HeadersInit) => ((await this.raw.updateCollectionSubmission(props, headers)).success);
+  collectionSubmissionRequest = async (props: CollectionSubmissionRequestProps, headers?: HeadersInit) => ((await this.raw.collectionSubmissionRequest(props, headers)).success);
 
   raw: RawCollectionsHandlers = {
     info: async (props, headers) => this.request('/collection/info' + propsToQueryString(props), { headers }),
@@ -33,6 +37,10 @@ export class Collections extends Base {
     updateDefaultProperties: async (props, headers) => this.request('/collection/defaultProperties', { method: 'PUT', body: JSON.stringify(props), headers }),
     activateCollection: async (props, headers) => this.request('/collection/activate', { method: 'PUT', body: JSON.stringify(props), headers }),
     deactivateCollection: async (props, headers) => this.request('/collection/deactivate', { method: 'PUT', body: JSON.stringify(props), headers }),
+    
+    createCollectionSubmission: async (props, headers) => this.request('/collection/submission/new', { method: 'POST', body: JSON.stringify(props), headers }),
+    updateCollectionSubmission: async (props, headers) => this.request('/collection/submission/update', { method: 'PUT', body: JSON.stringify(props), headers }),
+    collectionSubmissionRequest: async (props, headers) => this.request('/collection/submission/request', { method: 'POST', body: JSON.stringify(props), headers }),
   };
 
   safe: SafeCollectionsHandlers = {
@@ -71,6 +79,15 @@ export class Collections extends Base {
       catch (e) { return { error: parseBasicError(e) }; } },
     deactivateCollection: async (props, headers) => {
       try { return { result: await this.deactivateCollection(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    createCollectionSubmission: async (props, headers) => {
+      try { return { result: await this.createCollectionSubmission(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    updateCollectionSubmission: async (props, headers) => {
+      try { return { result: await this.updateCollectionSubmission(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    collectionSubmissionRequest: async (props, headers) => {
+      try { return { result: await this.collectionSubmissionRequest(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
   };
 }

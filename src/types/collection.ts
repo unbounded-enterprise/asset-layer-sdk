@@ -39,22 +39,22 @@ export type Collection = {
     collectionName: string;
     collectionImage: string;
     collectionBanner: string;
+    type: CollectionType;
     description: string;
     creator: UserAlias;
     slotId: string;
-    maximum: number;
+    maximum: number | null;
     minted: number;
-    tags: string[];
     royaltyRecipient: UserAlias;
     status: CollectionStatus;
     createdAt: number;
     updatedAt: number;
-    exampleExpressionValues: ExpressionValue[];
-    type?: CollectionType;
+    tags?: string[];
     properties?: BasicAnyObject;
     defaultProperties?: BasicAnyObject;
     submissionId?: string;
     submissionData?: CollectionSubmission;
+    exampleExpressionValues?: ExpressionValue[];
 };
 
 export type CollectionWithAssetIdOnlys = Omit<Collection, 'assets'> & {

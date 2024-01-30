@@ -1,7 +1,7 @@
 import type { GetOTPResponseBody, GetUserCollectionsProps, RawUsersHandlers, RegisterDidProps, RegisterUserProps, RegisterUserResponseBody, SafeUsersHandlers, UserCollectionsProps } from '../types/user';
 import { Base } from './base';
 import { parseBasicError } from '../utils/basic-error';
-import { propsToQueryString } from 'src/utils/basic-format';
+import { propsToQueryString } from '../utils/basic-format';
 
 export class Users extends Base {
   getUser = async (headers?: HeadersInit) => { return (await this.raw.getUser(headers)).body.user; }

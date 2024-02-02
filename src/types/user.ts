@@ -16,7 +16,7 @@ export type User = {
     status?: UserStatus;
     handcashHandle?: string;
 };
-export type GetUserCollectionsProps = { includeDeactivated?: boolean; includeDrafts?: boolean; };
+export type GetUserCollectionsProps = { includeDeactivated?: boolean; includeDrafts?: boolean; includeSubmissionData?: boolean; };
 export type UserCollectionsProps = GetUserCollectionsProps & { idOnly?: boolean; };
 export type GetOTPResponseBody = { otp: string; };
 export type RegisterUserResponseBody = {

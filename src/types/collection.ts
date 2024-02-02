@@ -53,7 +53,7 @@ export type Collection = {
     properties?: BasicAnyObject;
     defaultProperties?: BasicAnyObject;
     submissionId?: string;
-    submissionData?: CollectionSubmission;
+    submission?: CollectionSubmission;
     exampleExpressionValues?: ExpressionValue[];
 };
 

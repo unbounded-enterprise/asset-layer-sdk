@@ -31,7 +31,7 @@ export type SlotWithExpressionsAndCollections = Omit<Slot, 'expressions'|'collec
 
 export type GetSlotProps = { slotId: string; }
 
-export type GetSlotCollectionsProps = { slotId: string; includeDeactivated?: boolean; };
+export type GetSlotCollectionsProps = { slotId: string; includeDeactivated?: boolean; includeDrafts?: boolean; includeSubmissionData?: boolean; };
 export type SlotCollectionsProps = GetSlotCollectionsProps & { idOnly?: boolean; };
 
 export type GetSlotResponse = BasicResponse<{ slot: Slot; }>;

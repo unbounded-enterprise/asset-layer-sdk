@@ -18,6 +18,10 @@ export type ExpressionValue = {
       expressionId: string, 
       expressionName: string 
     };
+    expressionType: {
+        expressionTypeId: string;
+        expressionTypeName: string;
+    };
 }
 
 export type ExpressionType = {

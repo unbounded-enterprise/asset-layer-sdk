@@ -1,4 +1,5 @@
 import type { BasicError, BasicResponse, BasicResult } from "./basic-types";
+import { Collection } from "./collection";
 
 export type UserStatus = string;
 export type UserTeamRole = 'admin' | 'developer';
@@ -15,6 +16,8 @@ export type User = {
     status?: UserStatus;
     handcashHandle?: string;
 };
+export type GetUserCollectionsProps = { includeDrafts?: boolean; includeSubmissionData?: boolean; };
+export type UserCollectionsProps = GetUserCollectionsProps & { idOnly?: boolean; };
 export type GetOTPResponseBody = { otp: string; };
 export type RegisterUserResponseBody = {
     _id: string;
@@ -36,6 +39,9 @@ export type RegisterDidProps = { otp: string };
 
 export type RawUsersHandlers = {
     getUser: (headers?: HeadersInit) => Promise<BasicResponse<{ user: User; }>>;
+    collections: (props: UserCollectionsProps, headers?: HeadersInit) => Promise<BasicResponse<{ collections: Collection[]; }>>;
+    getUserCollections: (props: GetUserCollectionsProps, headers?: HeadersInit) => Promise<BasicResponse<{ collections: Collection[]; }>>;
+    getUserCollectionIds: (props: GetUserCollectionsProps, headers?: HeadersInit) => Promise<BasicResponse<{ collections: string[]; }>>;
     register: (props?: RegisterUserProps, headers?: HeadersInit) => Promise<BasicResponse<GetOTPResponseBody|RegisterUserResponseBody>>;
     getOTP: (headers?: HeadersInit) => Promise<BasicResponse<GetOTPResponseBody>>;
     registerDid: (props: RegisterDidProps, headers?: HeadersInit) => Promise<BasicResponse<RegisterUserResponseBody>>;
@@ -43,13 +49,16 @@ export type RawUsersHandlers = {
 
 export type SafeUsersHandlers = {
     getUser: (headers?: HeadersInit) => Promise<BasicResult<User>>;
+    collections: (props: UserCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<Collection[]|string[]>>;
+    getUserCollections: (props: GetUserCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<Collection[]>>;
+    getUserCollectionIds: (props: GetUserCollectionsProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
     register: (props?: RegisterUserProps, headers?: HeadersInit) => Promise<BasicResult<string|RegisterUserResponseBody>>;
     getOTP: (headers?: HeadersInit) => Promise<BasicResult<string>>;
     registerDid: (props: RegisterDidProps, headers?: HeadersInit) => Promise<BasicResult<RegisterUserResponseBody>>;
 };
 
 export type SafeLoginHandlers = {
-    initialize: (setter?: (initialized: boolean) => void) => Promise<BasicResult<boolean|void>>;
+    initialize: (setter?: (loggedIn: boolean) => void) => Promise<BasicResult<boolean|void>>;
     isUserLoggedIn: () => Promise<BasicResult<boolean|undefined>>;
     getUserDidToken: () => Promise<BasicResult<string|undefined>>;
     getUserMetadata: () => Promise<BasicResult<any>>;

@@ -1,6 +1,6 @@
 import type { BasicResponse, BasicResult, BasicSuccessResponse } from "./basic-types";
 
-export type ShopPrice = { currencyId: string; price: number };
+export type ShopPrice = { currencyId: string; amount: number };
 
 export type NewItemProps = {
     collectionId: string;

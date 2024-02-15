@@ -216,9 +216,13 @@ export class AssetLayer {
         .on('done', async (result) => {
           const didToken = result;
           
-          if (!didToken) throw new Error('Invalid DID Token');
-
-          await register(didToken);
+          if (!didToken) {
+            const message = 'Invalid DID Token';
+            console.warn('login aborted:', message);
+            if (props?.onError) props.onError(message);
+            if (props?.onComplete) props.onComplete(false);
+          }
+          else await register(didToken);
         })
         .on('error', (reason) => {
           console.error(reason);

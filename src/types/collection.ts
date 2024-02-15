@@ -109,8 +109,8 @@ export type CreateCollectionSubmissionProps = Omit<CreateCollectionProps, 'draft
 }
 export type UpdateCollectionSubmissionProps = {
     collectionId: string;
-    mintRights: CollectionMintRights;
-    prices: ShopPrice[];
+    mintRights?: CollectionMintRights;
+    prices?: ShopPrice[];
     submissionMessage?: string;
 }
 export type CollectionSubmissionRequestProps = { collectionId: string; };

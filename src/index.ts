@@ -1,4 +1,4 @@
-import type { SafeLoginHandlers, UserLoginProps } from './types/user';
+import type { NewRegisteredDidTokenProps, SafeLoginHandlers, UserLoginProps } from './types/user';
 import { Apps } from './resources/apps';
 import { Assets } from './resources/assets';
 import { Collections } from './resources/collections';
@@ -15,6 +15,7 @@ import { Currencies } from './resources/currencies';
 import AssetLayerSessionTokenManager from './resources/sessions';
 
 const magic = (typeof window !== 'undefined') ? new Magic('pk_live_8FB965353AF0A346') : undefined;
+const defaultLifespan = 86400;
 let lastTokenGenerated = 0;
 
 export type AssetLayerConfig = {
@@ -284,7 +285,7 @@ export class AssetLayer {
     }
   }
 
-  async newRegisteredDidToken(headers?: HeadersInit) {
+  async newRegisteredDidToken(props?:NewRegisteredDidTokenProps, headers?: HeadersInit) {
     const didtoken = await this.getUserDidToken();
     if (!didtoken) return undefined;
 
@@ -296,7 +297,7 @@ export class AssetLayer {
       return undefined;
     }
 
-    const did = await magic!.user.generateIdToken({ lifespan: 86400, attachment: otp });
+    const did = await magic!.user.generateIdToken({ lifespan: props?.lifespan || defaultLifespan, attachment: otp });
     const h2 = (headers) ? { ...headers, didtoken: did } : { didtoken: did };
     const { result: userInfo, error: e2 } = await this.users.safe.registerDid({ otp }, h2);
 

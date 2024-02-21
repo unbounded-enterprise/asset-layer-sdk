@@ -36,6 +36,7 @@ export type UserLoginProps = {
 };
 export type RegisterUserProps = { otp?: string };
 export type RegisterDidProps = { otp: string };
+export type NewRegisteredDidTokenProps = { lifespan?: number; };
 
 export type RawUsersHandlers = {
     getUser: (headers?: HeadersInit) => Promise<BasicResponse<{ user: User; }>>;

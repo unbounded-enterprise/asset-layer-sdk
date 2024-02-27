@@ -297,7 +297,7 @@ export class AssetLayer {
       return undefined;
     }
 
-    const did = await magic!.user.generateIdToken({ lifespan: props?.lifespan || defaultLifespan, attachment: otp });
+    const did = await magic!.user.generateIdToken({ lifespan: defaultLifespan, attachment: otp });
     const h2 = (headers) ? { ...headers, didtoken: did } : { didtoken: did };
     const { result: userInfo, error: e2 } = await this.users.safe.registerDid({ otp }, h2);
 

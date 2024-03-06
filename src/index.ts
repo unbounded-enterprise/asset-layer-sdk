@@ -1,4 +1,4 @@
-import type { SafeLoginHandlers, UserLoginProps } from './types/user';
+import type { NewRegisteredDidTokenProps, SafeLoginHandlers, UserLoginProps } from './types/user';
 import { Apps } from './resources/apps';
 import { Assets } from './resources/assets';
 import { Collections } from './resources/collections';
@@ -15,6 +15,7 @@ import { Currencies } from './resources/currencies';
 import AssetLayerSessionTokenManager from './resources/sessions';
 
 const magic = (typeof window !== 'undefined') ? new Magic('pk_live_8FB965353AF0A346') : undefined;
+const defaultLifespan = 86400;
 let lastTokenGenerated = 0;
 
 export type AssetLayerConfig = {
@@ -69,7 +70,7 @@ export class AssetLayer {
     let loggedIn = false;
 
     const cachedToken = (this.sessionCache) ? AssetLayerSessionTokenManager.get() : undefined;
-    if (cachedToken) loggedIn = !!(await this.loginUser({ registeredDidToken: cachedToken }));
+    if (cachedToken) loggedIn = !!(await this.loginUser({ registeredDidToken: cachedToken, disableCaching: true }));
 
     if (!loggedIn) {
       const didToken = await this.getUserDidToken();
@@ -110,6 +111,9 @@ export class AssetLayer {
     if (this.logs) console.log('login props:', props)
     if (props?.registeredDidToken) {
       this.didToken = props.registeredDidToken;
+      if (this.sessionCache && !props.disableCaching) {
+        AssetLayerSessionTokenManager.set(props.registeredDidToken, Date.now() - 300000);
+      }
       this.initialized = true;
       if (props?.onSuccess) props.onSuccess();
       if (props?.onComplete) props.onComplete(true);
@@ -131,6 +135,7 @@ export class AssetLayer {
         if (parent.logs) console.log('pre-registered did:', otp);
         if (!otp) {
           const message = 'Login Failed [OTP]: ' + parseBasicError(e1).message;
+          console.warn(message);
           if (props?.onError) props.onError(message);
           if (props?.onComplete) props.onComplete(false);
           return false;
@@ -143,6 +148,7 @@ export class AssetLayer {
 
         if (!userInfo) {
           const message = 'Login Failed [Reg]: ' + parseBasicError(e2).message;
+          console.warn(message);
           if (props?.onError) props.onError(message);
           if (props?.onComplete) props.onComplete(false);
           return false;
@@ -284,7 +290,7 @@ export class AssetLayer {
     }
   }
 
-  async newRegisteredDidToken(headers?: HeadersInit) {
+  async newRegisteredDidToken(props?: NewRegisteredDidTokenProps, headers?: HeadersInit) {
     const didtoken = await this.getUserDidToken();
     if (!didtoken) return undefined;
 
@@ -296,7 +302,7 @@ export class AssetLayer {
       return undefined;
     }
 
-    const did = await magic!.user.generateIdToken({ lifespan: 86400, attachment: otp });
+    const did = await magic!.user.generateIdToken({ lifespan: defaultLifespan, attachment: otp });
     const h2 = (headers) ? { ...headers, didtoken: did } : { didtoken: did };
     const { result: userInfo, error: e2 } = await this.users.safe.registerDid({ otp }, h2);
 
@@ -328,11 +334,9 @@ export class AssetLayer {
     logoutUser: async () => {
       try { return { result: await this.logoutUser() } }
       catch (e) { return { error: parseBasicError(e) } } },
-    /*
-    newRegisteredDidToken: async () => {
-      try { return { result: await this.generateDidToken() } }
+    newRegisteredDidToken: async (props) => {
+      try { return { result: await this.newRegisteredDidToken(props) } }
       catch (e) { return { error: parseBasicError(e) } } },
-    */
   }
 }
 

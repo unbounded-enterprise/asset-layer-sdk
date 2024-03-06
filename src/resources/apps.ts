@@ -1,5 +1,5 @@
 import type { BasicConditionalBoolResult, BasicConditionalExtResult } from '../types/basic-types';
-import type { GetAppProps, AppSlotsProps, GetAppSlotsProps, AppInfoProps, GetAppsProps, AppListingsProps, RawAppsHandlers, SafeAppsHandlers, App, GetAppResponse, GetAppsResponse, AppIdOnly, AppWithListingsCount } from '../types/app';
+import type { GetAppProps, AppSlotsProps, GetAppSlotsProps, AppInfoProps, GetAppsProps, AppListingsProps, RawAppsHandlers, SafeAppsHandlers, App, AppWithListingsCount, AppIdOnlyWithListingsCount } from '../types/app';
 import type { SlotWithExpressions } from '../types/slot';
 import { Base } from './base';
 import { parseBasicError } from '../utils/basic-error';
@@ -14,7 +14,7 @@ export class Apps extends Base {
   async slots<T extends AppSlotsProps> (props: T, headers?: HeadersInit) { return ((await this.raw.slots<T>(props, headers)).body.app.slots); };
   getAppSlots = async (props: GetAppSlotsProps, headers?: HeadersInit) => ((await this.raw.getAppSlots(props, headers)).body.app.slots);
   getAppSlotIds = async (props: GetAppSlotsProps, headers?: HeadersInit) => ((await this.raw.getAppSlotIds(props, headers)).body.app.slots);
-  async listings<T extends AppListingsProps = {}> (props?: T, headers?: HeadersInit): Promise<BasicConditionalBoolResult<T, 'idOnly', AppIdOnly[], AppWithListingsCount[]>>;
+  async listings<T extends AppListingsProps = {}> (props?: T, headers?: HeadersInit): Promise<BasicConditionalBoolResult<T, 'idOnly', AppIdOnlyWithListingsCount[], AppWithListingsCount[]>>;
   async listings<T extends AppListingsProps = {}> (props?: T, headers?: HeadersInit) { return ((await this.raw.listings<T>(props, headers)).body.apps); };
   getAppsWithListings = async (headers?: HeadersInit) => ((await this.raw.getAppsWithListings(headers)).body.apps);
   getAppIdsWithListings = async (headers?: HeadersInit) => ((await this.raw.getAppIdsWithListings(headers)).body.apps);

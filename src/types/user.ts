@@ -30,6 +30,7 @@ export type UserLoginProps = {
     didToken?: string; 
     registeredDidToken?: string; 
     showUI?: boolean; 
+    disableCaching?: boolean;
     onSuccess?: () => void; 
     onError?: (message:string) => void; 
     onComplete?: (loggedIn:boolean) => void;
@@ -65,5 +66,5 @@ export type SafeLoginHandlers = {
     getUserMetadata: () => Promise<BasicResult<any>>;
     loginUser: (props: UserLoginProps) => Promise<BasicResult<boolean|void>>;
     logoutUser: () => Promise<BasicResult<void>>;
-    // newRegisteredDidToken: () => Promise<BasicResult<string|undefined>>;
+    newRegisteredDidToken: (props?: NewRegisteredDidTokenProps) => Promise<BasicResult<string|undefined>>;
 };

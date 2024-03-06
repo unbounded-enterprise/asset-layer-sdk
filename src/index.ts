@@ -70,7 +70,7 @@ export class AssetLayer {
     let loggedIn = false;
 
     const cachedToken = (this.sessionCache) ? AssetLayerSessionTokenManager.get() : undefined;
-    if (cachedToken) loggedIn = !!(await this.loginUser({ registeredDidToken: cachedToken }));
+    if (cachedToken) loggedIn = !!(await this.loginUser({ registeredDidToken: cachedToken, disableCaching: true }));
 
     if (!loggedIn) {
       const didToken = await this.getUserDidToken();
@@ -111,6 +111,9 @@ export class AssetLayer {
     if (this.logs) console.log('login props:', props)
     if (props?.registeredDidToken) {
       this.didToken = props.registeredDidToken;
+      if (this.sessionCache && !props.disableCaching) {
+        AssetLayerSessionTokenManager.set(props.registeredDidToken, Date.now() - 300000);
+      }
       this.initialized = true;
       if (props?.onSuccess) props.onSuccess();
       if (props?.onComplete) props.onComplete(true);
@@ -287,7 +290,7 @@ export class AssetLayer {
     }
   }
 
-  async newRegisteredDidToken(props?:NewRegisteredDidTokenProps, headers?: HeadersInit) {
+  async newRegisteredDidToken(props?: NewRegisteredDidTokenProps, headers?: HeadersInit) {
     const didtoken = await this.getUserDidToken();
     if (!didtoken) return undefined;
 
@@ -331,11 +334,9 @@ export class AssetLayer {
     logoutUser: async () => {
       try { return { result: await this.logoutUser() } }
       catch (e) { return { error: parseBasicError(e) } } },
-    /*
-    newRegisteredDidToken: async () => {
-      try { return { result: await this.generateDidToken() } }
+    newRegisteredDidToken: async (props) => {
+      try { return { result: await this.newRegisteredDidToken(props) } }
       catch (e) { return { error: parseBasicError(e) } } },
-    */
   }
 }
 

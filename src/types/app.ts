@@ -38,6 +38,7 @@ export type App = {
     revShare?: CollectionRevShare;
 };
 export type AppIdOnly = { appId: string; };
+export type AppIdOnlyWithListingsCount = { appId: string; count: number; };
 export type AppWithSlots = Omit<App, 'slots'> & {
     slots: Slot[];
 };
@@ -73,7 +74,7 @@ export type GetAppsResponse = BasicResponse<{ app: App[]; }>;
 export type GetAppSlotsResponse = BasicResponse<{ app: AppWithSlotsWithExpressions; }>;
 export type GetAppSlotIdsResponse = BasicResponse<{ app: App; }>;
 export type GetAppsWithListingsResponse = BasicResponse<{ apps: AppWithListingsCount[]; }>;
-export type GetAppIdsWithListingsResponse = BasicResponse<{ apps: AppIdOnly[]; }>;
+export type GetAppIdsWithListingsResponse = BasicResponse<{ apps: AppIdOnlyWithListingsCount[]; }>;
 
 export type RawAppsHandlers = {
     info: <T extends AppInfoProps>(props: T, headers?: HeadersInit) 
@@ -100,7 +101,7 @@ export type SafeAppsHandlers = {
     getAppSlots: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<BasicResult<SlotWithExpressions[]>>;
     getAppSlotIds: (props: GetAppSlotsProps, headers?: HeadersInit) => Promise<BasicResult<string[]>>;
     listings: <T extends AppListingsProps>(props?: T, headers?: HeadersInit) 
-        => Promise<BasicResult<BasicConditionalBoolResult<T, 'idOnly', AppIdOnly[], AppWithListingsCount[]>>>;
+        => Promise<BasicResult<BasicConditionalBoolResult<T, 'idOnly', AppIdOnlyWithListingsCount[], AppWithListingsCount[]>>>;
     getAppsWithListings: (headers?: HeadersInit) => Promise<BasicResult<AppWithListingsCount[]>>;
-    getAppIdsWithListings: (headers?: HeadersInit) => Promise<BasicResult<AppIdOnly[]>>;
+    getAppIdsWithListings: (headers?: HeadersInit) => Promise<BasicResult<AppIdOnlyWithListingsCount[]>>;
 };

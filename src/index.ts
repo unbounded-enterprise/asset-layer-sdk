@@ -132,6 +132,7 @@ export class AssetLayer {
         if (parent.logs) console.log('pre-registered did:', otp);
         if (!otp) {
           const message = 'Login Failed [OTP]: ' + parseBasicError(e1).message;
+          console.warn(message);
           if (props?.onError) props.onError(message);
           if (props?.onComplete) props.onComplete(false);
           return false;
@@ -144,6 +145,7 @@ export class AssetLayer {
 
         if (!userInfo) {
           const message = 'Login Failed [Reg]: ' + parseBasicError(e2).message;
+          console.warn(message);
           if (props?.onError) props.onError(message);
           if (props?.onComplete) props.onComplete(false);
           return false;

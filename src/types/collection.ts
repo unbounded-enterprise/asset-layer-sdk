@@ -20,7 +20,7 @@ export type CollectionChangeProposal = {
     mintRights?: CollectionMintRights;
     prices?: ShopPrice[];
     revShare?: CollectionRevShare;
-    submissionMessage?: string;
+    message?: string;
     denialMessage?: string;
 }
 export type CollectionSubmission = {
@@ -30,7 +30,7 @@ export type CollectionSubmission = {
     mintRights: CollectionMintRights;
     prices: ShopPrice[];
     revShare: CollectionRevShare;
-    submissionMessage?: string;
+    message?: string;
     denialMessage?: string;
     changeProposal?: CollectionChangeProposal;
 }
@@ -105,13 +105,13 @@ export type DeactivateCollectionProps = ActivateCollectionProps;
 export type CreateCollectionSubmissionProps = Omit<CreateCollectionProps, 'draft'> & {
     mintRights: CollectionMintRights;
     prices: ShopPrice[];
-    submissionMessage?: string;
+    message?: string;
 }
 export type UpdateCollectionSubmissionProps = {
     collectionId: string;
     mintRights?: CollectionMintRights;
     prices?: ShopPrice[];
-    submissionMessage?: string;
+    message?: string;
 }
 export type CollectionSubmissionRequestProps = { collectionId: string; };
 

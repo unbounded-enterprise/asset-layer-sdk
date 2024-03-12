@@ -20,7 +20,7 @@ export type CollectionChangeProposal = {
     mintRights?: CollectionMintRights;
     prices?: ShopPrice[];
     revShare?: CollectionRevShare;
-    submissionMessage?: string;
+    message?: string;
     denialMessage?: string;
 }
 export type CollectionSubmission = {
@@ -30,7 +30,7 @@ export type CollectionSubmission = {
     mintRights: CollectionMintRights;
     prices: ShopPrice[];
     revShare: CollectionRevShare;
-    submissionMessage?: string;
+    message?: string;
     denialMessage?: string;
     changeProposal?: CollectionChangeProposal;
 }
@@ -105,15 +105,16 @@ export type DeactivateCollectionProps = ActivateCollectionProps;
 export type CreateCollectionSubmissionProps = Omit<CreateCollectionProps, 'draft'> & {
     mintRights: CollectionMintRights;
     prices: ShopPrice[];
-    submissionMessage?: string;
+    message?: string;
 }
 export type UpdateCollectionSubmissionProps = {
     collectionId: string;
     mintRights?: CollectionMintRights;
     prices?: ShopPrice[];
-    submissionMessage?: string;
+    message?: string;
 }
 export type CollectionSubmissionRequestProps = { collectionId: string; };
+export type RevokeCollectionSubmissionProps = { collectionId: string; };
 
 export type GetCollectionsResponse = BasicResponse<{ collections: Collection[]; }>;
 export type GetCollectionAssetsResponse = BasicResponse<{ collection: CollectionWithAssets; }>;
@@ -138,6 +139,7 @@ export type RawCollectionsHandlers = {
     createCollectionSubmission: (props: CreateCollectionSubmissionProps, headers?: HeadersInit) => Promise<CreateCollectionSubmissionResponse>;
     updateCollectionSubmission: (props: UpdateCollectionSubmissionProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
     collectionSubmissionRequest: (props: CollectionSubmissionRequestProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
+    revokeCollectionSubmission: (props: RevokeCollectionSubmissionProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
 }
 
 export type SafeCollectionsHandlers = {
@@ -156,4 +158,5 @@ export type SafeCollectionsHandlers = {
     createCollectionSubmission: (props: CreateCollectionSubmissionProps, headers?: HeadersInit) => Promise<BasicResult<CreateCollectionSubmissionResponseBody>>;
     updateCollectionSubmission: (props: UpdateCollectionSubmissionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
     collectionSubmissionRequest: (props: CollectionSubmissionRequestProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+    revokeCollectionSubmission: (props: RevokeCollectionSubmissionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
 }

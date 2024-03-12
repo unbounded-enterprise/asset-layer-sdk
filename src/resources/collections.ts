@@ -1,4 +1,4 @@
-import type { ActivateCollectionProps, CreateCollectionProps, CollectionAssetsProps, GetCollectionAssetsProps, GetCollectionProps, CollectionInfoProps, GetCollectionsProps, RawCollectionsHandlers, SafeCollectionsHandlers, UpdateCollectionImageProps, UpdateCollectionProps, UpdateDefaultPropertiesProps, CreateCollectionSubmissionProps, UpdateCollectionSubmissionProps, CollectionSubmissionRequestProps } from '../types/collection';
+import type { ActivateCollectionProps, CreateCollectionProps, CollectionAssetsProps, GetCollectionAssetsProps, GetCollectionProps, CollectionInfoProps, GetCollectionsProps, RawCollectionsHandlers, SafeCollectionsHandlers, UpdateCollectionImageProps, UpdateCollectionProps, UpdateDefaultPropertiesProps, CreateCollectionSubmissionProps, UpdateCollectionSubmissionProps, CollectionSubmissionRequestProps, RevokeCollectionSubmissionProps } from '../types/collection';
 import { Base } from './base';
 import { propsToQueryString } from '../utils/basic-format';
 import { parseBasicError } from '../utils/basic-error';
@@ -23,6 +23,7 @@ export class Collections extends Base {
   createCollectionSubmission = async (props: CreateCollectionSubmissionProps, headers?: HeadersInit) => ((await this.raw.createCollectionSubmission(props, headers)).body);
   updateCollectionSubmission = async (props: UpdateCollectionSubmissionProps, headers?: HeadersInit) => ((await this.raw.updateCollectionSubmission(props, headers)).success);
   collectionSubmissionRequest = async (props: CollectionSubmissionRequestProps, headers?: HeadersInit) => ((await this.raw.collectionSubmissionRequest(props, headers)).success);
+  revokeCollectionSubmission = async (props: RevokeCollectionSubmissionProps, headers?: HeadersInit) => ((await this.raw.revokeCollectionSubmission(props, headers)).success);
 
   raw: RawCollectionsHandlers = {
     info: async (props, headers) => this.request('/collection/info' + propsToQueryString(props), { headers }),
@@ -41,6 +42,7 @@ export class Collections extends Base {
     createCollectionSubmission: async (props, headers) => this.request('/collection/submission/new', { method: 'POST', body: JSON.stringify(props), headers }),
     updateCollectionSubmission: async (props, headers) => this.request('/collection/submission/update', { method: 'PUT', body: JSON.stringify(props), headers }),
     collectionSubmissionRequest: async (props, headers) => this.request('/collection/submission/request', { method: 'POST', body: JSON.stringify(props), headers }),
+    revokeCollectionSubmission: async (props, headers) => this.request('/collection/submission/revoke', { method: 'POST', body: JSON.stringify(props), headers }),
   };
 
   safe: SafeCollectionsHandlers = {
@@ -88,6 +90,9 @@ export class Collections extends Base {
       catch (e) { return { error: parseBasicError(e) }; } },
     collectionSubmissionRequest: async (props, headers) => {
       try { return { result: await this.collectionSubmissionRequest(props, headers) }; }
+      catch (e) { return { error: parseBasicError(e) }; } },
+    revokeCollectionSubmission: async (props, headers) => {
+      try { return { result: await this.revokeCollectionSubmission(props, headers) }; }
       catch (e) { return { error: parseBasicError(e) }; } },
   };
 }

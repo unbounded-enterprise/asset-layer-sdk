@@ -114,6 +114,7 @@ export type UpdateCollectionSubmissionProps = {
     message?: string;
 }
 export type CollectionSubmissionRequestProps = { collectionId: string; };
+export type RevokeCollectionSubmissionProps = { collectionId: string; };
 
 export type GetCollectionsResponse = BasicResponse<{ collections: Collection[]; }>;
 export type GetCollectionAssetsResponse = BasicResponse<{ collection: CollectionWithAssets; }>;
@@ -138,6 +139,7 @@ export type RawCollectionsHandlers = {
     createCollectionSubmission: (props: CreateCollectionSubmissionProps, headers?: HeadersInit) => Promise<CreateCollectionSubmissionResponse>;
     updateCollectionSubmission: (props: UpdateCollectionSubmissionProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
     collectionSubmissionRequest: (props: CollectionSubmissionRequestProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
+    revokeCollectionSubmission: (props: RevokeCollectionSubmissionProps, headers?: HeadersInit) => Promise<BasicSuccessResponse>;
 }
 
 export type SafeCollectionsHandlers = {
@@ -156,4 +158,5 @@ export type SafeCollectionsHandlers = {
     createCollectionSubmission: (props: CreateCollectionSubmissionProps, headers?: HeadersInit) => Promise<BasicResult<CreateCollectionSubmissionResponseBody>>;
     updateCollectionSubmission: (props: UpdateCollectionSubmissionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
     collectionSubmissionRequest: (props: CollectionSubmissionRequestProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
+    revokeCollectionSubmission: (props: RevokeCollectionSubmissionProps, headers?: HeadersInit) => Promise<BasicResult<boolean>>;
 }
